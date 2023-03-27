@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
+// eslint-disable-next-line import/order
 import { ColorModeContext } from './contexts/ColorModeContext'
 
 import { Routes } from './router'
