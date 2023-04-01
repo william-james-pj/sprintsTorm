@@ -5,6 +5,7 @@ type LogoutStackParamList = {
 
 type LoggedParamList = {
   TabBar: undefined
+  Tracking: undefined
 }
 
 type HomeParamList = {
