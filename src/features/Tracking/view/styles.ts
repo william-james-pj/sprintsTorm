@@ -10,21 +10,14 @@ export const ViewWrapper = styled.View`
   display: flex;
   justify-content: space-between;
   position: relative;
-`
-
-export const ViewHeader = styled.View`
-  width: 100%;
-  height: auto;
 
   gap: 16px;
 `
 
-export const ViewMap = styled.View`
-  background: ${(props) => props.theme.colors.card};
+export const ViewHeader = styled.View`
   flex: 1;
-  border-radius: 8px;
 
-  overflow: hidden;
+  gap: 16px;
 `
 
 export const ViewFooter = styled.View`

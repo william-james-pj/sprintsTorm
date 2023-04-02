@@ -1,6 +1,10 @@
 import * as S from './styles'
 
-export function TimeBox() {
+type TimeBoxProps = {
+  distance: number
+}
+
+export function TimeBox({ distance }: TimeBoxProps) {
   return (
     <S.ViewWrapper>
       <S.ViewColumn>
@@ -9,7 +13,9 @@ export function TimeBox() {
       </S.ViewColumn>
       <S.ViewColumn style={{ alignItems: 'flex-end' }}>
         <S.TextTitle style={{ textAlign: 'right' }}>Distância</S.TextTitle>
-        <S.TextValue style={{ textAlign: 'right' }}>5,2 km</S.TextValue>
+        <S.TextValue style={{ textAlign: 'right' }}>
+          {`${Math.round(distance * 100) / 100} km`}
+        </S.TextValue>
       </S.ViewColumn>
     </S.ViewWrapper>
   )
