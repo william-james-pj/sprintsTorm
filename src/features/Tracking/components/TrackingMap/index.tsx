@@ -17,9 +17,10 @@ import * as S from './styles'
 type TrackingMapProps = {
   setNewDistance: (newDistance: number) => void
   setWatcher: (newWatcher: LocationSubscription) => void
+  isStarted: boolean
 }
 
-export function TrackingMap({ setNewDistance, setWatcher }: TrackingMapProps) {
+export function TrackingMap({ setNewDistance, setWatcher, isStarted }: TrackingMapProps) {
   const [oldLocation, setOldLocation] = useState<LocationObject | null>(null)
   const [location, setLocation] = useState<LocationObject | null>(null)
   const [routeCoordinates, setRouteCoordinates] = useState<LatLng[]>([])
@@ -27,6 +28,8 @@ export function TrackingMap({ setNewDistance, setWatcher }: TrackingMapProps) {
   const theme = useTheme()
 
   function calcDistance() {
+    if (!isStarted) return
+
     const pointA: Coordinates = {
       latitude: oldLocation?.coords.latitude ?? 0,
       longitude: oldLocation?.coords.longitude ?? 0
@@ -44,6 +47,7 @@ export function TrackingMap({ setNewDistance, setWatcher }: TrackingMapProps) {
 
     if (granted) {
       const currentLocation = await getCurrentPositionAsync()
+      setOldLocation(currentLocation)
       setLocation(currentLocation)
     }
   }

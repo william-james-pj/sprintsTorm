@@ -2,14 +2,15 @@ import * as S from './styles'
 
 type TimeBoxProps = {
   distance: number
+  time: string
 }
 
-export function TimeBox({ distance }: TimeBoxProps) {
+export function TimeBox({ distance, time }: TimeBoxProps) {
   return (
     <S.ViewWrapper>
       <S.ViewColumn>
         <S.TextTitle>Tempo</S.TextTitle>
-        <S.TextValue>01:42:00</S.TextValue>
+        <S.TextValue>{time}</S.TextValue>
       </S.ViewColumn>
       <S.ViewColumn style={{ alignItems: 'flex-end' }}>
         <S.TextTitle style={{ textAlign: 'right' }}>Distância</S.TextTitle>
