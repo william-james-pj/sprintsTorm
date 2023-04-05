@@ -52,6 +52,17 @@ export function TrackingMap({ setNewDistance, setWatcher, isStarted }: TrackingM
     }
   }
 
+  function setTrackingLine(response: LocationObject) {
+    console.log('caiu')
+    if (!isStarted) return
+    console.log('pass')
+
+    setRouteCoordinates((oldArray) => [
+      ...oldArray,
+      { latitude: response.coords.latitude, longitude: response.coords.longitude }
+    ])
+  }
+
   useEffect(() => {
     ;(async () => {
       await requestLocationPermissions()
@@ -59,7 +70,6 @@ export function TrackingMap({ setNewDistance, setWatcher, isStarted }: TrackingM
   }, [])
 
   useEffect(() => {
-    console.log('Caiu')
     calcDistance()
     setOldLocation(location)
   }, [location])
@@ -74,10 +84,7 @@ export function TrackingMap({ setNewDistance, setWatcher, isStarted }: TrackingM
         },
         (response) => {
           setLocation(response)
-          setRouteCoordinates((oldArray) => [
-            ...oldArray,
-            { latitude: response.coords.latitude, longitude: response.coords.longitude }
-          ])
+          setTrackingLine(response)
           mapRef.current?.animateCamera({
             center: response.coords
           })
@@ -86,7 +93,7 @@ export function TrackingMap({ setNewDistance, setWatcher, isStarted }: TrackingM
         setWatcher(locationWatcher)
       })
     })()
-  }, [])
+  }, [isStarted])
 
   return (
     <S.ViewWrapper>
