@@ -7,6 +7,8 @@ import { RankingStackNavigator } from 'src/router/logged/Stack/RankingStackNavig
 import { FloatingButton } from 'src/router/logged/TabBar/FloatingButton'
 import { IconTabBar } from 'src/router/logged/TabBar/IconTabBar'
 
+import { HomeTabBarOptions } from './HomeTabBarOptions'
+
 const Tab = createBottomTabNavigator()
 
 export function BottomTabNavigator() {
@@ -57,7 +59,7 @@ export function BottomTabNavigator() {
       <Tab.Screen
         name="HomeStack"
         component={HomeStackNavigator}
-        options={{ tabBarIcon: ({ focused }) => <IconTabBar icon="Home" focused={focused} /> }}
+        options={({ route }) => HomeTabBarOptions({ route, style: styles.navigator })}
       />
 
       <Tab.Screen
