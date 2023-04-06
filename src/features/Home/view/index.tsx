@@ -1,7 +1,9 @@
+import { useNavigation } from '@react-navigation/native'
 import { useRef } from 'react'
 import { FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { FriendCell } from 'src/features/Home/components/FriendCell'
 import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { HomeSection } from 'src/features/Home/components/HomeSection'
@@ -10,6 +12,7 @@ import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrain
 import * as S from './styles'
 
 export function HomeScreen() {
+  const navigation = useNavigation<HomeNavigationProp>()
   const flatList = useRef<FlatList<FriendType>>(null)
 
   const data: FriendType[] = [{ id: '1' }, { id: '2' }, { id: '3' }]
@@ -27,7 +30,11 @@ export function HomeScreen() {
 
         <HomeSection title="Duelo" buttonText="Iniciar duelo"></HomeSection>
 
-        <HomeSection title="Último treino" buttonText="Ver tudo">
+        <HomeSection
+          title="Último treino"
+          buttonText="Ver tudo"
+          buttonTextOnPress={() => navigation.navigate('LastTraining')}
+        >
           <LastTrainingCell />
         </HomeSection>
 

@@ -2,3 +2,7 @@
 type FriendType = {
   id: string
 }
+
+type LastTrainingType = {
+  id: string
+}

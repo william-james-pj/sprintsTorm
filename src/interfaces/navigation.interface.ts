@@ -10,6 +10,7 @@ type LoggedParamList = {
 
 type HomeParamList = {
   Home: undefined
+  LastTraining: undefined
 }
 
 type RankingParamList = {
