@@ -1,21 +1,22 @@
 import styled from 'styled-components/native'
 
-import { fonts } from 'src/styles/fonts'
-
 export const ViewWrapper = styled.View`
   background: ${(props) => props.theme.colors.background};
   flex: 1;
+  padding: 0px 24px 64px;
+
   display: flex;
-  padding: 32px 24px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
 `
 
-export const Text = styled.Text`
-  color: ${(props) => props.theme.colors.text};
-  font-size: ${fonts.size.xs};
-  font-family: ${fonts.type.text600};
-  text-align: center;
-  margin-bottom: 8px;
+export const ViewHeaderContainer = styled.View`
+  width: 100%;
+  gap: 32px;
+
+  margin-top: 32px;
+  margin-bottom: 16px;
+`
+
+export const Separator = styled.View`
+  width: 100%;
+  height: 0px;
 `
