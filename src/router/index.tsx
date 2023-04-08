@@ -4,7 +4,7 @@ import { View } from 'react-native'
 
 import { LoggedStackNavigator } from './logged'
 
-// import { StackNavigator } from './logout'
+// import { LogoutStackNavigator } from './logout'
 
 export function Routes() {
   return (
