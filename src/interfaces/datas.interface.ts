@@ -6,3 +6,9 @@ type FriendType = {
 type LastTrainingType = {
   id: string
 }
+
+type RankingType = {
+  id: string
+}
+
+type RankingTabType = 'week' | 'month' | 'year'
