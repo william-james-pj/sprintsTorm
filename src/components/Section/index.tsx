@@ -4,19 +4,19 @@ import { RectButton } from 'react-native-gesture-handler'
 
 import * as S from './styles'
 
-type HomeSectionProps = {
+type SectionProps = {
   title: string
   buttonText?: string
   buttonTextOnPress?: () => void
   children?: ReactNode
 }
 
-export function HomeSection({
+export function Section({
   title,
   children,
   buttonText,
   buttonTextOnPress = () => {}
-}: HomeSectionProps) {
+}: SectionProps) {
   return (
     <S.ViewWrapper>
       <S.ViewHeader>
