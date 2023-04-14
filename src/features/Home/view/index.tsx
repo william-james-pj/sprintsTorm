@@ -1,10 +1,13 @@
 import { useNavigation } from '@react-navigation/native'
-import { useRef } from 'react'
-import { FlatList } from 'react-native'
+import { ImageBackground } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useTheme } from 'styled-components'
 
+import BackgroundImg from 'src/assets/img/background.png'
+import SwordsSVG from 'src/assets/svg/swords.svg'
+import { UserStatus } from 'src/components/UserStatus'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
-import { FriendCell } from 'src/features/Home/components/FriendCell'
 import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { HomeSection } from 'src/features/Home/components/HomeSection'
 import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrainingCell'
@@ -13,51 +16,40 @@ import * as S from './styles'
 
 export function HomeScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
-  const flatList = useRef<FlatList<FriendType>>(null)
-
-  const data: FriendType[] = [{ id: '1' }, { id: '2' }, { id: '3' }]
-
-  const renderRows = ({ item }: { item: FriendType }) => {
-    return <FriendCell />
-  }
-
-  const renderHeader = () => {
-    return (
-      <S.ViewHeaderContainer>
-        <HomeHeader userName="UserName" />
-
-        <HomeSection title="Desafios"></HomeSection>
-
-        <HomeSection title="Duelo" buttonText="Iniciar duelo"></HomeSection>
-
-        <HomeSection
-          title="Último treino"
-          buttonText="Ver tudo"
-          buttonTextOnPress={() => navigation.navigate('LastTraining')}
-        >
-          <LastTrainingCell />
-        </HomeSection>
-
-        <HomeSection title="Amigos" buttonText="Adicionar"></HomeSection>
-      </S.ViewHeaderContainer>
-    )
-  }
+  const theme = useTheme()
 
   return (
-    <S.ViewWrapper>
+    <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
       <SafeAreaView style={{ flex: 1 }}>
-        <FlatList
-          style={{ flex: 1 }}
-          ref={flatList}
-          showsVerticalScrollIndicator={false}
-          bounces={false}
-          data={data}
-          renderItem={renderRows}
-          keyExtractor={(item) => item.id}
-          ListHeaderComponent={renderHeader}
-          ItemSeparatorComponent={() => <S.Separator></S.Separator>}
-        />
+        <S.ViewWrapper>
+          <S.ViewHeader>
+            <UserStatus />
+
+            <HomeHeader userName="UserName" trophy={0} />
+          </S.ViewHeader>
+
+          <S.ViewContent>
+            <HomeSection title="Desafios"></HomeSection>
+
+            <HomeSection
+              title="Último treino"
+              buttonText="Ver tudo"
+              buttonTextOnPress={() => navigation.navigate('LastTraining')}
+            >
+              <LastTrainingCell />
+            </HomeSection>
+          </S.ViewContent>
+
+          <S.ViewBattleButton>
+            <TouchableOpacity onPress={() => {}} style={{ flex: 1 }}>
+              <S.ViewBattleButtonContent>
+                <SwordsSVG fill={theme.colors.primary} />
+                <S.TextBattleButton>Batalhar</S.TextBattleButton>
+              </S.ViewBattleButtonContent>
+            </TouchableOpacity>
+          </S.ViewBattleButton>
+        </S.ViewWrapper>
       </SafeAreaView>
-    </S.ViewWrapper>
+    </ImageBackground>
   )
 }

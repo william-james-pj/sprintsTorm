@@ -3,12 +3,12 @@ import styled from 'styled-components/native'
 import { fonts } from 'src/styles/fonts'
 
 export const ViewWrapper = styled.View`
-  background: ${(props) => props.theme.colors.card};
+  background: ${({ theme }) => theme.colors.card};
   width: 100%;
   height: auto;
 
-  padding: 8px 16px 8px 8px;
-  border-radius: 16px;
+  padding: 8px 8px 8px 16px;
+  border-radius: 8px;
   overflow: hidden;
 
   flex-direction: row;
@@ -22,32 +22,35 @@ export const ViewRow = styled.View`
   gap: 12px;
 `
 
-export const ViewCircleContainer = styled.View`
-  background: ${(props) => props.theme.colors.text};
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  overflow: hidden;
-`
-
 export const ViewTextContainer = styled.View`
   gap: 0px;
 `
 
 export const TextType = styled.Text`
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${fonts.size.xxs};
   font-family: ${fonts.type.text600};
 `
 
 export const TextDate = styled.Text`
-  color: ${(props) => props.theme.colors.disabled};
+  color: ${({ theme }) => theme.colors.disabled};
   font-size: ${fonts.size.xxs};
   font-family: ${fonts.type.text600};
 `
 
+export const ViewAwardContainer = styled.View`
+  background: ${({ theme }) => theme.colors.background};
+
+  padding: 6px 8px;
+  border-radius: 8px;
+
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+`
+
 export const TextDistance = styled.Text`
-  color: ${(props) => props.theme.colors.text};
-  font-size: ${fonts.size.xs};
+  color: ${({ theme }) => theme.colors.text};
+  font-size: ${fonts.size.xxs};
   font-family: ${fonts.type.text600};
 `

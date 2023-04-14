@@ -14,7 +14,6 @@ export const ViewWrapper = styled.View`
 `
 
 export const ViewContent = styled.View`
-  background: ${({ theme }) => theme.colors.background};
   min-height: 56px;
   flex: 1;
   flex-direction: row;
@@ -36,5 +35,5 @@ export const TextTitle = styled.Text`
   text-align: center;
   font-family: ${fonts.type.text700};
   font-size: ${fonts.size.sm};
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
 `

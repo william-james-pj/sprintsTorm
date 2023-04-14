@@ -11,27 +11,40 @@ export const ViewWrapper = styled.View`
   align-items: center;
 `
 
-export const ViewTextContainer = styled.View`
-  flex-direction: column;
-  gap: 4px;
+export const ViewBoxContainer = styled.View`
+  background: ${({ theme }) => theme.colors.card};
+  width: auto;
+
+  padding: 8px 16px;
+
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
 `
 
 export const TextUserName = styled.Text`
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${fonts.size.sm};
   font-family: ${fonts.type.text600};
 `
 
-export const TextMessage = styled.Text`
-  color: ${(props) => props.theme.colors.disabled};
-  font-size: ${fonts.size.xs};
-  font-family: ${fonts.type.text400};
+export const ViewTrophyContainer = styled.View`
+  flex-direction: row;
+  gap: -8px;
 `
 
-export const ViewUserContainer = styled.View`
-  background: ${(props) => props.theme.colors.card};
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  overflow: hidden;
+export const ViewTextTrophyContainer = styled.View`
+  background: ${({ theme }) => theme.colors.background};
+
+  padding: 2px 12px;
+  border-radius: 4px;
+
+  justify-content: center;
+  align-items: center;
+`
+
+export const TextTrophyNumber = styled.Text`
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: ${fonts.size.xxs};
+  font-family: ${fonts.type.text600};
 `
