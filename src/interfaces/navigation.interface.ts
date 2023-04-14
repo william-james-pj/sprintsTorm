@@ -13,6 +13,6 @@ type HomeParamList = {
   LastTraining: undefined
 }
 
-type RankingParamList = {
-  Ranking: undefined
+type CollectionParamList = {
+  Collection: undefined
 }

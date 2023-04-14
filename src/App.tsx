@@ -1,6 +1,7 @@
 import { Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
 import { useCallback } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -28,6 +29,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar translucent backgroundColor="transparent" style="light" />
       <ColorModeContext>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Routes />

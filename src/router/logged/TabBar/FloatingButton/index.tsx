@@ -1,7 +1,7 @@
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs'
 import { Path } from 'react-native-svg'
 
-import PlaySVG from 'src/assets/svg/play.svg'
+import PersonSVG from 'src/assets/svg/person-running-solid.svg'
 
 import * as S from './styles'
 
@@ -15,7 +15,7 @@ export function FloatingButton({ bgColor, onPress }: FloatingButtonProps) {
       <SvgBackground color={bgColor} />
       <S.TouchableOpacity onPress={onPress}>
         <S.ActionButtonView>
-          <PlaySVG fill={bgColor} />
+          <PersonSVG fill={'#FFF'} />
         </S.ActionButtonView>
       </S.TouchableOpacity>
     </S.View>

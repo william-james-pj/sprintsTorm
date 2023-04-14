@@ -12,6 +12,9 @@ declare module 'styled-components' {
       text: string
       disabled: string
 
+      exp: string
+      coin: string
+
       green: string
     }
   }
