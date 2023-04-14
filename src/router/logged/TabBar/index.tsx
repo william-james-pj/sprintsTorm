@@ -2,8 +2,8 @@ import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'styled-components'
 
+import { CollectionStackNavigator } from 'src/router/logged/Stack/CollectionStackNavigator'
 import { HomeStackNavigator } from 'src/router/logged/Stack/HomeStackNavigator'
-import { RankingStackNavigator } from 'src/router/logged/Stack/RankingStackNavigator'
 import { FloatingButton } from 'src/router/logged/TabBar/FloatingButton'
 import { IconTabBar } from 'src/router/logged/TabBar/IconTabBar'
 
@@ -78,9 +78,9 @@ export function BottomTabNavigator() {
 
       <Tab.Screen
         name="RankingStack"
-        component={RankingStackNavigator}
+        component={CollectionStackNavigator}
         options={{
-          tabBarIcon: ({ focused }) => <IconTabBar icon="Ranking" focused={focused} />
+          tabBarIcon: ({ focused }) => <IconTabBar icon="Cards" focused={focused} />
         }}
       />
     </Tab.Navigator>

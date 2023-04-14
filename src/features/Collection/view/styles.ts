@@ -1,9 +1,8 @@
 import styled from 'styled-components/native'
 
 export const ViewWrapper = styled.View`
-  background: ${({ theme }) => theme.colors.card};
   flex: 1;
-  border-radius: 8px;
+  padding: 0px 24px 64px;
 
-  overflow: hidden;
+  display: flex;
 `

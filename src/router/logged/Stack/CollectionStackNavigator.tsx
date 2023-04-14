@@ -1,8 +1,8 @@
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack'
 
-import { RankingScreen } from 'src/features/Ranking/view'
+import { CollectionScreen } from 'src/features/Collection/view'
 
-const Stack = createStackNavigator<RankingParamList>()
+const Stack = createStackNavigator<CollectionParamList>()
 
 const screenOptions: StackNavigationOptions = {
   headerShown: false,
@@ -11,10 +11,10 @@ const screenOptions: StackNavigationOptions = {
   }
 }
 
-export function RankingStackNavigator() {
+export function CollectionStackNavigator() {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name="Ranking" component={RankingScreen} />
+      <Stack.Screen name="Collection" component={CollectionScreen} />
     </Stack.Navigator>
   )
 }

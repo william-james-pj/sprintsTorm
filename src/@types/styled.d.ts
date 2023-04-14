@@ -7,10 +7,14 @@ declare module 'styled-components' {
       primary: string
 
       background: string
+      background_overlay: string
       card: string
 
       text: string
       disabled: string
+
+      exp: string
+      coin: string
 
       green: string
     }

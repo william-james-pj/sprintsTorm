@@ -53,9 +53,7 @@ export function TrackingMap({ setNewDistance, setWatcher, isStarted }: TrackingM
   }
 
   function setTrackingLine(response: LocationObject) {
-    console.log('caiu')
     if (!isStarted) return
-    console.log('pass')
 
     setRouteCoordinates((oldArray) => [
       ...oldArray,

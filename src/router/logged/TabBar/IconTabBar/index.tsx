@@ -1,15 +1,13 @@
 import { useTheme } from 'styled-components'
 
-import HouseLightSVG from 'src/assets/svg/house-light.svg'
+import CardsSVG from 'src/assets/svg/cards.svg'
 import HomeSVG from 'src/assets/svg/house-solid.svg'
-import RankingLightSVG from 'src/assets/svg/ranking-star-light.svg'
-import RankingSVG from 'src/assets/svg/ranking-star-solid.svg'
 
 import * as S from './styles'
 
 interface IconTabBarProps {
   focused: boolean
-  icon: 'Home' | 'Ranking'
+  icon: 'Home' | 'Cards'
 }
 
 export function IconTabBar({ focused, icon }: IconTabBarProps) {
@@ -18,15 +16,9 @@ export function IconTabBar({ focused, icon }: IconTabBarProps) {
   return (
     <S.Icon active={focused}>
       {icon === 'Home' ? (
-        focused ? (
-          <HomeSVG fill={theme.colors.primary} />
-        ) : (
-          <HouseLightSVG fill={theme.colors.disabled} />
-        )
-      ) : focused ? (
-        <RankingSVG fill={theme.colors.primary} />
+        <HomeSVG fill={focused ? theme.colors.primary : theme.colors.disabled} />
       ) : (
-        <RankingLightSVG fill={theme.colors.disabled} />
+        <CardsSVG fill={focused ? theme.colors.primary : theme.colors.disabled} />
       )}
     </S.Icon>
   )

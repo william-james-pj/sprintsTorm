@@ -1,7 +1,6 @@
 import styled from 'styled-components/native'
 
 export const ViewWrapper = styled.View`
-  background: ${(props) => props.theme.colors.background};
   flex: 1;
   padding: 56px 24px 8px;
 `

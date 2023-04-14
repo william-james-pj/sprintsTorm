@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { fonts } from '../../styles/fonts'
+import { fonts } from 'src/styles/fonts'
 
 export const ViewWrapper = styled.View`
   width: 100%;
@@ -11,7 +11,7 @@ export const ViewWrapper = styled.View`
 `
 
 export const TextTitle = styled.Text`
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${fonts.size.xs};
   font-family: ${fonts.type.text600};
   text-align: center;
@@ -19,7 +19,7 @@ export const TextTitle = styled.Text`
 `
 
 export const TextSubTitle = styled.Text`
-  color: ${(props) => props.theme.colors.disabled};
+  color: ${({ theme }) => theme.colors.disabled};
   font-size: ${fonts.size.xs};
   font-family: ${fonts.type.text400};
   text-align: center;
