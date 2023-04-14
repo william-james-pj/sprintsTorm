@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { fonts } from '../../styles/fonts'
+import { fonts } from 'src/styles/fonts'
 
 export const ViewWrapper = styled.View`
   height: auto;

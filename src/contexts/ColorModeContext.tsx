@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useEffect, useState } from 'react'
 import { useColorScheme } from 'react-native'
 import { DefaultTheme, ThemeProvider } from 'styled-components'
 
-import themes from '../styles/themes'
+import themes from 'src/styles/themes'
 
 type ColorContextType = {
   theme: DefaultTheme

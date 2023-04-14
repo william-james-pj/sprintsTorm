@@ -1,4 +1,5 @@
-import { TrackingButton } from '../TrackingButton'
+import { TrackingButton } from 'src/features/Tracking/components/TrackingButton'
+
 import * as S from './styles'
 
 type TrackingModalProps = {

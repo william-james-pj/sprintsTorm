@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { fonts } from 'src/styles/fonts'
 
 export const ViewWrapper = styled.View`
-  background: ${(props) => props.theme.colors.background};
+  background: ${({ theme }) => theme.colors.background};
   width: 100%;
   height: auto;
 
@@ -12,7 +12,7 @@ export const ViewWrapper = styled.View`
 `
 
 export const TextTitle = styled.Text`
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${fonts.size.sm};
   font-family: ${fonts.type.text600};
   text-align: center;

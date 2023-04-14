@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { fonts } from 'src/styles/fonts'
 
 export const ViewWrapper = styled.View`
-  background: ${(props) => props.theme.colors.background};
+  background: ${({ theme }) => theme.colors.background};
   flex: 1;
 
   padding: 32px 24px;
@@ -17,7 +17,7 @@ export const ViewContainer = styled.View`
 `
 
 export const TextAppName = styled.Text`
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${fonts.size.sm};
   font-family: ${fonts.type.text600};
   text-align: center;
@@ -39,14 +39,14 @@ export const ViewTextGap = styled.View`
 `
 
 export const TextSubTitle = styled.Text`
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${fonts.size.normal};
   font-family: ${fonts.type.text600};
   text-align: center;
 `
 
 export const TextTitle = styled.Text`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: ${fonts.size.xl};
   font-family: ${fonts.type.text600};
   text-align: center;
@@ -57,7 +57,7 @@ export const ViewButtonGap = styled.View`
 `
 
 export const TextMessage = styled.Text`
-  color: ${(props) => props.theme.colors.disabled};
+  color: ${({ theme }) => theme.colors.disabled};
   font-size: ${fonts.size.xs};
   font-family: ${fonts.type.text400};
   text-align: center;
