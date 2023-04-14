@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/native'
 import { LocationSubscription } from 'expo-location'
 import { useEffect, useState } from 'react'
+import { ImageBackground } from 'react-native'
 import Modal from 'react-native-modal'
 
+import BackgroundImg from 'src/assets/img/background.png'
 import { TimeBox } from 'src/features/Tracking/components/TimeBox'
 import { TrackingButton } from 'src/features/Tracking/components/TrackingButton'
 import { TrackingHeader } from 'src/features/Tracking/components/TrackingHeader'
@@ -54,29 +56,31 @@ export function TrackingScreen() {
 
   return (
     <>
-      <S.ViewWrapper>
-        <S.ViewHeader>
-          <TrackingHeader title={'Correndo'} onClose={toggleModal} />
-          <TrackingMap
-            setNewDistance={setNewDistance}
-            setWatcher={setNewWatcher}
-            isStarted={isStarted}
-          />
-        </S.ViewHeader>
-        <S.ViewFooter>
-          <TimeBox distance={traveledDistance} time={getTimerString(timer)} />
-          <S.ViewButtonContainer>
-            {isStarted ? (
-              <>
-                <TrackingButton title="Pausar" onPress={() => setIsStarted(false)} />
-                <TrackingButton title="Terminar" onPress={toggleModal} />
-              </>
-            ) : (
-              <TrackingButton title="Iniciar" onPress={() => setIsStarted(true)} />
-            )}
-          </S.ViewButtonContainer>
-        </S.ViewFooter>
-      </S.ViewWrapper>
+      <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
+        <S.ViewWrapper>
+          <S.ViewHeader>
+            <TrackingHeader title={'Correndo'} onClose={toggleModal} />
+            <TrackingMap
+              setNewDistance={setNewDistance}
+              setWatcher={setNewWatcher}
+              isStarted={isStarted}
+            />
+          </S.ViewHeader>
+          <S.ViewFooter>
+            <TimeBox distance={traveledDistance} time={getTimerString(timer)} />
+            <S.ViewButtonContainer>
+              {isStarted ? (
+                <>
+                  <TrackingButton title="Pausar" onPress={() => setIsStarted(false)} />
+                  <TrackingButton title="Terminar" onPress={toggleModal} />
+                </>
+              ) : (
+                <TrackingButton title="Iniciar" onPress={() => setIsStarted(true)} />
+              )}
+            </S.ViewButtonContainer>
+          </S.ViewFooter>
+        </S.ViewWrapper>
+      </ImageBackground>
       <Modal
         isVisible={isModalVisible}
         onBackButtonPress={toggleModal}
