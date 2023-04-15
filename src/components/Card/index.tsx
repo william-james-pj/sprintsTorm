@@ -6,6 +6,7 @@ type CardProps = {
   width?: number
   hideName?: boolean
   hideQtd?: boolean
+  qtd?: string
   onPress?: () => void
 }
 
@@ -13,7 +14,8 @@ export function Card({
   width = 100,
   hideName = false,
   hideQtd = false,
-  onPress = () => {}
+  onPress = () => {},
+  qtd = '0'
 }: CardProps) {
   return (
     <S.ViewWrapper style={{ width, height: width + 20 }}>
@@ -21,7 +23,7 @@ export function Card({
         <S.ViewContent>
           {!hideQtd && (
             <S.ViewQtdContainer style={{ borderBottomStartRadius: 4 }}>
-              <S.TextQtd>2</S.TextQtd>
+              <S.TextQtd>{qtd}</S.TextQtd>
             </S.ViewQtdContainer>
           )}
 

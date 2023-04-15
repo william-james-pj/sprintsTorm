@@ -9,7 +9,7 @@ export const ViewWrapper = styled.View`
 `
 
 export const TextNumber = styled.Text`
-  color: ${({ theme }) => theme.colors.coin};
+  color: ${({ theme }) => theme.colors.exp};
   font-size: ${fonts.size.xxs};
   font-family: ${fonts.type.text600};
 `

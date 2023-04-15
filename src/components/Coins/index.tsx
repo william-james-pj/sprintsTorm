@@ -5,7 +5,7 @@ import CoinsSVG from 'src/assets/svg/coins-solid.svg'
 import * as S from './styles'
 
 type CoinsProps = {
-  coin: number
+  coin: string
 }
 
 export function Coins({ coin }: CoinsProps) {
@@ -13,7 +13,7 @@ export function Coins({ coin }: CoinsProps) {
 
   return (
     <S.ViewWrapper>
-      <CoinsSVG fill={theme.colors.primary} />
+      <CoinsSVG fill={theme.colors.coin} />
       <S.TextNumber>{coin}</S.TextNumber>
     </S.ViewWrapper>
   )

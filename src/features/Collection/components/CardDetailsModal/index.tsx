@@ -28,7 +28,7 @@ export function CardDetails() {
       <S.ViewButton>
         <TouchableOpacity style={{ width: '100%' }} onPress={() => {}}>
           <S.ViewButtonContent>
-            <Coins coin={50} />
+            <Coins coin={'50'} />
           </S.ViewButtonContent>
         </TouchableOpacity>
       </S.ViewButton>
