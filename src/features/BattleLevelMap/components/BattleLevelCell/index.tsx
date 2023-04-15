@@ -8,9 +8,10 @@ import * as S from './styles'
 
 type BattleLevelCellProps = {
   item: BossType
+  onPress: () => void
 }
 
-export function BattleLevelCell({ item }: BattleLevelCellProps) {
+export function BattleLevelCell({ item, onPress }: BattleLevelCellProps) {
   return (
     <S.ViewWrapper>
       <S.ViewLevelContainer>
@@ -20,7 +21,7 @@ export function BattleLevelCell({ item }: BattleLevelCellProps) {
 
       <S.ViewContentContainer>
         <S.ViewCard>
-          <RectButton onPress={() => {}} style={styles.button}>
+          <RectButton onPress={onPress} style={styles.button}>
             <S.ViewCardContent isRight={item.level % 2 !== 0}>
               <S.ViewCardContainer>
                 <Card width={60} hideName hideQtd />
