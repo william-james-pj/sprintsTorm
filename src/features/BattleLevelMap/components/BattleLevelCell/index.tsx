@@ -36,7 +36,7 @@ export function BattleLevelCell({ item, onPress }: BattleLevelCellProps) {
 
               <S.ViewAward>
                 <S.TextAward>Prémio</S.TextAward>
-                <Coins coin={100} />
+                <Coins coin={'100'} />
               </S.ViewAward>
             </S.ViewCardContent>
           </RectButton>

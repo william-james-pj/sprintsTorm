@@ -13,7 +13,7 @@ export function LastTrainingCell() {
       </S.ViewRow>
 
       <S.ViewAwardContainer>
-        <Coins coin={10} />
+        <Coins coin={'10'} />
         <S.TextDistance>5.65 km</S.TextDistance>
       </S.ViewAwardContainer>
     </S.ViewWrapper>
