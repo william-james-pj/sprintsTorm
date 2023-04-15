@@ -83,7 +83,12 @@ export function BattleLevelMap() {
         statusBarTranslucent
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
-        <BossModal />
+        <BossModal
+          onPress={() => {
+            navigation.navigate('Battle')
+            toggleModal()
+          }}
+        />
       </Modal>
     </>
   )

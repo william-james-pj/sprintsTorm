@@ -7,7 +7,11 @@ import { Card } from 'src/components/Card'
 
 import * as S from './styles'
 
-export function BossModal() {
+type BossModalProps = {
+  onPress: () => void
+}
+
+export function BossModal({ onPress }: BossModalProps) {
   const theme = useTheme()
 
   return (
@@ -29,7 +33,7 @@ export function BossModal() {
       </S.ViewAbility>
 
       <S.ViewButton>
-        <TouchableOpacity style={{ width: '100%' }} onPress={() => {}}>
+        <TouchableOpacity style={{ width: '100%' }} onPress={onPress}>
           <S.ViewButtonContent>
             <SwordsSVG fill={theme.colors.text} />
             <S.TextButtonText>Batalhar</S.TextButtonText>
