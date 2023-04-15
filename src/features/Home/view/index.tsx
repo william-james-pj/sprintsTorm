@@ -41,7 +41,10 @@ export function HomeScreen() {
           </S.ViewContent>
 
           <S.ViewBattleButton>
-            <TouchableOpacity onPress={() => {}} style={{ flex: 1 }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('BattleLevelMap')}
+              style={{ flex: 1 }}
+            >
               <S.ViewBattleButtonContent>
                 <SwordsSVG fill={theme.colors.primary} />
                 <S.TextBattleButton>Batalhar</S.TextBattleButton>
