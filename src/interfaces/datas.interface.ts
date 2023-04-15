@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-type FriendType = {
-  id: string
-}
-
 type LastTrainingType = {
   id: string
 }
 
-type RankingType = {
+type BossType = {
   id: string
+  level: number
 }
-
-type RankingTabType = 'week' | 'month' | 'year'

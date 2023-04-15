@@ -1,16 +1,18 @@
 import { TouchableOpacity } from 'react-native'
+import { useTheme } from 'styled-components'
 
+import SwordsSVG from 'src/assets/svg/swordsSmall.svg'
 import { AbilityCard } from 'src/components/AbilityCard'
 import { Card } from 'src/components/Card'
-import { Coins } from 'src/components/Coins'
 
 import * as S from './styles'
 
-export function CardDetails() {
+export function BossModal() {
+  const theme = useTheme()
+
   return (
-    <S.ViewWrapper>
+    <S.ViewWrapper style={{ borderTopLeftRadius: 24, borderTopRightRadius: 24 }}>
       <S.ViewDetails>
-        <Card hideName />
         <S.ViewTextContainer>
           <S.TextName>Name</S.TextName>
           <S.TextDescription>
@@ -18,6 +20,7 @@ export function CardDetails() {
             mais difíceis de se vencer. Derrotá-lo exigirá muita habilidade e estratégia.
           </S.TextDescription>
         </S.ViewTextContainer>
+        <Card hideName hideQtd />
       </S.ViewDetails>
 
       <S.ViewAbility>
@@ -28,7 +31,8 @@ export function CardDetails() {
       <S.ViewButton>
         <TouchableOpacity style={{ width: '100%' }} onPress={() => {}}>
           <S.ViewButtonContent>
-            <Coins coin={50} />
+            <SwordsSVG fill={theme.colors.text} />
+            <S.TextButtonText>Batalhar</S.TextButtonText>
           </S.ViewButtonContent>
         </TouchableOpacity>
       </S.ViewButton>

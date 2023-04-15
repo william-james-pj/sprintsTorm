@@ -15,7 +15,7 @@ export function HomeTabBarOptions({
   return {
     tabBarStyle: ((route) => {
       const routeName = getFocusedRouteNameFromRoute(route) ?? ''
-      if (routeName === 'LastTraining') {
+      if (routeName === 'LastTraining' || routeName === 'BattleLevelMap') {
         return { display: 'none' }
       }
       return style
