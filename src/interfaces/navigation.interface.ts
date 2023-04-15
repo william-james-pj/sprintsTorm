@@ -12,6 +12,7 @@ type HomeParamList = {
   Home: undefined
   LastTraining: undefined
   BattleLevelMap: undefined
+  Battle: undefined
 }
 
 type CollectionParamList = {
