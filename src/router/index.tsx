@@ -2,15 +2,18 @@ import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { View } from 'react-native'
 
-import { LoggedStackNavigator } from './logged'
+import { useAuth } from 'src/hooks/useAuth'
 
-// import { LogoutStackNavigator } from './logout'
+import { LoggedStackNavigator } from './logged'
+import { LogoutStackNavigator } from './logout'
 
 export function Routes() {
+  const { user } = useAuth()
+
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>
-        <LoggedStackNavigator />
+        {!user?.id ? <LogoutStackNavigator /> : <LoggedStackNavigator />}
       </NavigationContainer>
     </View>
   )

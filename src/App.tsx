@@ -7,7 +7,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 // eslint-disable-next-line import/order
-import { ColorModeContext } from './contexts/ColorModeContext'
+import { AuthContextProvider } from 'src/contexts/AuthContext'
+import { ColorModeContext } from 'src/contexts/ColorModeContext'
 
 import { Routes } from './router'
 
@@ -31,9 +32,11 @@ export default function App() {
     <SafeAreaProvider>
       <StatusBar translucent backgroundColor="transparent" style="light" />
       <ColorModeContext>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <Routes />
-        </GestureHandlerRootView>
+        <AuthContextProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <Routes />
+          </GestureHandlerRootView>
+        </AuthContextProvider>
       </ColorModeContext>
     </SafeAreaProvider>
   )

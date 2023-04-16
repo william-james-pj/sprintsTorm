@@ -7,3 +7,7 @@ type BossType = {
   id: string
   level: number
 }
+
+type UserType = {
+  id: string
+}

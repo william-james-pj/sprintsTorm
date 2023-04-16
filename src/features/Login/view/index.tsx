@@ -3,10 +3,17 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import img from 'src/assets/img/welcomeImage.png'
 import { ButtonGoogle } from 'src/features/Login/components/ButtonGoogle'
+import { useAuth } from 'src/hooks/useAuth'
 
 import * as S from './styles'
 
 export function LoginScreen() {
+  const { promptAsync } = useAuth()
+
+  const login = async () => {
+    await promptAsync()
+  }
+
   return (
     <S.ViewWrapper>
       <SafeAreaView style={{ flex: 1 }}>
@@ -23,7 +30,7 @@ export function LoginScreen() {
             </S.ViewTextGap>
             <S.ViewButtonGap>
               <S.TextMessage>Uma vida saudável começa com um passo</S.TextMessage>
-              <ButtonGoogle onPress={() => {}} />
+              <ButtonGoogle onPress={login} />
             </S.ViewButtonGap>
           </S.ViewFooter>
         </S.ViewContainer>
