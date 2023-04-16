@@ -32,7 +32,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
   useEffect(() => {
     if (response?.type === 'success') {
       setToken(response?.authentication?.accessToken)
-      getUserInfo()
+      token && getUserInfo()
     }
   }, [response, token])
 
@@ -45,7 +45,6 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
       const user = await response.json()
       setUser({ id: user.id })
-      console.log(user)
       setIsLoading(false)
     } catch (error) {
       console.log(error)
