@@ -1,11 +1,11 @@
 import * as S from './styles'
 
-type TimeBoxProps = {
+type Props = {
   distance: number
   time: string
 }
 
-export function TimeBox({ distance, time }: TimeBoxProps) {
+export function TimeBox({ distance, time }: Props) {
   return (
     <S.ViewWrapper>
       <S.ViewColumn>

@@ -7,11 +7,11 @@ import { Card } from 'src/components/Card'
 
 import * as S from './styles'
 
-type BossModalProps = {
+type Props = {
   onPress: () => void
 }
 
-export function BossModal({ onPress }: BossModalProps) {
+export function BossModal({ onPress }: Props) {
   const theme = useTheme()
 
   return (

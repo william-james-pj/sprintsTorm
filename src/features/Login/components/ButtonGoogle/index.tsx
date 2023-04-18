@@ -4,11 +4,11 @@ import GoogleSVG from 'src/assets/svg/google.svg'
 
 import * as S from './styles'
 
-type ButtonGoogleProps = {
+type Props = {
   onPress: () => void
 }
 
-export function ButtonGoogle({ onPress }: ButtonGoogleProps) {
+export function ButtonGoogle({ onPress }: Props) {
   return (
     <S.Wrapper>
       <RectButton onPress={onPress}>

@@ -1,11 +1,11 @@
 import * as S from './styles'
 
-interface EmptyListProps {
+interface Props {
   title: string
   subTitle: string
 }
 
-export function EmptyList({ title, subTitle }: EmptyListProps) {
+export function EmptyList({ title, subTitle }: Props) {
   return (
     <S.ViewWrapper>
       <S.TextTitle>{title}</S.TextTitle>

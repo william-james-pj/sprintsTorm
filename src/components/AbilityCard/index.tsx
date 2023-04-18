@@ -3,11 +3,11 @@ import ShieldSVG from 'src/assets/svg/shield-halved.svg'
 
 import * as S from './styles'
 
-type AbilityCardProps = {
+type Props = {
   type: 'weakness' | 'resistance'
 }
 
-export function AbilityCard({ type }: AbilityCardProps) {
+export function AbilityCard({ type }: Props) {
   return (
     <S.ViewWrapper>
       {type === 'weakness' ? <HeartSVG /> : <ShieldSVG />}
