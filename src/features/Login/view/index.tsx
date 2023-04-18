@@ -8,10 +8,10 @@ import { useAuth } from 'src/hooks/useAuth'
 import * as S from './styles'
 
 export function LoginScreen() {
-  const { promptAsync } = useAuth()
+  const { handleGoogleSignIn } = useAuth()
 
   const login = async () => {
-    await promptAsync()
+    await handleGoogleSignIn()
   }
 
   return (

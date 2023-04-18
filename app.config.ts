@@ -5,6 +5,7 @@ module.exports = {
   expo: {
     name: 'sprintsTorm',
     slug: 'sprintsTorm',
+    scheme: 'sprintsTorm',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
@@ -33,11 +34,9 @@ module.exports = {
     web: {
       favicon: './assets/favicon.png'
     },
-    scheme:
-      '//expo-development-client/?url=https://u.expo.dev/3baaa41a-3722-4972-8a75-951f517c3a09?channel-name=sprintsTorm',
     extra: {
       EXPO_KEY: process.env.EXPO_KEY,
-      ANDROID_KEY: process.env.ANDROID_KEY,
+      REDIRECT_URI: process.env.REDIRECT_URI,
       API_KEY: process.env.FIREBASE_API_KEY,
       AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
       PROJECT_ID: process.env.FIREBASE_PROJECT_ID,

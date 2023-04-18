@@ -1,18 +1,23 @@
-import { AuthRequestPromptOptions, AuthSessionResult } from 'expo-auth-session'
+import * as AuthSession from 'expo-auth-session'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
-import { createContext, ReactNode, useEffect, useState } from 'react'
-
-import * as Google from 'expo-auth-session/providers/google'
+import { createContext, ReactNode, useState } from 'react'
 
 type AuthContextType = {
   user: UserType | undefined
   isLoading: boolean
-  promptAsync: (options?: AuthRequestPromptOptions | undefined) => Promise<AuthSessionResult>
+  handleGoogleSignIn: () => Promise<void>
 }
 
 type AuthContextProviderProps = {
   children: ReactNode
+}
+
+type AuthResponse = {
+  params: {
+    access_token: string
+  }
+  type: string
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -20,32 +25,32 @@ export const AuthContext = createContext({} as AuthContextType)
 WebBrowser.maybeCompleteAuthSession()
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
-  const [token, setToken] = useState<string>()
   const [user, setUser] = useState<UserType>()
   const [isLoading, setIsLoading] = useState(true)
 
-  const [, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: Constants?.manifest?.extra?.ANDROID_KEY,
-    expoClientId: Constants?.manifest?.extra?.EXPO_KEY
-  })
-
-  useEffect(() => {
-    if (response?.type === 'success') {
-      setToken(response?.authentication?.accessToken)
-      token && getUserInfo()
-    }
-  }, [response, token])
-
-  const getUserInfo = async () => {
+  async function handleGoogleSignIn() {
     try {
-      setIsLoading(true)
-      const response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      const CLIENT_ID = Constants?.manifest?.extra?.EXPO_KEY
+      const REDIRECT_URI = Constants?.manifest?.extra?.REDIRECT_URI
+      const SCOPE = encodeURI('profile email')
+      const RESPONSE_TYPE = 'token'
 
-      const user = await response.json()
-      setUser({ id: user.id })
-      setIsLoading(false)
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+
+      const { type, params } = (await AuthSession.startAsync({ authUrl })) as AuthResponse
+
+      if (type === 'success') {
+        const response = await fetch(
+          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`
+        )
+        const userJson = await response.json()
+        setUser({
+          id: userJson.id,
+          email: userJson.email,
+          name: userJson.name,
+          picture: userJson.picture
+        })
+      }
     } catch (error) {
       console.log(error)
     }
@@ -56,7 +61,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
       value={{
         user,
         isLoading,
-        promptAsync
+        handleGoogleSignIn
       }}
     >
       {props.children}
