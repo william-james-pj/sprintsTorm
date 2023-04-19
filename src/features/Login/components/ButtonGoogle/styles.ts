@@ -1,3 +1,4 @@
+import { ActivityIndicator } from 'react-native'
 import styled from 'styled-components/native'
 
 import { fonts } from 'src/styles/fonts'
@@ -27,3 +28,7 @@ export const Title = styled.Text`
 
   margin-left: 16px;
 `
+
+export const Indicator = styled(ActivityIndicator).attrs((props) => ({
+  color: props.theme.colors.primary
+}))``

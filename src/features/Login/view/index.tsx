@@ -8,7 +8,7 @@ import { useAuth } from 'src/hooks/useAuth'
 import * as S from './styles'
 
 export function LoginScreen() {
-  const { handleGoogleSignIn } = useAuth()
+  const { handleGoogleSignIn, isLoading } = useAuth()
 
   const login = async () => {
     await handleGoogleSignIn()
@@ -28,7 +28,7 @@ export function LoginScreen() {
               </S.ViewTextGap>
               <S.ViewButtonGap>
                 <S.TextMessage>Uma vida saudável começa com um passo</S.TextMessage>
-                <ButtonGoogle onPress={login} />
+                <ButtonGoogle onPress={login} isLoading={isLoading} />
               </S.ViewButtonGap>
             </S.ViewFooter>
           </S.ViewContainer>
