@@ -1,33 +1,39 @@
-import { Image } from 'expo-image'
+import { ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import img from 'src/assets/img/welcomeImage.png'
+import BackgroundImg from 'src/assets/img/background.png'
 import { ButtonGoogle } from 'src/features/Login/components/ButtonGoogle'
+import { useAuth } from 'src/hooks/useAuth'
 
 import * as S from './styles'
 
 export function LoginScreen() {
-  return (
-    <S.ViewWrapper>
-      <SafeAreaView style={{ flex: 1 }}>
-        <S.ViewContainer>
-          <S.TextAppName>SprintsTorm.io</S.TextAppName>
+  const { handleGoogleSignIn, isLoading } = useAuth()
 
-          <S.ViewFooter>
-            <S.ImageWrapper>
-              <Image style={{ width: 190, height: 153 }} source={img} contentFit="fill" />
-            </S.ImageWrapper>
-            <S.ViewTextGap>
-              <S.TextSubTitle>Transforme sua corrida em uma aventura com</S.TextSubTitle>
-              <S.TextTitle>SprintsTorm.io</S.TextTitle>
-            </S.ViewTextGap>
-            <S.ViewButtonGap>
-              <S.TextMessage>Uma vida saudável começa com um passo</S.TextMessage>
-              <ButtonGoogle onPress={() => {}} />
-            </S.ViewButtonGap>
-          </S.ViewFooter>
-        </S.ViewContainer>
+  const login = async () => {
+    await handleGoogleSignIn()
+  }
+
+  return (
+    <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <S.ViewWrapper>
+          <S.ViewContainer>
+            <S.TextAppName>SprintsTorm.io</S.TextAppName>
+
+            <S.ViewFooter>
+              <S.ViewTextGap>
+                <S.TextSubTitle>Transforme sua corrida em uma aventura com</S.TextSubTitle>
+                <S.TextTitle>SprintsTorm.io</S.TextTitle>
+              </S.ViewTextGap>
+              <S.ViewButtonGap>
+                <S.TextMessage>Uma vida saudável começa com um passo</S.TextMessage>
+                <ButtonGoogle onPress={login} isLoading={isLoading} />
+              </S.ViewButtonGap>
+            </S.ViewFooter>
+          </S.ViewContainer>
+        </S.ViewWrapper>
       </SafeAreaView>
-    </S.ViewWrapper>
+    </ImageBackground>
   )
 }

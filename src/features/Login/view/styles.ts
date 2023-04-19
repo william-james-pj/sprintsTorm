@@ -3,7 +3,6 @@ import styled from 'styled-components/native'
 import { fonts } from 'src/styles/fonts'
 
 export const ViewWrapper = styled.View`
-  background: ${({ theme }) => theme.colors.background};
   flex: 1;
 
   padding: 32px 24px;

@@ -7,11 +7,11 @@ import ChevronSVG from 'src/assets/svg/chevron-left.svg'
 
 import * as S from './styles'
 
-interface NavBarProps {
+interface Props {
   title: string
 }
 
-export function NavBar({ title }: NavBarProps) {
+export function NavBar({ title }: Props) {
   const navigation = useNavigation()
   const theme = useTheme()
 

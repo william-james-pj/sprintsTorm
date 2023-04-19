@@ -4,12 +4,12 @@ import TrophySVG from 'src/assets/svg/trophy.svg'
 
 import * as S from './styles'
 
-type HomeHeaderProps = {
+type Props = {
   userName: string
   trophy: number
 }
 
-export function HomeHeader({ userName, trophy }: HomeHeaderProps) {
+export function HomeHeader({ userName, trophy }: Props) {
   const theme = useTheme()
 
   return (

@@ -2,12 +2,12 @@ import { TouchableOpacity } from 'react-native'
 
 import * as S from './styles'
 
-type TrackingButtonProps = {
+type Props = {
   title: string
   onPress: () => void
 }
 
-export function TrackingButton({ title, onPress }: TrackingButtonProps) {
+export function TrackingButton({ title, onPress }: Props) {
   return (
     <S.ViewWrapper>
       <TouchableOpacity style={{ flex: 1 }} onPress={onPress}>

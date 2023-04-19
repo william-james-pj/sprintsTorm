@@ -4,11 +4,11 @@ import StarSVG from 'src/assets/svg/star-small.svg'
 
 import * as S from './styles'
 
-type ExperienceProps = {
+type Props = {
   experience: string
 }
 
-export function Experience({ experience }: ExperienceProps) {
+export function Experience({ experience }: Props) {
   const theme = useTheme()
 
   return (

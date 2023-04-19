@@ -6,12 +6,12 @@ import { Coins } from 'src/components/Coins'
 
 import * as S from './styles'
 
-type BattleLevelCellProps = {
+type Props = {
   item: BossType
   onPress: () => void
 }
 
-export function BattleLevelCell({ item, onPress }: BattleLevelCellProps) {
+export function BattleLevelCell({ item, onPress }: Props) {
   return (
     <S.ViewWrapper>
       <S.ViewLevelContainer>

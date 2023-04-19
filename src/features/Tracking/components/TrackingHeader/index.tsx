@@ -6,12 +6,12 @@ import XMarkSVG from 'src/assets/svg/xMark.svg'
 
 import * as S from './styles'
 
-interface TrackingHeaderProps {
+interface Props {
   title: string
   onClose: () => void
 }
 
-export function TrackingHeader({ title, onClose }: TrackingHeaderProps) {
+export function TrackingHeader({ title, onClose }: Props) {
   const theme = useTheme()
 
   return (

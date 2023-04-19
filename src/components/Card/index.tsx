@@ -2,7 +2,7 @@ import { RectButton } from 'react-native-gesture-handler'
 
 import * as S from './styles'
 
-type CardProps = {
+type Props = {
   width?: number
   hideName?: boolean
   hideQtd?: boolean
@@ -16,7 +16,7 @@ export function Card({
   hideQtd = false,
   onPress = () => {},
   qtd = '0'
-}: CardProps) {
+}: Props) {
   return (
     <S.ViewWrapper style={{ width, height: width + 20 }}>
       <RectButton onPress={onPress} style={{ flex: 1, padding: 4 }}>

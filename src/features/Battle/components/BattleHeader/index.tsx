@@ -6,12 +6,12 @@ import XMarkSVG from 'src/assets/svg/xMark.svg'
 
 import * as S from './styles'
 
-interface BattleHeaderProps {
+interface Props {
   title: string
   onClose: () => void
 }
 
-export function BattleHeader({ title, onClose }: BattleHeaderProps) {
+export function BattleHeader({ title, onClose }: Props) {
   const theme = useTheme()
 
   return (

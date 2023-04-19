@@ -14,13 +14,13 @@ import { haversine } from 'src/utils/haversine'
 
 import * as S from './styles'
 
-type TrackingMapProps = {
+type Props = {
   setNewDistance: (newDistance: number) => void
   setWatcher: (newWatcher: LocationSubscription) => void
   isStarted: boolean
 }
 
-export function TrackingMap({ setNewDistance, setWatcher, isStarted }: TrackingMapProps) {
+export function TrackingMap({ setNewDistance, setWatcher, isStarted }: Props) {
   const [oldLocation, setOldLocation] = useState<LocationObject | null>(null)
   const [location, setLocation] = useState<LocationObject | null>(null)
   const [routeCoordinates, setRouteCoordinates] = useState<LatLng[]>([])
