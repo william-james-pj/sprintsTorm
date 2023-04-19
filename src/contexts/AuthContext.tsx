@@ -2,7 +2,7 @@ import * as AuthSession from 'expo-auth-session'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import { GoogleAuthProvider, signInWithCredential, signOut } from 'firebase/auth'
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 
 import { auth } from 'src/services/firebase'
 
@@ -30,7 +30,7 @@ WebBrowser.maybeCompleteAuthSession()
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
   const [user, setUser] = useState<UserType>()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   async function handleGoogleSignIn() {
     try {
@@ -69,27 +69,6 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
       setUser(undefined)
     })
   }
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const { uid, email, displayName, photoURL } = userAuth
-
-        setUser({
-          id: uid,
-          email: email ?? '',
-          name: displayName ?? '',
-          picture: photoURL ?? ''
-        })
-        setIsLoading(false)
-      }
-      setIsLoading(false)
-    })
-
-    return () => {
-      unsubscribe()
-    }
-  }, [])
 
   return (
     <AuthContext.Provider
