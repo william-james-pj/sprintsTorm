@@ -1,12 +1,16 @@
 import * as AuthSession from 'expo-auth-session'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
-import { createContext, ReactNode, useState } from 'react'
+import { GoogleAuthProvider, signInWithCredential, signOut } from 'firebase/auth'
+import { createContext, ReactNode, useEffect, useState } from 'react'
+
+import { auth } from 'src/services/firebase'
 
 type AuthContextType = {
   user: UserType | undefined
   isLoading: boolean
   handleGoogleSignIn: () => Promise<void>
+  logout: () => void
 }
 
 type AuthContextProviderProps = {
@@ -30,6 +34,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
   async function handleGoogleSignIn() {
     try {
+      setIsLoading(true)
       const CLIENT_ID = Constants?.manifest?.extra?.EXPO_KEY
       const REDIRECT_URI = Constants?.manifest?.extra?.REDIRECT_URI
       const SCOPE = encodeURI('profile email')
@@ -38,30 +43,61 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
 
       const { type, params } = (await AuthSession.startAsync({ authUrl })) as AuthResponse
-
       if (type === 'success') {
-        const response = await fetch(
-          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`
-        )
-        const userJson = await response.json()
+        const credential = GoogleAuthProvider.credential(null, params.access_token)
+
+        const userCredential = await signInWithCredential(auth, credential)
+
+        const userFirebase = userCredential.user
+
         setUser({
-          id: userJson.id,
-          email: userJson.email,
-          name: userJson.name,
-          picture: userJson.picture
+          id: userFirebase.uid,
+          email: userFirebase.email ?? '',
+          name: userFirebase.displayName ?? '',
+          picture: userFirebase.photoURL ?? ''
         })
       }
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
     }
   }
+
+  function logout() {
+    signOut(auth).then(() => {
+      setUser(undefined)
+    })
+  }
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const { uid, email, displayName, photoURL } = userAuth
+
+        setUser({
+          id: uid,
+          email: email ?? '',
+          name: displayName ?? '',
+          picture: photoURL ?? ''
+        })
+        setIsLoading(false)
+      }
+      setIsLoading(false)
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
   return (
     <AuthContext.Provider
       value={{
         user,
         isLoading,
-        handleGoogleSignIn
+        handleGoogleSignIn,
+        logout
       }}
     >
       {props.children}
