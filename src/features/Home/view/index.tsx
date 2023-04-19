@@ -11,12 +11,16 @@ import { UserStatus } from 'src/components/UserStatus'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrainingCell'
+import { useAuth } from 'src/hooks/useAuth'
+import { splitName } from 'src/utils/splitName'
 
 import * as S from './styles'
 
 export function HomeScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
   const theme = useTheme()
+
+  const { user } = useAuth()
 
   return (
     <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
@@ -25,7 +29,7 @@ export function HomeScreen() {
           <S.ViewHeader>
             <UserStatus />
 
-            <HomeHeader userName="UserName" trophy={0} />
+            <HomeHeader userName={splitName(user?.name)} trophy={0} />
           </S.ViewHeader>
 
           <S.ViewContent>
