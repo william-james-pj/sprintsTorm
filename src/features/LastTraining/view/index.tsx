@@ -10,11 +10,11 @@ import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrain
 import * as S from './styles'
 
 export function LastTraining() {
-  const flatList = useRef<FlatList<LastTrainingType>>(null)
+  const flatList = useRef<FlatList<LastTrainingProps>>(null)
 
-  const data: LastTrainingType[] = [{ id: '1' }, { id: '2' }, { id: '3' }]
+  const data: LastTrainingProps[] = [{ id: '1' }, { id: '2' }, { id: '3' }]
 
-  const renderRows = ({ item }: { item: LastTrainingType }) => {
+  const renderRows = ({ item }: { item: LastTrainingProps }) => {
     return <LastTrainingCell />
   }
 
