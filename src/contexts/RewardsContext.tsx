@@ -1,9 +1,11 @@
 import { createContext, ReactNode, useState } from 'react'
 
 import { useAuth } from 'src/hooks/useAuth'
+import { getRewardsRequest, setRewardsRequest } from 'src/services/rewardsService'
 
 type RewardsContextType = {
   rewards: RewardsProps | undefined
+  getRewards: () => void
   isLoading: boolean
 }
 
@@ -18,8 +20,27 @@ export function RewardsContextProvider(props: RewardsContextProviderProps) {
   const [rewards, setRewards] = useState<RewardsProps>()
   const [isLoading, setIsLoading] = useState(false)
 
+  async function getRewards() {
+    if (!user) return
+
+    const auxRewards = await getRewardsRequest(user.id)
+
+    if (auxRewards) {
+      setRewards(auxRewards)
+      return
+    }
+
+    const newRewards: RewardsProps = {
+      xp: 0,
+      coins: 0
+    }
+
+    await setRewardsRequest(user.id, newRewards)
+    setRewards(newRewards)
+  }
+
   return (
-    <RewardsContext.Provider value={{ rewards, isLoading }}>
+    <RewardsContext.Provider value={{ rewards, getRewards, isLoading }}>
       {props.children}
     </RewardsContext.Provider>
   )

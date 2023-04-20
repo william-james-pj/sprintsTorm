@@ -5,7 +5,12 @@ import StarSVG from 'src/assets/svg/star-solid.svg'
 
 import * as S from './styles'
 
-export function UserStatus() {
+type Props = {
+  xp: number
+  coins: number
+}
+
+export function UserStatus({ xp, coins }: Props) {
   const theme = useTheme()
 
   return (
@@ -15,7 +20,7 @@ export function UserStatus() {
           <StarSVG />
 
           <S.ViewStarTextContainer>
-            <S.TextLevelNumber>1</S.TextLevelNumber>
+            <S.TextLevelNumber>{xp}</S.TextLevelNumber>
           </S.ViewStarTextContainer>
         </S.ViewStarContainer>
         <S.ViewXP>
@@ -24,7 +29,7 @@ export function UserStatus() {
       </S.ViewXPContainer>
 
       <S.ViewCoin>
-        <S.TextCoinNumber>200</S.TextCoinNumber>
+        <S.TextCoinNumber>{coins}</S.TextCoinNumber>
         <CoinsSVG fill={theme.colors.primary} />
       </S.ViewCoin>
     </S.ViewWrapper>

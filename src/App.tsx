@@ -6,9 +6,9 @@ import { useCallback } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-// eslint-disable-next-line import/order
 import { AuthContextProvider } from 'src/contexts/AuthContext'
 import { ColorModeContext } from 'src/contexts/ColorModeContext'
+import { RewardsContextProvider } from 'src/contexts/RewardsContext'
 
 import { Routes } from './router'
 
@@ -33,9 +33,11 @@ export default function App() {
       <StatusBar translucent backgroundColor="transparent" style="light" />
       <ColorModeContext>
         <AuthContextProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <Routes />
-          </GestureHandlerRootView>
+          <RewardsContextProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Routes />
+            </GestureHandlerRootView>
+          </RewardsContextProvider>
         </AuthContextProvider>
       </ColorModeContext>
     </SafeAreaProvider>
