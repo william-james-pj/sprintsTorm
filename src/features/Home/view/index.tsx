@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import { useEffect } from 'react'
 import { ImageBackground } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -12,6 +13,7 @@ import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrainingCell'
 import { useAuth } from 'src/hooks/useAuth'
+import { useRewards } from 'src/hooks/useRewards'
 import { splitName } from 'src/utils/splitName'
 
 import * as S from './styles'
@@ -21,13 +23,20 @@ export function HomeScreen() {
   const theme = useTheme()
 
   const { user } = useAuth()
+  const { getRewards, rewards } = useRewards()
+
+  useEffect(() => {
+    getRewards()
+    console.log('HomeScreen')
+    return () => {}
+  }, [])
 
   return (
     <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
       <SafeAreaView style={{ flex: 1 }}>
         <S.ViewWrapper>
           <S.ViewHeader>
-            <UserStatus />
+            <UserStatus coins={rewards?.coins ?? -1} />
 
             <HomeHeader userName={splitName(user?.name)} trophy={0} />
           </S.ViewHeader>

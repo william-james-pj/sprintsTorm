@@ -7,7 +7,7 @@ import { createContext, ReactNode, useState } from 'react'
 import { auth } from 'src/services/firebase'
 
 type AuthContextType = {
-  user: UserType | undefined
+  user: UserProps | undefined
   isLoading: boolean
   handleGoogleSignIn: () => Promise<void>
   logout: () => void
@@ -29,7 +29,7 @@ export const AuthContext = createContext({} as AuthContextType)
 WebBrowser.maybeCompleteAuthSession()
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
-  const [user, setUser] = useState<UserType>()
+  const [user, setUser] = useState<UserProps>()
   const [isLoading, setIsLoading] = useState(false)
 
   async function handleGoogleSignIn() {

@@ -17,13 +17,13 @@ import * as S from './styles'
 export function BattleLevelMap() {
   const navigation = useNavigation<HomeNavigationProp>()
   const theme = useTheme()
-  const flatList = useRef<FlatList<BossType>>(null)
+  const flatList = useRef<FlatList<BossProps>>(null)
 
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
 
-  const data: BossType[] = [
+  const data: BossProps[] = [
     { id: '1', level: 1 },
     { id: '2', level: 2 },
     { id: '3', level: 3 },
@@ -32,7 +32,7 @@ export function BattleLevelMap() {
     { id: '6', level: 6 }
   ]
 
-  const renderRows = ({ item }: { item: BossType }) => {
+  const renderRows = ({ item }: { item: BossProps }) => {
     return <BattleLevelCell item={item} onPress={toggleModal} />
   }
 

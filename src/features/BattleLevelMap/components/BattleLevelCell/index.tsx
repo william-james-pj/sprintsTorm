@@ -7,7 +7,7 @@ import { Coins } from 'src/components/Coins'
 import * as S from './styles'
 
 type Props = {
-  item: BossType
+  item: BossProps
   onPress: () => void
 }
 
