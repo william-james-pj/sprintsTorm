@@ -11,29 +11,37 @@ import HouseSVG from 'src/assets/svg/house-solid.svg'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleLevelCell } from 'src/features/BattleLevelMap/components/BattleLevelCell'
 import { BossModal } from 'src/features/BattleLevelMap/components/BossModal'
+import { useEnemies } from 'src/hooks/useEnemies'
+import { useRewards } from 'src/hooks/useRewards'
 
 import * as S from './styles'
 
 export function BattleLevelMap() {
   const navigation = useNavigation<HomeNavigationProp>()
   const theme = useTheme()
-  const flatList = useRef<FlatList<BossProps>>(null)
+  const flatList = useRef<FlatList<EnemiesProps>>(null)
+
+  const { rewards } = useRewards()
+  const { enemies } = useEnemies()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [indexSelected, setIndexSelected] = useState(0)
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
+  const changeIndex = (index: number) => setIndexSelected(index)
 
-  const data: BossProps[] = [
-    { id: '1', level: 1 },
-    { id: '2', level: 2 },
-    { id: '3', level: 3 },
-    { id: '4', level: 4 },
-    { id: '5', level: 5 },
-    { id: '6', level: 6 }
-  ]
-
-  const renderRows = ({ item }: { item: BossProps }) => {
-    return <BattleLevelCell item={item} onPress={toggleModal} />
+  const renderRows = ({ item }: { item: EnemiesProps }) => {
+    return (
+      <BattleLevelCell
+        isLeveBefore={item.level < (rewards?.currentLevel ?? 0)}
+        isLeveAfter={item.level > (rewards?.currentLevel ?? 1)}
+        item={item}
+        onPress={() => {
+          toggleModal()
+          changeIndex(item.level - 1)
+        }}
+      />
+    )
   }
 
   const renderHeader = () => {
@@ -56,7 +64,7 @@ export function BattleLevelMap() {
               showsVerticalScrollIndicator={false}
               bounces={false}
               removeClippedSubviews={false}
-              data={data}
+              data={enemies}
               renderItem={renderRows}
               keyExtractor={(item) => item.id}
               ItemSeparatorComponent={() => <S.Separator></S.Separator>}
@@ -84,6 +92,7 @@ export function BattleLevelMap() {
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
         <BossModal
+          item={enemies[indexSelected]}
           onPress={() => {
             navigation.navigate('Battle')
             toggleModal()

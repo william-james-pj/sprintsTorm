@@ -21,8 +21,8 @@ export function CardDetails() {
       </S.ViewDetails>
 
       <S.ViewAbility>
-        <AbilityCard type="weakness" />
-        <AbilityCard type="resistance" />
+        <AbilityCard type="weakness" value="" />
+        <AbilityCard type="resistance" value="" />
       </S.ViewAbility>
 
       <S.ViewButton>

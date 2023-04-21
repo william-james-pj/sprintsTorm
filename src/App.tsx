@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { AuthContextProvider } from 'src/contexts/AuthContext'
 import { ColorModeContext } from 'src/contexts/ColorModeContext'
+import { EnemiesContextProvider } from 'src/contexts/EnemiesContext'
 import { RewardsContextProvider } from 'src/contexts/RewardsContext'
 
 import { Routes } from './router'
@@ -34,9 +35,11 @@ export default function App() {
       <ColorModeContext>
         <AuthContextProvider>
           <RewardsContextProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <Routes />
-            </GestureHandlerRootView>
+            <EnemiesContextProvider>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <Routes />
+              </GestureHandlerRootView>
+            </EnemiesContextProvider>
           </RewardsContextProvider>
         </AuthContextProvider>
       </ColorModeContext>

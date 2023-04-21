@@ -8,11 +8,14 @@ import { Card } from 'src/components/Card'
 import { Section } from 'src/components/Section'
 import { UserStatus } from 'src/components/UserStatus'
 import { CardDetails } from 'src/features/Collection/components/CardDetailsModal'
+import { useRewards } from 'src/hooks/useRewards'
 
 import * as S from './styles'
 
 export function CollectionScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const { rewards } = useRewards()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
 
@@ -21,7 +24,7 @@ export function CollectionScreen() {
       <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
         <SafeAreaView style={{ flex: 1 }}>
           <S.ViewWrapper>
-            <UserStatus />
+            <UserStatus coins={rewards?.coins ?? 0} />
             <S.ViewContent>
               <Section title="Coleção de cartas">
                 <S.ViewCardRow>

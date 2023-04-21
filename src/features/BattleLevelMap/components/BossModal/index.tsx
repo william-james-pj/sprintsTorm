@@ -4,21 +4,23 @@ import { useTheme } from 'styled-components'
 import SwordsSVG from 'src/assets/svg/swordsSmall.svg'
 import { AbilityCard } from 'src/components/AbilityCard'
 import { Card } from 'src/components/Card'
+import { getEnemiesTypeName } from 'src/utils/getEnemiesTypeName'
 
 import * as S from './styles'
 
 type Props = {
+  item: EnemiesProps
   onPress: () => void
 }
 
-export function BossModal({ onPress }: Props) {
+export function BossModal({ onPress, item }: Props) {
   const theme = useTheme()
 
   return (
     <S.ViewWrapper style={{ borderTopLeftRadius: 24, borderTopRightRadius: 24 }}>
       <S.ViewDetails>
         <S.ViewTextContainer>
-          <S.TextName>Name</S.TextName>
+          <S.TextName>{item.name}</S.TextName>
           <S.TextDescription>
             Sua agilidade e habilidades de combate são incomparáveis, fazendo dele um dos inimigos
             mais difíceis de se vencer. Derrotá-lo exigirá muita habilidade e estratégia.
@@ -28,8 +30,8 @@ export function BossModal({ onPress }: Props) {
       </S.ViewDetails>
 
       <S.ViewAbility>
-        <AbilityCard type="weakness" />
-        <AbilityCard type="resistance" />
+        <AbilityCard type="weakness" value={getEnemiesTypeName(item.weakness)} />
+        <AbilityCard type="resistance" value={getEnemiesTypeName(item.resistance)} />
       </S.ViewAbility>
 
       <S.ViewButton>
