@@ -6,6 +6,14 @@ type ComponentsProps = {
   isRight: boolean
 }
 
+type BeforeProps = {
+  isLeveBefore: boolean
+}
+
+type AfterProps = {
+  isLeveAfter: boolean
+}
+
 export const ViewWrapper = styled.View`
   width: 100%;
   height: 122px;
@@ -24,8 +32,9 @@ export const ViewLevelContainer = styled.View`
   gap: 8px;
 `
 
-export const ViewLevel = styled.View`
-  background: rgba(64, 75, 93, 0.6);
+export const ViewLevel = styled.View<BeforeProps>`
+  background: ${({ theme, isLeveBefore }) =>
+    isLeveBefore ? theme.colors.primary : 'rgba(64, 75, 93, 0.6)'};
   width: 20px;
   height: 100%;
 `
@@ -54,7 +63,7 @@ export const ViewCard = styled.View`
 export const ViewCardContent = styled.View<ComponentsProps>`
   flex: 1;
 
-  padding: 8px 16px;
+  padding: 0px 16px;
 
   flex-direction: ${({ isRight }) => (isRight ? 'row-reverse' : 'row')};
   align-items: center;

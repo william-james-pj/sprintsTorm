@@ -33,7 +33,7 @@ export function RewardsContextProvider(props: RewardsContextProviderProps) {
     const newRewards: RewardsProps = {
       coins: 0,
       trophy: 0,
-      currentLevel: 0,
+      currentLevel: 1,
       round: 0
     }
 

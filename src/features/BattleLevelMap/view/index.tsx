@@ -11,6 +11,7 @@ import HouseSVG from 'src/assets/svg/house-solid.svg'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleLevelCell } from 'src/features/BattleLevelMap/components/BattleLevelCell'
 import { BossModal } from 'src/features/BattleLevelMap/components/BossModal'
+import { useRewards } from 'src/hooks/useRewards'
 
 import * as S from './styles'
 
@@ -18,6 +19,8 @@ export function BattleLevelMap() {
   const navigation = useNavigation<HomeNavigationProp>()
   const theme = useTheme()
   const flatList = useRef<FlatList<BossProps>>(null)
+
+  const { rewards } = useRewards()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -33,7 +36,14 @@ export function BattleLevelMap() {
   ]
 
   const renderRows = ({ item }: { item: BossProps }) => {
-    return <BattleLevelCell item={item} onPress={toggleModal} />
+    return (
+      <BattleLevelCell
+        isLeveBefore={item.level < (rewards?.currentLevel ?? 0)}
+        isLeveAfter={item.level > (rewards?.currentLevel ?? 1)}
+        item={item}
+        onPress={toggleModal}
+      />
+    )
   }
 
   const renderHeader = () => {

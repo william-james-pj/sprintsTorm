@@ -8,20 +8,26 @@ import * as S from './styles'
 
 type Props = {
   item: BossProps
+  isLeveBefore: boolean
+  isLeveAfter: boolean
   onPress: () => void
 }
 
-export function BattleLevelCell({ item, onPress }: Props) {
+export function BattleLevelCell({ item, onPress, isLeveBefore, isLeveAfter }: Props) {
   return (
     <S.ViewWrapper>
       <S.ViewLevelContainer>
-        <S.ViewLevel style={styles.borderLevel}></S.ViewLevel>
+        <S.ViewLevel isLeveBefore={isLeveBefore} style={styles.borderLevel}></S.ViewLevel>
         <S.TextLevelNumber>{item.level}</S.TextLevelNumber>
       </S.ViewLevelContainer>
 
       <S.ViewContentContainer>
         <S.ViewCard>
-          <RectButton onPress={onPress} style={styles.button}>
+          <RectButton
+            onPress={onPress}
+            style={styles.button}
+            enabled={!isLeveAfter && !isLeveBefore}
+          >
             <S.ViewCardContent isRight={item.level % 2 !== 0}>
               <S.ViewCardContainer>
                 <Card width={60} hideName hideQtd />
