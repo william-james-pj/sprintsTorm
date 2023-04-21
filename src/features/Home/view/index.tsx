@@ -36,7 +36,7 @@ export function HomeScreen() {
       <SafeAreaView style={{ flex: 1 }}>
         <S.ViewWrapper>
           <S.ViewHeader>
-            <UserStatus xp={rewards?.xp ?? -1} coins={rewards?.coins ?? -1} />
+            <UserStatus coins={rewards?.coins ?? -1} />
 
             <HomeHeader userName={splitName(user?.name)} trophy={0} />
           </S.ViewHeader>

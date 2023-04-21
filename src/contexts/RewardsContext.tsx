@@ -31,8 +31,10 @@ export function RewardsContextProvider(props: RewardsContextProviderProps) {
     }
 
     const newRewards: RewardsProps = {
-      xp: 0,
-      coins: 0
+      coins: 0,
+      trophy: 0,
+      currentLevel: 0,
+      round: 0
     }
 
     await setRewardsRequest(user.id, newRewards)

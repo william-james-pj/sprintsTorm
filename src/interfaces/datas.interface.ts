@@ -16,6 +16,8 @@ type UserProps = {
 }
 
 type RewardsProps = {
-  xp: number
   coins: number
+  trophy: number
+  currentLevel: number
+  round: number
 }

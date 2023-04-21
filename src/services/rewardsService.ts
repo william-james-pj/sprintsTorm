@@ -12,7 +12,9 @@ export const getRewardsRequest = async (userId: string): Promise<RewardsProps | 
 
   return {
     coins: data.coins,
-    xp: data.xp
+    trophy: data.trophy,
+    currentLevel: data.currentLevel,
+    round: data.round
   }
 }
 
