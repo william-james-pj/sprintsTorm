@@ -8,23 +8,28 @@ import { Card } from 'src/components/Card'
 import { Section } from 'src/components/Section'
 import { UserStatus } from 'src/components/UserStatus'
 import { CardDetails } from 'src/features/Collection/components/CardDetailsModal'
-import { useRewards } from 'src/hooks/useRewards'
+import { useStatus } from 'src/hooks/useStatus'
 
 import * as S from './styles'
 
 export function CollectionScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const { rewards } = useRewards()
+  const { status } = useStatus()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
+
+  const closeModal = () => {
+    toggleModal()
+    console.log('closeModal')
+  }
 
   return (
     <>
       <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
         <SafeAreaView style={{ flex: 1 }}>
           <S.ViewWrapper>
-            <UserStatus coins={rewards?.coins ?? 0} />
+            <UserStatus coins={status?.coins ?? 0} />
             <S.ViewContent>
               <Section title="Coleção de cartas">
                 <S.ViewCardRow>
@@ -39,10 +44,10 @@ export function CollectionScreen() {
       </ImageBackground>
       <Modal
         isVisible={isModalVisible}
-        onBackButtonPress={toggleModal}
-        onBackdropPress={toggleModal}
+        onBackButtonPress={closeModal}
+        onBackdropPress={closeModal}
         swipeDirection="down"
-        onSwipeComplete={toggleModal}
+        onSwipeComplete={closeModal}
         statusBarTranslucent
         style={{}}
       >

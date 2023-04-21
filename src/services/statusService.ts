@@ -2,8 +2,8 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 import { firestore } from './firebase'
 
-export const getRewardsRequest = async (userId: string): Promise<RewardsProps | undefined> => {
-  const docRef = doc(firestore, 'rewards', userId)
+export const getStatusRequest = async (userId: string): Promise<StatusProps | undefined> => {
+  const docRef = doc(firestore, 'status', userId)
   const docSnap = await getDoc(docRef)
 
   if (!docSnap.exists()) return undefined
@@ -18,6 +18,6 @@ export const getRewardsRequest = async (userId: string): Promise<RewardsProps | 
   }
 }
 
-export const setRewardsRequest = async (userId: string, rewards: RewardsProps): Promise<void> => {
-  await setDoc(doc(firestore, 'rewards', userId), rewards)
+export const setStatusRequest = async (userId: string, status: StatusProps): Promise<void> => {
+  await setDoc(doc(firestore, 'status', userId), status)
 }

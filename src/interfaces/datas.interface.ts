@@ -23,7 +23,7 @@ type UserProps = {
   picture: string
 }
 
-type RewardsProps = {
+type StatusProps = {
   coins: number
   trophy: number
   currentLevel: number

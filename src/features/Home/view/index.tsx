@@ -14,7 +14,7 @@ import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrainingCell'
 import { useAuth } from 'src/hooks/useAuth'
 import { useEnemies } from 'src/hooks/useEnemies'
-import { useRewards } from 'src/hooks/useRewards'
+import { useStatus } from 'src/hooks/useStatus'
 import { splitName } from 'src/utils/splitName'
 
 import * as S from './styles'
@@ -24,11 +24,11 @@ export function HomeScreen() {
   const theme = useTheme()
 
   const { user } = useAuth()
-  const { getRewards, rewards } = useRewards()
+  const { getStatus, status } = useStatus()
   const { getEnemies } = useEnemies()
 
   useEffect(() => {
-    Promise.all([getRewards(), getEnemies()])
+    Promise.all([getStatus(), getEnemies()])
     console.log('HomeScreen')
     return () => {}
   }, [])
@@ -38,7 +38,7 @@ export function HomeScreen() {
       <SafeAreaView style={{ flex: 1 }}>
         <S.ViewWrapper>
           <S.ViewHeader>
-            <UserStatus coins={rewards?.coins ?? -1} />
+            <UserStatus coins={status?.coins ?? -1} />
 
             <HomeHeader userName={splitName(user?.name)} trophy={0} />
           </S.ViewHeader>

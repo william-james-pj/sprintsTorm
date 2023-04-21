@@ -12,7 +12,7 @@ import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleLevelCell } from 'src/features/BattleLevelMap/components/BattleLevelCell'
 import { BossModal } from 'src/features/BattleLevelMap/components/BossModal'
 import { useEnemies } from 'src/hooks/useEnemies'
-import { useRewards } from 'src/hooks/useRewards'
+import { useStatus } from 'src/hooks/useStatus'
 
 import * as S from './styles'
 
@@ -21,7 +21,7 @@ export function BattleLevelMap() {
   const theme = useTheme()
   const flatList = useRef<FlatList<EnemiesProps>>(null)
 
-  const { rewards } = useRewards()
+  const { status } = useStatus()
   const { enemies } = useEnemies()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -33,8 +33,8 @@ export function BattleLevelMap() {
   const renderRows = ({ item }: { item: EnemiesProps }) => {
     return (
       <BattleLevelCell
-        isLeveBefore={item.level < (rewards?.currentLevel ?? 0)}
-        isLeveAfter={item.level > (rewards?.currentLevel ?? 1)}
+        isLeveBefore={item.level < (status?.currentLevel ?? 0)}
+        isLeveAfter={item.level > (status?.currentLevel ?? 1)}
         item={item}
         onPress={() => {
           toggleModal()
