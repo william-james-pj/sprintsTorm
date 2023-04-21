@@ -5,6 +5,7 @@ type LastTrainingProps = {
 
 type EnemiesProps = {
   id: string
+  life: number
   level: number
   name: string
   resistance: ResistanceTypeProps

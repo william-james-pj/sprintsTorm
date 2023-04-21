@@ -13,6 +13,7 @@ export const getEnemiesRequest = async (): Promise<EnemiesProps[]> => {
 
     enemies.push({
       id: doc.id,
+      life: data.life,
       level: data.level,
       name: data.name,
       resistance: data.resistance,
