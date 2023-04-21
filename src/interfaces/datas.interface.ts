@@ -3,9 +3,10 @@ type LastTrainingProps = {
   id: string
 }
 
-type BossProps = {
+type EnemiesProps = {
   id: string
   level: number
+  name: string
 }
 
 type UserProps = {

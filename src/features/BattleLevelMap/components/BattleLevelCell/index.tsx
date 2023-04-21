@@ -7,7 +7,7 @@ import { Coins } from 'src/components/Coins'
 import * as S from './styles'
 
 type Props = {
-  item: BossProps
+  item: EnemiesProps
   isLeveBefore: boolean
   isLeveAfter: boolean
   onPress: () => void
@@ -34,7 +34,7 @@ export function BattleLevelCell({ item, onPress, isLeveBefore, isLeveAfter }: Pr
               </S.ViewCardContainer>
 
               <S.ViewTextContainer isRight={item.level % 2 !== 0}>
-                <S.TextTitle>Chefão X</S.TextTitle>
+                <S.TextTitle>{item.name}</S.TextTitle>
                 <S.TextDescription isRight={item.level % 2 !== 0}>
                   Sua agilidade e habilidades de combate são incomparáveis
                 </S.TextDescription>

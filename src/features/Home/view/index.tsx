@@ -13,6 +13,7 @@ import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrainingCell'
 import { useAuth } from 'src/hooks/useAuth'
+import { useEnemies } from 'src/hooks/useEnemies'
 import { useRewards } from 'src/hooks/useRewards'
 import { splitName } from 'src/utils/splitName'
 
@@ -24,9 +25,10 @@ export function HomeScreen() {
 
   const { user } = useAuth()
   const { getRewards, rewards } = useRewards()
+  const { getEnemies } = useEnemies()
 
   useEffect(() => {
-    getRewards()
+    Promise.all([getRewards(), getEnemies()])
     console.log('HomeScreen')
     return () => {}
   }, [])
