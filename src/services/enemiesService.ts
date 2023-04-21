@@ -14,7 +14,9 @@ export const getEnemiesRequest = async (): Promise<EnemiesProps[]> => {
     enemies.push({
       id: doc.id,
       level: data.level,
-      name: data.name
+      name: data.name,
+      resistance: data.resistance,
+      weakness: data.weakness
     })
   })
 

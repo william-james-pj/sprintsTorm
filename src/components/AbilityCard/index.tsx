@@ -5,15 +5,16 @@ import * as S from './styles'
 
 type Props = {
   type: 'weakness' | 'resistance'
+  value: string
 }
 
-export function AbilityCard({ type }: Props) {
+export function AbilityCard({ type, value }: Props) {
   return (
     <S.ViewWrapper>
       {type === 'weakness' ? <HeartSVG /> : <ShieldSVG />}
       <S.ViewTextContainer>
         <S.TextTitle>{type === 'weakness' ? 'Fraqueza' : 'Resistência'}</S.TextTitle>
-        <S.TextText>SomoWeakness</S.TextText>
+        <S.TextText>{value}</S.TextText>
       </S.ViewTextContainer>
     </S.ViewWrapper>
   )
