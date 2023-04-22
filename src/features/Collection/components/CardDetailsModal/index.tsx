@@ -2,7 +2,9 @@ import { TouchableOpacity } from 'react-native'
 
 import { AbilityCard } from 'src/components/AbilityCard'
 import { Card } from 'src/components/Card'
+import { ClassTypeCard } from 'src/components/ClassTypeCard'
 import { Coins } from 'src/components/Coins'
+import { baseDamageValue } from 'src/constants/baseDamageValue'
 import { coinBaseValue } from 'src/constants/coinBaseValue'
 import { useWarriors } from 'src/hooks/useWarriors'
 
@@ -30,8 +32,8 @@ export function CardDetails({ onBuy, item }: Props) {
       </S.ViewDetails>
 
       <S.ViewAbility>
-        <AbilityCard type="class" value="" />
-        <AbilityCard type="resistance" value="" />
+        <ClassTypeCard type={item.ability} />
+        <AbilityCard type="damage" value={`${baseDamageValue}`} />
       </S.ViewAbility>
 
       <S.ViewButton>
