@@ -17,7 +17,7 @@ export function CollectionScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [indexSelected, setIndexSelected] = useState(0)
 
-  const { status, updateStatus } = useStatus()
+  const { updateStatus } = useStatus()
   const { warriors, userArmy, buyWarrior, updateUserArmy } = useWarriors()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
@@ -45,24 +45,14 @@ export function CollectionScreen() {
             <S.ViewContent>
               <Section title="Coleção de cartas">
                 <S.ViewCardRow>
-                  <Card
-                    key={warriors[0].id}
-                    onPress={() => opemModal(0)}
-                    item={warriors[0]}
-                    qtd={userArmy?.archer}
-                  />
-                  <Card
-                    key={warriors[1].id}
-                    onPress={() => opemModal(1)}
-                    item={warriors[1]}
-                    qtd={userArmy?.mage}
-                  />
-                  <Card
-                    key={warriors[2].id}
-                    onPress={() => opemModal(2)}
-                    item={warriors[2]}
-                    qtd={userArmy?.warrior}
-                  />
+                  {warriors.map((warrior, index) => (
+                    <Card
+                      key={warrior.id}
+                      onPress={() => opemModal(index)}
+                      item={warrior}
+                      qtd={userArmy ? userArmy[warrior.ability] : 0}
+                    />
+                  ))}
                 </S.ViewCardRow>
               </Section>
             </S.ViewContent>

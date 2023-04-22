@@ -7,11 +7,15 @@ import { Card } from 'src/components/Card'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleHeader } from 'src/features/Battle/components/BattleHeader'
 import { LifeBar } from 'src/features/Battle/components/LifeBar'
+import { useWarriors } from 'src/hooks/useWarriors'
 
 import * as S from './styles'
 
 export function BattleScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
+
+  const { warriors, userArmy } = useWarriors()
+
   return (
     <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -29,9 +33,14 @@ export function BattleScreen() {
           <S.ViewFooter>
             <S.ViewCardsContainer style={{ borderTopStartRadius: 16 }}>
               <S.ViewCards>
-                <Card width={80} />
-                <Card width={80} />
-                <Card width={80} />
+                {warriors.map((warrior) => (
+                  <Card
+                    width={80}
+                    key={warrior.id}
+                    item={warrior}
+                    qtd={userArmy ? userArmy[warrior.ability] : 0}
+                  />
+                ))}
               </S.ViewCards>
             </S.ViewCardsContainer>
           </S.ViewFooter>

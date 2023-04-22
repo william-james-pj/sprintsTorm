@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native'
 import { AbilityCard } from 'src/components/AbilityCard'
 import { Card } from 'src/components/Card'
 import { Coins } from 'src/components/Coins'
+import { coinBaseValue } from 'src/constants/coinBaseValue'
 import { useWarriors } from 'src/hooks/useWarriors'
 
 import * as S from './styles'
@@ -29,14 +30,14 @@ export function CardDetails({ onBuy, item }: Props) {
       </S.ViewDetails>
 
       <S.ViewAbility>
-        <AbilityCard type="weakness" value="" />
+        <AbilityCard type="class" value="" />
         <AbilityCard type="resistance" value="" />
       </S.ViewAbility>
 
       <S.ViewButton>
         <TouchableOpacity style={{ width: '100%' }} onPress={() => onBuy(item.ability)}>
           <S.ViewButtonContent>
-            <Coins coin={'50'} />
+            <Coins coin={`${coinBaseValue}`} />
           </S.ViewButtonContent>
         </TouchableOpacity>
       </S.ViewButton>
