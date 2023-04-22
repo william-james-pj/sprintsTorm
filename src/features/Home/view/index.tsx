@@ -25,12 +25,12 @@ export function HomeScreen() {
   const theme = useTheme()
 
   const { user } = useAuth()
-  const { getStatus, status } = useStatus()
+  const { getStatus } = useStatus()
   const { getEnemies } = useEnemies()
-  const { getWarriors } = useWarriors()
+  const { getWarriors, getUserWarriors } = useWarriors()
 
   useEffect(() => {
-    Promise.all([getStatus(), getEnemies(), getWarriors()])
+    Promise.all([getStatus(), getEnemies(), getWarriors(), getUserWarriors()])
     console.log('HomeScreen')
     return () => {}
   }, [])
@@ -40,7 +40,7 @@ export function HomeScreen() {
       <SafeAreaView style={{ flex: 1 }}>
         <S.ViewWrapper>
           <S.ViewHeader>
-            <UserStatus coins={status?.coins ?? -1} />
+            <UserStatus />
 
             <HomeHeader userName={splitName(user?.name)} trophy={0} />
           </S.ViewHeader>

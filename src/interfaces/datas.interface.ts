@@ -11,6 +11,12 @@ type WarriorsProps = {
 
 type WarriorsTypeProps = 'warrior' | 'mage' | 'archer'
 
+type UserArmyProps = {
+  warrior: number
+  mage: number
+  archer: number
+}
+
 type EnemiesProps = {
   id: string
   life: number

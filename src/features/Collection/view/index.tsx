@@ -15,15 +15,25 @@ import * as S from './styles'
 
 export function CollectionScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [indexSelected, setIndexSelected] = useState(0)
 
-  const { status } = useStatus()
-  const { warriors } = useWarriors()
+  const { status, updateStatus } = useStatus()
+  const { warriors, userArmy, buyWarrior, updateUserArmy } = useWarriors()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
 
   const closeModal = () => {
     toggleModal()
-    console.log('closeModal')
+    Promise.all([updateStatus(), updateUserArmy()])
+  }
+
+  const opemModal = (index: number) => {
+    setIndexSelected(index)
+    toggleModal()
+  }
+
+  const handleBuy = (type: WarriorsTypeProps) => {
+    buyWarrior(type)
   }
 
   return (
@@ -31,13 +41,28 @@ export function CollectionScreen() {
       <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
         <SafeAreaView style={{ flex: 1 }}>
           <S.ViewWrapper>
-            <UserStatus coins={status?.coins ?? 0} />
+            <UserStatus />
             <S.ViewContent>
               <Section title="Coleção de cartas">
                 <S.ViewCardRow>
-                  {warriors.map((warrior) => (
-                    <Card key={warrior.id} onPress={toggleModal} item={warrior} />
-                  ))}
+                  <Card
+                    key={warriors[0].id}
+                    onPress={() => opemModal(0)}
+                    item={warriors[0]}
+                    qtd={userArmy?.archer}
+                  />
+                  <Card
+                    key={warriors[1].id}
+                    onPress={() => opemModal(1)}
+                    item={warriors[1]}
+                    qtd={userArmy?.mage}
+                  />
+                  <Card
+                    key={warriors[2].id}
+                    onPress={() => opemModal(2)}
+                    item={warriors[2]}
+                    qtd={userArmy?.warrior}
+                  />
                 </S.ViewCardRow>
               </Section>
             </S.ViewContent>
@@ -53,7 +78,7 @@ export function CollectionScreen() {
         statusBarTranslucent
         style={{}}
       >
-        <CardDetails />
+        <CardDetails onBuy={handleBuy} item={warriors[indexSelected]} />
       </Modal>
     </>
   )
