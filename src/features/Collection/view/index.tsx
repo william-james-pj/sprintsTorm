@@ -9,6 +9,7 @@ import { Section } from 'src/components/Section'
 import { UserStatus } from 'src/components/UserStatus'
 import { CardDetails } from 'src/features/Collection/components/CardDetailsModal'
 import { useStatus } from 'src/hooks/useStatus'
+import { useWarriors } from 'src/hooks/useWarriors'
 
 import * as S from './styles'
 
@@ -16,6 +17,7 @@ export function CollectionScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const { status } = useStatus()
+  const { warriors } = useWarriors()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
 
@@ -33,9 +35,9 @@ export function CollectionScreen() {
             <S.ViewContent>
               <Section title="Coleção de cartas">
                 <S.ViewCardRow>
-                  <Card onPress={toggleModal} />
-                  <Card onPress={toggleModal} />
-                  <Card onPress={toggleModal} />
+                  {warriors.map((warrior) => (
+                    <Card key={warrior.id} onPress={toggleModal} item={warrior} />
+                  ))}
                 </S.ViewCardRow>
               </Section>
             </S.ViewContent>

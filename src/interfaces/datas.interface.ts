@@ -3,6 +3,14 @@ type LastTrainingProps = {
   id: string
 }
 
+type WarriorsProps = {
+  id: string
+  name: string
+  ability: WarriorsTypeProps
+}
+
+type WarriorsTypeProps = 'warrior' | 'mage' | 'archer'
+
 type EnemiesProps = {
   id: string
   life: number

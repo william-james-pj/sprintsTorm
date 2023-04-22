@@ -15,6 +15,7 @@ import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrain
 import { useAuth } from 'src/hooks/useAuth'
 import { useEnemies } from 'src/hooks/useEnemies'
 import { useStatus } from 'src/hooks/useStatus'
+import { useWarriors } from 'src/hooks/useWarriors'
 import { splitName } from 'src/utils/splitName'
 
 import * as S from './styles'
@@ -26,9 +27,10 @@ export function HomeScreen() {
   const { user } = useAuth()
   const { getStatus, status } = useStatus()
   const { getEnemies } = useEnemies()
+  const { getWarriors } = useWarriors()
 
   useEffect(() => {
-    Promise.all([getStatus(), getEnemies()])
+    Promise.all([getStatus(), getEnemies(), getWarriors()])
     console.log('HomeScreen')
     return () => {}
   }, [])

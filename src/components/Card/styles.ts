@@ -2,16 +2,21 @@ import styled from 'styled-components/native'
 
 import { fonts } from 'src/styles/fonts'
 
-export const ViewWrapper = styled.View`
+type DisabledProps = {
+  isDisabled: boolean
+}
+
+export const ViewWrapper = styled.View<DisabledProps>`
   background: ${({ theme }) => theme.colors.card};
 
   border-radius: 8px;
   border: 2px solid;
-  border-color: ${({ theme }) => theme.colors.primary};
+  border-color: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.disabled : theme.colors.primary};
 `
 
 export const ViewContent = styled.View`
-  background: ${({ theme }) => theme.colors.disabled};
+  background: rgba(217, 217, 217, 1);
   flex: 1;
 
   border-radius: 4px;
@@ -19,8 +24,9 @@ export const ViewContent = styled.View`
   overflow: hidden;
 `
 
-export const ViewNameContainer = styled.View`
-  background: ${({ theme }) => theme.colors.primary};
+export const ViewNameContainer = styled.View<DisabledProps>`
+  background: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.disabled : theme.colors.primary};
   width: 100%;
 
   padding: 2px 0px;
@@ -40,8 +46,9 @@ export const TextName = styled.Text`
   text-align: center;
 `
 
-export const ViewQtdContainer = styled.View`
-  background: ${({ theme }) => theme.colors.primary};
+export const ViewQtdContainer = styled.View<DisabledProps>`
+  background: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.disabled : theme.colors.primary};
 
   padding: 2px 6px;
 

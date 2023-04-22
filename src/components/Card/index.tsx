@@ -6,7 +6,8 @@ type Props = {
   width?: number
   hideName?: boolean
   hideQtd?: boolean
-  qtd?: string
+  qtd?: number
+  item?: WarriorsProps
   onPress?: () => void
 }
 
@@ -15,21 +16,22 @@ export function Card({
   hideName = false,
   hideQtd = false,
   onPress = () => {},
-  qtd = '0'
+  qtd = 0,
+  item
 }: Props) {
   return (
-    <S.ViewWrapper style={{ width, height: width + 20 }}>
+    <S.ViewWrapper style={{ width, height: width + 20 }} isDisabled={qtd === 0}>
       <RectButton onPress={onPress} style={{ flex: 1, padding: 4 }}>
         <S.ViewContent>
           {!hideQtd && (
-            <S.ViewQtdContainer style={{ borderBottomStartRadius: 4 }}>
+            <S.ViewQtdContainer style={{ borderBottomStartRadius: 4 }} isDisabled={qtd === 0}>
               <S.TextQtd>{qtd}</S.TextQtd>
             </S.ViewQtdContainer>
           )}
 
           {!hideName && (
-            <S.ViewNameContainer>
-              <S.TextName>Name</S.TextName>
+            <S.ViewNameContainer isDisabled={qtd === 0}>
+              <S.TextName>{item?.name}</S.TextName>
             </S.ViewNameContainer>
           )}
         </S.ViewContent>
