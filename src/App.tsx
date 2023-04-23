@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { AuthContextProvider } from 'src/contexts/AuthContext'
+import { BattleContextProvider } from 'src/contexts/BattleContext'
 import { ColorModeContext } from 'src/contexts/ColorModeContext'
 import { EnemiesContextProvider } from 'src/contexts/EnemiesContext'
 import { StatusContextProvider } from 'src/contexts/StatusContext'
@@ -38,9 +39,11 @@ export default function App() {
           <StatusContextProvider>
             <EnemiesContextProvider>
               <WarriorsContextProvider>
-                <GestureHandlerRootView style={{ flex: 1 }}>
-                  <Routes />
-                </GestureHandlerRootView>
+                <BattleContextProvider>
+                  <GestureHandlerRootView style={{ flex: 1 }}>
+                    <Routes />
+                  </GestureHandlerRootView>
+                </BattleContextProvider>
               </WarriorsContextProvider>
             </EnemiesContextProvider>
           </StatusContextProvider>

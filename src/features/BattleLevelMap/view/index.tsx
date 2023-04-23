@@ -11,6 +11,7 @@ import HouseSVG from 'src/assets/svg/house-solid.svg'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleLevelCell } from 'src/features/BattleLevelMap/components/BattleLevelCell'
 import { BossModal } from 'src/features/BattleLevelMap/components/BossModal'
+import { useBattle } from 'src/hooks/useBattle'
 import { useEnemies } from 'src/hooks/useEnemies'
 import { useStatus } from 'src/hooks/useStatus'
 
@@ -23,6 +24,7 @@ export function BattleLevelMap() {
 
   const { status } = useStatus()
   const { enemies } = useEnemies()
+  const { selectEnemy } = useBattle()
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [indexSelected, setIndexSelected] = useState(0)
@@ -33,8 +35,10 @@ export function BattleLevelMap() {
   const renderRows = ({ item }: { item: EnemiesProps }) => {
     return (
       <BattleLevelCell
-        isLeveBefore={item.level < (status?.currentLevel ?? 0)}
-        isLeveAfter={item.level > (status?.currentLevel ?? 1)}
+        // isLeveBefore={item.level < (status?.currentLevel ?? 0)}
+        isLeveBefore={false}
+        // isLeveAfter={item.level > (status?.currentLevel ?? 1)}
+        isLeveAfter={false}
         item={item}
         onPress={() => {
           toggleModal()
@@ -94,6 +98,7 @@ export function BattleLevelMap() {
         <BossModal
           item={enemies[indexSelected]}
           onPress={() => {
+            selectEnemy(enemies[indexSelected])
             navigation.navigate('Battle')
             toggleModal()
           }}

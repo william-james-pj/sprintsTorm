@@ -8,6 +8,7 @@ type Props = {
   hideQtd?: boolean
   qtd?: number
   item?: WarriorsProps
+  enemy?: EnemiesProps
   onPress?: () => void
 }
 
@@ -17,6 +18,7 @@ export function Card({
   hideQtd = false,
   onPress = () => {},
   qtd = 0,
+  enemy,
   item
 }: Props) {
   return (
@@ -31,7 +33,7 @@ export function Card({
 
           {!hideName && (
             <S.ViewNameContainer isDisabled={qtd === 0}>
-              <S.TextName>{item?.name}</S.TextName>
+              <S.TextName>{item?.name ?? enemy?.name}</S.TextName>
             </S.ViewNameContainer>
           )}
         </S.ViewContent>

@@ -32,7 +32,7 @@ export function CollectionScreen() {
     toggleModal()
   }
 
-  const handleBuy = (type: WarriorsTypeProps) => {
+  const handleBuy = (type: WarriorAbilityTypeProps) => {
     buyWarrior(type)
   }
 

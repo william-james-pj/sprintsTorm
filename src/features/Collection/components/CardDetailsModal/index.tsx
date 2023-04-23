@@ -11,7 +11,7 @@ import { useWarriors } from 'src/hooks/useWarriors'
 import * as S from './styles'
 
 type Props = {
-  onBuy: (type: WarriorsTypeProps) => void
+  onBuy: (type: WarriorAbilityTypeProps) => void
   item: WarriorsProps
 }
 

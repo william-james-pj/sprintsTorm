@@ -5,7 +5,7 @@ import SwordSVG from 'src/assets/svg/sword.svg'
 import * as S from './styles'
 
 type Props = {
-  type: WarriorsTypeProps
+  type: WarriorAbilityTypeProps | EnemyAbilityTypeProps
 }
 
 export function ClassTypeCard({ type }: Props) {

@@ -15,7 +15,7 @@ type WarriorsContextType = {
   getWarriors: () => Promise<void>
   getUserWarriors: () => Promise<void>
   updateUserArmy: () => Promise<void>
-  buyWarrior: (type: WarriorsTypeProps) => void
+  buyWarrior: (type: WarriorAbilityTypeProps) => void
 }
 
 type WarriorsContextProviderProps = {
@@ -55,7 +55,7 @@ export function WarriorsContextProvider(props: WarriorsContextProviderProps) {
     setUserArmy(newUserArmy)
   }
 
-  function buyWarrior(type: WarriorsTypeProps) {
+  function buyWarrior(type: WarriorAbilityTypeProps) {
     if (!status || !userArmy) return
     if (status.coins - coinBaseValue < 0) return
 

@@ -4,7 +4,8 @@ import { useTheme } from 'styled-components'
 import SwordsSVG from 'src/assets/svg/swordsSmall.svg'
 import { AbilityCard } from 'src/components/AbilityCard'
 import { Card } from 'src/components/Card'
-import { getEnemiesTypeName } from 'src/utils/getEnemiesTypeName'
+import { ClassTypeCard } from 'src/components/ClassTypeCard'
+import { getEnemiesWeaknessName } from 'src/utils/getEnemiesWeaknessName'
 
 import * as S from './styles'
 
@@ -30,8 +31,8 @@ export function BossModal({ onPress, item }: Props) {
       </S.ViewDetails>
 
       <S.ViewAbility>
-        <AbilityCard type="weakness" value={getEnemiesTypeName(item.weakness)} />
-        <AbilityCard type="resistance" value={getEnemiesTypeName(item.resistance)} />
+        <ClassTypeCard type={item.ability} />
+        <AbilityCard type="weakness" value={getEnemiesWeaknessName(item.ability)} />
       </S.ViewAbility>
 
       <S.ViewButton>
