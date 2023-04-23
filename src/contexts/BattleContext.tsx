@@ -4,6 +4,7 @@ import { baseDamageValue } from 'src/constants/baseDamageValue'
 import { useAuth } from 'src/hooks/useAuth'
 import { useStatus } from 'src/hooks/useStatus'
 import { useWarriors } from 'src/hooks/useWarriors'
+import { getBattleLevelRequest, setBattleLevelRequest } from 'src/services/battleService'
 import { checkEnemyWeakness } from 'src/utils/checkEnemyWeakness'
 
 type BattleContextType = {
@@ -11,8 +12,10 @@ type BattleContextType = {
   totalLife: number
   currentLife: number
   lastDamage: number | undefined
-  selectEnemy: (enemy: EnemiesProps) => void
+  isLoadingBattle: boolean
+  selectEnemy: (enemy: EnemiesProps) => Promise<void>
   handleBattle: (warrior: WarriorsProps) => void
+  saveBattleLevel: () => Promise<void>
 }
 
 type BattleContextProviderProps = {
@@ -31,15 +34,23 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
   const [currentLife, setCurrentLife] = useState(0)
   const [lastDamage, setLastDamage] = useState<number>()
 
-  function selectEnemy(enemy: EnemiesProps) {
-    if (!status) return
+  const [isLoadingBattle, setIsLoadingBattle] = useState(false)
 
-    setEnemy(enemy)
+  async function selectEnemy(enemy: EnemiesProps) {
+    if (!user || !status) return
+    setIsLoadingBattle(true)
+    setLastDamage(undefined)
 
+    const lastBattleLevel = await getBattleLevelRequest(user.id)
     const life = calculateTotalLife(enemy.life, status.round)
 
+    setEnemy(enemy)
     setTotalLife(life)
-    setCurrentLife(life)
+
+    if (lastBattleLevel?.level === enemy.level) {
+      setCurrentLife(lastBattleLevel.currentLife)
+    } else setCurrentLife(life)
+    setIsLoadingBattle(false)
   }
 
   function handleBattle(warrior: WarriorsProps) {
@@ -54,6 +65,13 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
 
     lostWarrior(warrior.ability)
     setLastDamage(damage)
+  }
+
+  async function saveBattleLevel() {
+    if (!user || !enemy) return
+
+    const mapLevel: BattleLevelProps = { level: enemy?.level, currentLife }
+    await setBattleLevelRequest(user.id, mapLevel)
   }
 
   // private functions
@@ -72,7 +90,16 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
 
   return (
     <BattleContext.Provider
-      value={{ enemy, totalLife, currentLife, lastDamage, selectEnemy, handleBattle }}
+      value={{
+        enemy,
+        totalLife,
+        currentLife,
+        lastDamage,
+        isLoadingBattle,
+        selectEnemy,
+        handleBattle,
+        saveBattleLevel
+      }}
     >
       {props.children}
     </BattleContext.Provider>

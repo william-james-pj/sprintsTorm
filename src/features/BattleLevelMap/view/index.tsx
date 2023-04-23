@@ -35,10 +35,8 @@ export function BattleLevelMap() {
   const renderRows = ({ item }: { item: EnemiesProps }) => {
     return (
       <BattleLevelCell
-        // isLeveBefore={item.level < (status?.currentLevel ?? 0)}
-        isLeveBefore={false}
-        // isLeveAfter={item.level > (status?.currentLevel ?? 1)}
-        isLeveAfter={false}
+        isLeveBefore={item.level < (status?.currentLevel ?? 0)}
+        isLeveAfter={item.level > (status?.currentLevel ?? 1)}
         item={item}
         onPress={() => {
           toggleModal()
@@ -97,8 +95,8 @@ export function BattleLevelMap() {
       >
         <BossModal
           item={enemies[indexSelected]}
-          onPress={() => {
-            selectEnemy(enemies[indexSelected])
+          onPress={async () => {
+            await selectEnemy(enemies[indexSelected])
             navigation.navigate('Battle')
             toggleModal()
           }}

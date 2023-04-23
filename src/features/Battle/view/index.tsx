@@ -17,7 +17,7 @@ export function BattleScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
 
   const { warriors, userArmy, updateUserArmy } = useWarriors()
-  const { enemy, totalLife, currentLife, handleBattle, lastDamage } = useBattle()
+  const { enemy, totalLife, currentLife, handleBattle, lastDamage, saveBattleLevel } = useBattle()
 
   const selectWarrior = (warrior: WarriorsProps) => {
     handleBattle(warrior)
@@ -26,6 +26,7 @@ export function BattleScreen() {
 
   const debouncedRequest = useDebounce(() => {
     updateUserArmy()
+    saveBattleLevel()
   })
 
   return (
