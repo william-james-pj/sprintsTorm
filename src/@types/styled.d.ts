@@ -15,6 +15,7 @@ declare module 'styled-components' {
 
       exp: string
       coin: string
+      life: string
 
       green: string
     }

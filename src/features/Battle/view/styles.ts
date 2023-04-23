@@ -57,9 +57,19 @@ export const ViewCards = styled.View`
   bottom: 16px;
 `
 
-export const TextAppName = styled.Text`
-  color: ${({ theme }) => theme.colors.text};
-  font-size: ${fonts.size.sm};
+export const ViewLastDamage = styled.View`
+  background: ${({ theme }) => theme.colors.background};
+
+  padding: 4px 8px;
+  border-radius: 4px;
+
+  justify-content: center;
+  align-items: center;
+`
+
+export const TextLastDamage = styled.Text`
+  color: ${({ theme }) => theme.colors.life};
+  font-size: 8px;
   font-family: ${fonts.type.text600};
   text-align: center;
 `

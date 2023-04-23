@@ -16,7 +16,7 @@ export function BattleScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
 
   const { warriors, userArmy } = useWarriors()
-  const { enemy, totalLife, currentLife, handleBattle } = useBattle()
+  const { enemy, totalLife, currentLife, handleBattle, lastDamage } = useBattle()
 
   const selectWarrior = (warrior: WarriorsProps) => {
     handleBattle(warrior)
@@ -27,12 +27,18 @@ export function BattleScreen() {
       <SafeAreaView style={{ flex: 1 }}>
         <S.ViewWrapper>
           <S.ViewHeader>
-            <BattleHeader title="Level 1" onClose={() => navigation.goBack()} />
+            <BattleHeader title={`Level ${enemy?.level}`} onClose={() => navigation.goBack()} />
 
             <S.ViewBoss>
               <Card width={140} hideQtd qtd={1} enemy={enemy ?? undefined} />
 
               <LifeBar currentLife={currentLife} life={totalLife} />
+
+              {lastDamage && (
+                <S.ViewLastDamage>
+                  <S.TextLastDamage>{`-${lastDamage}`}</S.TextLastDamage>
+                </S.ViewLastDamage>
+              )}
             </S.ViewBoss>
           </S.ViewHeader>
 

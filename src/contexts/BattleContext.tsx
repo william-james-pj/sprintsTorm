@@ -10,6 +10,7 @@ type BattleContextType = {
   enemy: EnemiesProps | undefined
   totalLife: number
   currentLife: number
+  lastDamage: number | undefined
   selectEnemy: (enemy: EnemiesProps) => void
   handleBattle: (warrior: WarriorsProps) => void
 }
@@ -25,8 +26,10 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
   const { status } = useStatus()
   const { lostWarrior } = useWarriors()
   const [enemy, setEnemy] = useState<EnemiesProps>()
+
   const [totalLife, setTotalLife] = useState(0)
   const [currentLife, setCurrentLife] = useState(0)
+  const [lastDamage, setLastDamage] = useState<number>()
 
   function selectEnemy(enemy: EnemiesProps) {
     if (!status) return
@@ -42,9 +45,7 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
   function handleBattle(warrior: WarriorsProps) {
     if (!enemy) return
 
-    const has = checkEnemyWeakness(warrior, enemy)
-    console.log(has)
-    const damage = calculateDamage(has)
+    const damage = calculateDamage(checkEnemyWeakness(warrior, enemy))
 
     const remainingLife = currentLife - damage
 
@@ -52,6 +53,7 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
     else setCurrentLife(remainingLife)
 
     lostWarrior(warrior.ability)
+    setLastDamage(damage)
   }
 
   // private functions
@@ -69,7 +71,9 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
   }
 
   return (
-    <BattleContext.Provider value={{ enemy, totalLife, currentLife, selectEnemy, handleBattle }}>
+    <BattleContext.Provider
+      value={{ enemy, totalLife, currentLife, lastDamage, selectEnemy, handleBattle }}
+    >
       {props.children}
     </BattleContext.Provider>
   )
