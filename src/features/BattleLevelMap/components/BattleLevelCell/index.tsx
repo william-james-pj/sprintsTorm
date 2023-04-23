@@ -3,7 +3,7 @@ import { RectButton } from 'react-native-gesture-handler'
 
 import { Card } from 'src/components/Card'
 import { Coins } from 'src/components/Coins'
-import { useRewards } from 'src/hooks/useRewards'
+import { useStatus } from 'src/hooks/useStatus'
 import { calculateCoins } from 'src/utils/calculateCoins'
 
 import * as S from './styles'
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export function BattleLevelCell({ item, onPress, isLeveBefore, isLeveAfter }: Props) {
-  const { rewards } = useRewards()
+  const { status } = useStatus()
 
   return (
     <S.ViewWrapper>
@@ -46,7 +46,7 @@ export function BattleLevelCell({ item, onPress, isLeveBefore, isLeveAfter }: Pr
 
               <S.ViewAward>
                 <S.TextAward>Prémio</S.TextAward>
-                <Coins coin={`${calculateCoins(rewards?.round ?? 1, item.level)}`} />
+                <Coins coin={`${calculateCoins(status?.round ?? 1, item.level)}`} />
               </S.ViewAward>
             </S.ViewCardContent>
           </RectButton>

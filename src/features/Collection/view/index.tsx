@@ -8,29 +8,51 @@ import { Card } from 'src/components/Card'
 import { Section } from 'src/components/Section'
 import { UserStatus } from 'src/components/UserStatus'
 import { CardDetails } from 'src/features/Collection/components/CardDetailsModal'
-import { useRewards } from 'src/hooks/useRewards'
+import { useStatus } from 'src/hooks/useStatus'
+import { useWarriors } from 'src/hooks/useWarriors'
 
 import * as S from './styles'
 
 export function CollectionScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [indexSelected, setIndexSelected] = useState(0)
 
-  const { rewards } = useRewards()
+  const { updateStatus } = useStatus()
+  const { warriors, userArmy, buyWarrior, updateUserArmy } = useWarriors()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
+
+  const closeModal = () => {
+    toggleModal()
+    Promise.all([updateStatus(), updateUserArmy()])
+  }
+
+  const opemModal = (index: number) => {
+    setIndexSelected(index)
+    toggleModal()
+  }
+
+  const handleBuy = (type: WarriorAbilityTypeProps) => {
+    buyWarrior(type)
+  }
 
   return (
     <>
       <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
         <SafeAreaView style={{ flex: 1 }}>
           <S.ViewWrapper>
-            <UserStatus coins={rewards?.coins ?? 0} />
+            <UserStatus />
             <S.ViewContent>
               <Section title="Coleção de cartas">
                 <S.ViewCardRow>
-                  <Card onPress={toggleModal} />
-                  <Card onPress={toggleModal} />
-                  <Card onPress={toggleModal} />
+                  {warriors.map((warrior, index) => (
+                    <Card
+                      key={warrior.id}
+                      onPress={() => opemModal(index)}
+                      item={warrior}
+                      qtd={userArmy ? userArmy[warrior.ability] : 0}
+                    />
+                  ))}
                 </S.ViewCardRow>
               </Section>
             </S.ViewContent>
@@ -39,14 +61,14 @@ export function CollectionScreen() {
       </ImageBackground>
       <Modal
         isVisible={isModalVisible}
-        onBackButtonPress={toggleModal}
-        onBackdropPress={toggleModal}
+        onBackButtonPress={closeModal}
+        onBackdropPress={closeModal}
         swipeDirection="down"
-        onSwipeComplete={toggleModal}
+        onSwipeComplete={closeModal}
         statusBarTranslucent
         style={{}}
       >
-        <CardDetails />
+        <CardDetails onBuy={handleBuy} item={warriors[indexSelected]} />
       </Modal>
     </>
   )

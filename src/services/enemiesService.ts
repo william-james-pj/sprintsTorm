@@ -16,8 +16,7 @@ export const getEnemiesRequest = async (): Promise<EnemiesProps[]> => {
       life: data.life,
       level: data.level,
       name: data.name,
-      resistance: data.resistance,
-      weakness: data.weakness
+      ability: data.ability
     })
   })
 

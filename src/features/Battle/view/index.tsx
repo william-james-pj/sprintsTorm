@@ -7,11 +7,21 @@ import { Card } from 'src/components/Card'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleHeader } from 'src/features/Battle/components/BattleHeader'
 import { LifeBar } from 'src/features/Battle/components/LifeBar'
+import { useBattle } from 'src/hooks/useBattle'
+import { useWarriors } from 'src/hooks/useWarriors'
 
 import * as S from './styles'
 
 export function BattleScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
+
+  const { warriors, userArmy } = useWarriors()
+  const { enemy, totalLife, currentLife, handleBattle } = useBattle()
+
+  const selectWarrior = (warrior: WarriorsProps) => {
+    handleBattle(warrior)
+  }
+
   return (
     <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -20,18 +30,24 @@ export function BattleScreen() {
             <BattleHeader title="Level 1" onClose={() => navigation.goBack()} />
 
             <S.ViewBoss>
-              <Card width={140} hideQtd />
+              <Card width={140} hideQtd qtd={1} enemy={enemy ?? undefined} />
 
-              <LifeBar />
+              <LifeBar currentLife={currentLife} life={totalLife} />
             </S.ViewBoss>
           </S.ViewHeader>
 
           <S.ViewFooter>
             <S.ViewCardsContainer style={{ borderTopStartRadius: 16 }}>
               <S.ViewCards>
-                <Card width={80} />
-                <Card width={80} />
-                <Card width={80} />
+                {warriors.map((warrior) => (
+                  <Card
+                    width={80}
+                    key={warrior.id}
+                    item={warrior}
+                    qtd={userArmy ? userArmy[warrior.ability] : 0}
+                    onPress={() => selectWarrior(warrior)}
+                  />
+                ))}
               </S.ViewCards>
             </S.ViewCardsContainer>
           </S.ViewFooter>

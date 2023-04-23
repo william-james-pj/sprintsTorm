@@ -3,18 +3,28 @@ type LastTrainingProps = {
   id: string
 }
 
+type UserArmyProps = {
+  warrior: number
+  mage: number
+  archer: number
+}
+
+type WarriorAbilityTypeProps = 'warrior' | 'mage' | 'archer'
+type EnemyAbilityTypeProps = 'all' | 'warrior' | 'mage' | 'archer'
+
+type WarriorsProps = {
+  id: string
+  name: string
+  ability: WarriorAbilityTypeProps
+}
+
 type EnemiesProps = {
   id: string
   life: number
   level: number
   name: string
-  resistance: ResistanceTypeProps
-  weakness: WeaknessTypeProps
+  ability: EnemyAbilityTypeProps
 }
-
-type ResistanceTypeProps = 'all' | 'warrior' | 'mage' | 'archer'
-
-type WeaknessTypeProps = 'all' | 'warrior' | 'mage' | 'archer'
 
 type UserProps = {
   id: string
@@ -23,7 +33,7 @@ type UserProps = {
   picture: string
 }
 
-type RewardsProps = {
+type StatusProps = {
   coins: number
   trophy: number
   currentLevel: number
