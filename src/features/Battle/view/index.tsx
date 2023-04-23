@@ -8,6 +8,7 @@ import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleHeader } from 'src/features/Battle/components/BattleHeader'
 import { LifeBar } from 'src/features/Battle/components/LifeBar'
 import { useBattle } from 'src/hooks/useBattle'
+import { useDebounce } from 'src/hooks/useDebounce'
 import { useWarriors } from 'src/hooks/useWarriors'
 
 import * as S from './styles'
@@ -15,12 +16,17 @@ import * as S from './styles'
 export function BattleScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
 
-  const { warriors, userArmy } = useWarriors()
+  const { warriors, userArmy, updateUserArmy } = useWarriors()
   const { enemy, totalLife, currentLife, handleBattle, lastDamage } = useBattle()
 
   const selectWarrior = (warrior: WarriorsProps) => {
     handleBattle(warrior)
+    debouncedRequest()
   }
+
+  const debouncedRequest = useDebounce(() => {
+    updateUserArmy()
+  })
 
   return (
     <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
