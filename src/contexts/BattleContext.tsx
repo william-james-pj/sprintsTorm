@@ -3,6 +3,7 @@ import { createContext, ReactNode, useState } from 'react'
 import { baseDamageValue } from 'src/constants/baseDamageValue'
 import { useAuth } from 'src/hooks/useAuth'
 import { useStatus } from 'src/hooks/useStatus'
+import { useWarriors } from 'src/hooks/useWarriors'
 import { checkEnemyWeakness } from 'src/utils/checkEnemyWeakness'
 
 type BattleContextType = {
@@ -22,6 +23,7 @@ export const BattleContext = createContext({} as BattleContextType)
 export function BattleContextProvider(props: BattleContextProviderProps) {
   const { user } = useAuth()
   const { status } = useStatus()
+  const { lostWarrior } = useWarriors()
   const [enemy, setEnemy] = useState<EnemiesProps>()
   const [totalLife, setTotalLife] = useState(0)
   const [currentLife, setCurrentLife] = useState(0)
@@ -48,6 +50,8 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
 
     if (remainingLife <= 0) setCurrentLife(0)
     else setCurrentLife(remainingLife)
+
+    lostWarrior(warrior.ability)
   }
 
   // private functions

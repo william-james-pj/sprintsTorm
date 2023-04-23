@@ -9,6 +9,7 @@ type Props = {
   qtd?: number
   item?: WarriorsProps
   enemy?: EnemiesProps
+  canBeDisabled?: boolean
   onPress?: () => void
 }
 
@@ -18,12 +19,17 @@ export function Card({
   hideQtd = false,
   onPress = () => {},
   qtd = 0,
+  item,
   enemy,
-  item
+  canBeDisabled = false
 }: Props) {
   return (
     <S.ViewWrapper style={{ width, height: width + 20 }} isDisabled={qtd === 0}>
-      <RectButton onPress={onPress} style={{ flex: 1, padding: 4 }}>
+      <RectButton
+        onPress={onPress}
+        style={{ flex: 1, padding: 4 }}
+        enabled={!(qtd === 0 && canBeDisabled)}
+      >
         <S.ViewContent>
           {!hideQtd && (
             <S.ViewQtdContainer style={{ borderBottomStartRadius: 4 }} isDisabled={qtd === 0}>

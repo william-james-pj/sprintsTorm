@@ -16,6 +16,7 @@ type WarriorsContextType = {
   getUserWarriors: () => Promise<void>
   updateUserArmy: () => Promise<void>
   buyWarrior: (type: WarriorAbilityTypeProps) => void
+  lostWarrior: (type: WarriorAbilityTypeProps) => void
 }
 
 type WarriorsContextProviderProps = {
@@ -67,6 +68,13 @@ export function WarriorsContextProvider(props: WarriorsContextProviderProps) {
     setUserArmy(auxUserArmy)
   }
 
+  function lostWarrior(type: WarriorAbilityTypeProps) {
+    if (!status || !userArmy) return
+    const auxUserArmy = { ...userArmy }
+    auxUserArmy[type] -= 1
+    setUserArmy(auxUserArmy)
+  }
+
   async function updateUserArmy() {
     if (!user || !userArmy) return
     await setUserArmyRequest(user.id, userArmy)
@@ -74,7 +82,15 @@ export function WarriorsContextProvider(props: WarriorsContextProviderProps) {
 
   return (
     <WarriorsContext.Provider
-      value={{ warriors, userArmy, getWarriors, getUserWarriors, updateUserArmy, buyWarrior }}
+      value={{
+        warriors,
+        userArmy,
+        getWarriors,
+        getUserWarriors,
+        updateUserArmy,
+        buyWarrior,
+        lostWarrior
+      }}
     >
       {props.children}
     </WarriorsContext.Provider>

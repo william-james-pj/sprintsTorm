@@ -46,6 +46,7 @@ export function BattleScreen() {
                     item={warrior}
                     qtd={userArmy ? userArmy[warrior.ability] : 0}
                     onPress={() => selectWarrior(warrior)}
+                    canBeDisabled
                   />
                 ))}
               </S.ViewCards>
