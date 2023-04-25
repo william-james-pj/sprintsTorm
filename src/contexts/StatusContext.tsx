@@ -65,7 +65,7 @@ export function StatusContextProvider(props: StatusContextProviderProps) {
     auxStatus.coins += coinsEarned
 
     const currentLevel = auxStatus.currentLevel + 1
-    if (currentLevel === 10) {
+    if (currentLevel === 11) {
       auxStatus.currentLevel = 1
       auxStatus.round += 1
     } else auxStatus.currentLevel = currentLevel
