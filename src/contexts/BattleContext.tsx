@@ -1,9 +1,6 @@
 import { createContext, ReactNode, useState } from 'react'
 
 import { baseDamageValue } from 'src/constants/baseDamageValue'
-import { useAuth } from 'src/hooks/useAuth'
-import { useStatus } from 'src/hooks/useStatus'
-import { useWarriors } from 'src/hooks/useWarriors'
 import { getBattleLevelRequest, setBattleLevelRequest } from 'src/services/battleService'
 import { checkEnemyWeakness } from 'src/utils/checkEnemyWeakness'
 
@@ -13,9 +10,13 @@ type BattleContextType = {
   currentLife: number
   lastDamage: number | undefined
   isLoadingBattle: boolean
-  selectEnemy: (enemy: EnemiesProps) => Promise<void>
-  handleBattle: (warrior: WarriorsProps, onBossDefeated: () => void) => void
-  saveBattleLevel: () => Promise<void>
+  selectEnemy: (enemy: EnemiesProps, userId: string, round: number) => Promise<void>
+  handleBattle: (
+    warrior: WarriorsProps,
+    onBossDefeated: () => void,
+    onLostWarrior: (type: WarriorAbilityTypeProps) => void
+  ) => void
+  saveBattleLevel: (userId: string) => Promise<void>
 }
 
 type BattleContextProviderProps = {
@@ -25,24 +26,18 @@ type BattleContextProviderProps = {
 export const BattleContext = createContext({} as BattleContextType)
 
 export function BattleContextProvider(props: BattleContextProviderProps) {
-  const { user } = useAuth()
-  const { status } = useStatus()
-  const { lostWarrior } = useWarriors()
   const [enemy, setEnemy] = useState<EnemiesProps>()
-
   const [totalLife, setTotalLife] = useState(0)
   const [currentLife, setCurrentLife] = useState(0)
   const [lastDamage, setLastDamage] = useState<number>()
-
   const [isLoadingBattle, setIsLoadingBattle] = useState(false)
 
-  async function selectEnemy(enemy: EnemiesProps) {
-    if (!user || !status) return
+  async function selectEnemy(enemy: EnemiesProps, userId: string, round: number) {
     setIsLoadingBattle(true)
     setLastDamage(undefined)
 
-    const lastBattleLevel = await getBattleLevelRequest(user.id)
-    const life = calculateTotalLife(enemy.life, status.round)
+    const lastBattleLevel = await getBattleLevelRequest(userId)
+    const life = calculateTotalLife(enemy.life, round)
 
     setEnemy(enemy)
     setTotalLife(life)
@@ -53,14 +48,17 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
     setIsLoadingBattle(false)
   }
 
-  function handleBattle(warrior: WarriorsProps, onBossDefeated: () => void) {
+  function handleBattle(
+    warrior: WarriorsProps,
+    onBossDefeated: () => void,
+    onLostWarrior: (type: WarriorAbilityTypeProps) => void
+  ) {
     if (!enemy) return
 
+    onLostWarrior(warrior.ability)
+
     const damage = calculateDamage(checkEnemyWeakness(warrior, enemy))
-
     const remainingLife = currentLife - damage
-
-    lostWarrior(warrior.ability)
     setLastDamage(damage)
 
     if (remainingLife <= 0) {
@@ -69,11 +67,11 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
     } else setCurrentLife(remainingLife)
   }
 
-  async function saveBattleLevel() {
-    if (!user || !enemy) return
+  async function saveBattleLevel(userId: string) {
+    if (!enemy) return
 
     const mapLevel: BattleLevelProps = { level: enemy?.level, currentLife }
-    await setBattleLevelRequest(user.id, mapLevel)
+    await setBattleLevelRequest(userId, mapLevel)
   }
 
   // private functions

@@ -1,14 +1,13 @@
 import { createContext, ReactNode, useState } from 'react'
 
-import { useAuth } from 'src/hooks/useAuth'
 import { getStatusRequest, setStatusRequest } from 'src/services/statusService'
 
 type StatusContextType = {
   status: StatusProps | undefined
-  getStatus: () => void
+  getStatus: (userId: string) => void
   updateCoins: (value: number) => void
-  updateStatus: () => Promise<void>
-  finishBattle: (coinsEarned: number) => Promise<void>
+  updateStatus: (userId: string) => Promise<void>
+  finishBattle: (coinsEarned: number, userId: string) => Promise<void>
   isLoading: boolean
 }
 
@@ -19,14 +18,11 @@ type StatusContextProviderProps = {
 export const StatusContext = createContext({} as StatusContextType)
 
 export function StatusContextProvider(props: StatusContextProviderProps) {
-  const { user } = useAuth()
   const [status, setStatus] = useState<StatusProps>()
   const [isLoading, setIsLoading] = useState(false)
 
-  async function getStatus() {
-    if (!user) return
-
-    const auxStatus = await getStatusRequest(user.id)
+  async function getStatus(userId: string) {
+    const auxStatus = await getStatusRequest(userId)
 
     if (auxStatus) {
       setStatus(auxStatus)
@@ -40,7 +36,7 @@ export function StatusContextProvider(props: StatusContextProviderProps) {
       round: 1
     }
 
-    await setStatusRequest(user.id, newStatus)
+    await setStatusRequest(userId, newStatus)
     setStatus(newStatus)
   }
 
@@ -51,13 +47,13 @@ export function StatusContextProvider(props: StatusContextProviderProps) {
     setStatus(auxStatus)
   }
 
-  async function updateStatus() {
-    if (!user || !status) return
-    await setStatusRequest(user.id, status)
+  async function updateStatus(userId: string) {
+    if (!status) return
+    await setStatusRequest(userId, status)
   }
 
-  async function finishBattle(coinsEarned: number) {
-    if (!user || !status) return
+  async function finishBattle(coinsEarned: number, userId: string) {
+    if (!status) return
     setIsLoading(true)
 
     const auxStatus = { ...status }
@@ -71,7 +67,7 @@ export function StatusContextProvider(props: StatusContextProviderProps) {
     } else auxStatus.currentLevel = currentLevel
 
     setStatus(auxStatus)
-    await setStatusRequest(user.id, auxStatus)
+    await setStatusRequest(userId, auxStatus)
     setIsLoading(false)
   }
 

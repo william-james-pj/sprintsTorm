@@ -1,14 +1,11 @@
 import { useTheme } from 'styled-components'
 
 import CoinsSVG from 'src/assets/svg/coins-solid.svg'
-import StarSVG from 'src/assets/svg/star-solid.svg'
 import { useStatus } from 'src/hooks/useStatus'
 
 import * as S from './styles'
 
-type Props = object
-
-export function UserStatus({}: Props) {
+export function UserStatus() {
   const theme = useTheme()
 
   const { status } = useStatus()

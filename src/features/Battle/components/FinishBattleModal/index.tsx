@@ -1,6 +1,7 @@
 import { TouchableOpacity } from 'react-native'
 
 import { Coins } from 'src/components/Coins'
+import { useAuth } from 'src/hooks/useAuth'
 import { useStatus } from 'src/hooks/useStatus'
 
 import * as S from './styles'
@@ -12,10 +13,12 @@ type Props = {
 }
 
 export function FinishBattleModal({ coins, bossName, onCLose }: Props) {
+  const { user } = useAuth()
   const { finishBattle, isLoading } = useStatus()
 
   const onFinish = async () => {
-    await finishBattle(coins)
+    if (!user) return
+    await finishBattle(coins, user.id)
     onCLose()
   }
 

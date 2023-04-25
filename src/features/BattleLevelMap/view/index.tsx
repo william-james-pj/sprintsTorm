@@ -11,6 +11,7 @@ import HouseSVG from 'src/assets/svg/house-solid.svg'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleLevelCell } from 'src/features/BattleLevelMap/components/BattleLevelCell'
 import { BossModal } from 'src/features/BattleLevelMap/components/BossModal'
+import { useAuth } from 'src/hooks/useAuth'
 import { useBattle } from 'src/hooks/useBattle'
 import { useEnemies } from 'src/hooks/useEnemies'
 import { useStatus } from 'src/hooks/useStatus'
@@ -22,6 +23,7 @@ export function BattleLevelMap() {
   const theme = useTheme()
   const flatList = useRef<FlatList<EnemiesProps>>(null)
 
+  const { user } = useAuth()
   const { status } = useStatus()
   const { enemies } = useEnemies()
   const { selectEnemy } = useBattle()
@@ -52,6 +54,13 @@ export function BattleLevelMap() {
         <S.ViewLevel></S.ViewLevel>
       </S.Header>
     )
+  }
+
+  const onSelect = async () => {
+    if (!user || !status) return
+    await selectEnemy(enemies[indexSelected], user.id, status.round)
+    navigation.navigate('Battle')
+    toggleModal()
   }
 
   return (
@@ -93,14 +102,7 @@ export function BattleLevelMap() {
         statusBarTranslucent
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
-        <BossModal
-          item={enemies[indexSelected]}
-          onPress={async () => {
-            await selectEnemy(enemies[indexSelected])
-            navigation.navigate('Battle')
-            toggleModal()
-          }}
-        />
+        <BossModal item={enemies[indexSelected]} onPress={onSelect} />
       </Modal>
     </>
   )

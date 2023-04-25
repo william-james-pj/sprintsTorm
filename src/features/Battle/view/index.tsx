@@ -10,6 +10,7 @@ import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { BattleHeader } from 'src/features/Battle/components/BattleHeader'
 import { FinishBattleModal } from 'src/features/Battle/components/FinishBattleModal'
 import { LifeBar } from 'src/features/Battle/components/LifeBar'
+import { useAuth } from 'src/hooks/useAuth'
 import { useBattle } from 'src/hooks/useBattle'
 import { useDebounce } from 'src/hooks/useDebounce'
 import { useStatus } from 'src/hooks/useStatus'
@@ -22,20 +23,22 @@ export function BattleScreen() {
   const navigation = useNavigation<HomeNavigationProp>()
   const [isModalVisible, setIsModalVisible] = useState(false)
 
+  const { user } = useAuth()
   const { status } = useStatus()
-  const { warriors, userArmy, updateUserArmy } = useWarriors()
+  const { warriors, userArmy, updateUserArmy, lostWarrior } = useWarriors()
   const { enemy, totalLife, currentLife, handleBattle, lastDamage, saveBattleLevel } = useBattle()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
 
   const selectWarrior = (warrior: WarriorsProps) => {
-    handleBattle(warrior, toggleModal)
+    handleBattle(warrior, toggleModal, lostWarrior)
     debouncedRequest()
   }
 
   const debouncedRequest = useDebounce(() => {
-    updateUserArmy()
-    saveBattleLevel()
+    if (!user) return
+    updateUserArmy(user.id)
+    saveBattleLevel(user.id)
   })
 
   const finishBattle = () => {

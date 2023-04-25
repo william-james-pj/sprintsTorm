@@ -30,7 +30,8 @@ export function HomeScreen() {
   const { getWarriors, getUserWarriors } = useWarriors()
 
   useEffect(() => {
-    Promise.all([getStatus(), getEnemies(), getWarriors(), getUserWarriors()])
+    if (!user) return
+    Promise.all([getStatus(user.id), getEnemies(), getWarriors(), getUserWarriors(user.id)])
     console.log('HomeScreen')
     return () => {}
   }, [])
