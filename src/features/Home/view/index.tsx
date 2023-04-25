@@ -25,7 +25,7 @@ export function HomeScreen() {
   const theme = useTheme()
 
   const { user } = useAuth()
-  const { getStatus } = useStatus()
+  const { getStatus, status } = useStatus()
   const { getEnemies } = useEnemies()
   const { getWarriors, getUserWarriors } = useWarriors()
 
@@ -42,7 +42,7 @@ export function HomeScreen() {
           <S.ViewHeader>
             <UserStatus />
 
-            <HomeHeader userName={splitName(user?.name)} trophy={0} />
+            <HomeHeader userName={splitName(user?.name)} trophy={status?.trophy ?? 0} />
           </S.ViewHeader>
 
           <S.ViewContent>

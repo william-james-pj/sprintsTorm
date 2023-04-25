@@ -8,6 +8,7 @@ type StatusContextType = {
   getStatus: () => void
   updateCoins: (value: number) => void
   updateStatus: () => Promise<void>
+  finishBattle: (coinsEarned: number) => Promise<void>
   isLoading: boolean
 }
 
@@ -55,8 +56,29 @@ export function StatusContextProvider(props: StatusContextProviderProps) {
     await setStatusRequest(user.id, status)
   }
 
+  async function finishBattle(coinsEarned: number) {
+    if (!user || !status) return
+    setIsLoading(true)
+
+    const auxStatus = { ...status }
+    auxStatus.trophy += 1
+    auxStatus.coins += coinsEarned
+
+    const currentLevel = auxStatus.currentLevel + 1
+    if (currentLevel === 10) {
+      auxStatus.currentLevel = 1
+      auxStatus.round += 1
+    } else auxStatus.currentLevel = currentLevel
+
+    setStatus(auxStatus)
+    await setStatusRequest(user.id, auxStatus)
+    setIsLoading(false)
+  }
+
   return (
-    <StatusContext.Provider value={{ status, getStatus, updateCoins, updateStatus, isLoading }}>
+    <StatusContext.Provider
+      value={{ status, getStatus, updateCoins, updateStatus, finishBattle, isLoading }}
+    >
       {props.children}
     </StatusContext.Provider>
   )

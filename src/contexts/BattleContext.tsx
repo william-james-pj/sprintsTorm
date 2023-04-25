@@ -14,7 +14,7 @@ type BattleContextType = {
   lastDamage: number | undefined
   isLoadingBattle: boolean
   selectEnemy: (enemy: EnemiesProps) => Promise<void>
-  handleBattle: (warrior: WarriorsProps) => void
+  handleBattle: (warrior: WarriorsProps, onBossDefeated: () => void) => void
   saveBattleLevel: () => Promise<void>
 }
 
@@ -53,18 +53,20 @@ export function BattleContextProvider(props: BattleContextProviderProps) {
     setIsLoadingBattle(false)
   }
 
-  function handleBattle(warrior: WarriorsProps) {
+  function handleBattle(warrior: WarriorsProps, onBossDefeated: () => void) {
     if (!enemy) return
 
     const damage = calculateDamage(checkEnemyWeakness(warrior, enemy))
 
     const remainingLife = currentLife - damage
 
-    if (remainingLife <= 0) setCurrentLife(0)
-    else setCurrentLife(remainingLife)
-
     lostWarrior(warrior.ability)
     setLastDamage(damage)
+
+    if (remainingLife <= 0) {
+      setCurrentLife(0)
+      onBossDefeated()
+    } else setCurrentLife(remainingLife)
   }
 
   async function saveBattleLevel() {
