@@ -18,7 +18,7 @@ export function FinishTrackingModal() {
       </S.ViewTextContainer>
 
       <S.ViewContent>
-        <Card width={70} hideName qtd="+1" />
+        <Card width={70} hideName qtd={1} />
 
         <S.ViewRewardContainer>
           <S.ViewReward>

@@ -15,7 +15,13 @@ export function ClassTypeCard({ type }: Props) {
       <S.ViewTextContainer>
         <S.TextTitle>Classe</S.TextTitle>
         <S.TextText>
-          {type === 'warrior' ? 'Guerreiro' : type === 'mage' ? 'Mago' : 'Arqueiro'}
+          {type === 'warrior'
+            ? 'Guerreiro'
+            : type === 'mage'
+            ? 'Mago'
+            : type === 'archer'
+            ? 'Arqueiro'
+            : 'Todos'}
         </S.TextText>
       </S.ViewTextContainer>
     </S.ViewWrapper>

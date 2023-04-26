@@ -10,10 +10,6 @@ type BeforeProps = {
   isLeveBefore: boolean
 }
 
-type AfterProps = {
-  isLeveAfter: boolean
-}
-
 export const ViewWrapper = styled.View`
   width: 100%;
   height: 122px;

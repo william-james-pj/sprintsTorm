@@ -16,7 +16,7 @@ export const ViewWrapper = styled.View`
 `
 
 export const ViewLife = styled.View`
-  background: rgba(226, 78, 120, 1);
+  background: ${({ theme }) => theme.colors.life};
 
   position: absolute;
   top: 0;

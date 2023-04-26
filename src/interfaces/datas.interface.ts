@@ -39,3 +39,8 @@ type StatusProps = {
   currentLevel: number
   round: number
 }
+
+type BattleLevelProps = {
+  level: number
+  currentLife: number
+}

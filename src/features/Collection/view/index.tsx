@@ -8,6 +8,7 @@ import { Card } from 'src/components/Card'
 import { Section } from 'src/components/Section'
 import { UserStatus } from 'src/components/UserStatus'
 import { CardDetails } from 'src/features/Collection/components/CardDetailsModal'
+import { useAuth } from 'src/hooks/useAuth'
 import { useStatus } from 'src/hooks/useStatus'
 import { useWarriors } from 'src/hooks/useWarriors'
 
@@ -17,14 +18,16 @@ export function CollectionScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [indexSelected, setIndexSelected] = useState(0)
 
-  const { updateStatus } = useStatus()
+  const { user } = useAuth()
+  const { status, updateStatus, updateCoins } = useStatus()
   const { warriors, userArmy, buyWarrior, updateUserArmy } = useWarriors()
 
   const toggleModal = () => setIsModalVisible(!isModalVisible)
 
   const closeModal = () => {
+    if (!user) return
     toggleModal()
-    Promise.all([updateStatus(), updateUserArmy()])
+    Promise.all([updateStatus(user.id), updateUserArmy(user.id)])
   }
 
   const opemModal = (index: number) => {
@@ -33,7 +36,8 @@ export function CollectionScreen() {
   }
 
   const handleBuy = (type: WarriorAbilityTypeProps) => {
-    buyWarrior(type)
+    if (!status) return
+    buyWarrior(type, status.coins, updateCoins)
   }
 
   return (
