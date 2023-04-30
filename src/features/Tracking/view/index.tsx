@@ -5,23 +5,32 @@ import { ImageBackground } from 'react-native'
 import Modal from 'react-native-modal'
 
 import BackgroundImg from 'src/assets/img/background.png'
+import { FinishTrackingModal } from 'src/features/Tracking/components/FinishTrackingModal'
 import { TimeBox } from 'src/features/Tracking/components/TimeBox'
 import { TrackingButton } from 'src/features/Tracking/components/TrackingButton'
 import { TrackingHeader } from 'src/features/Tracking/components/TrackingHeader'
 import { TrackingMap } from 'src/features/Tracking/components/TrackingMap'
 import { TrackingModal } from 'src/features/Tracking/components/TrackingModal'
+import { useAuth } from 'src/hooks/useAuth'
+import { useStatus } from 'src/hooks/useStatus'
+import { useTracking } from 'src/hooks/useTracking'
 import { getTimerString } from 'src/utils/getTimeString'
 
 import * as S from './styles'
 
 export function TrackingScreen() {
-  const [traveledDistance, setTraveledDistance] = useState(0)
+  const [traveledDistance, setTraveledDistance] = useState(0) // km
   const [timer, setTimer] = useState(0)
   const [watcher, setWatcher] = useState<LocationSubscription | null>(null)
   const [isStarted, setIsStarted] = useState(false)
-  const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const [isSureModalVisible, setIsSureModalVisible] = useState(false)
+  const [isFinishModalVisible, setIsFinishModalVisible] = useState(false)
 
   const navigation = useNavigation()
+  const { user } = useAuth()
+  const { status, updateCoins } = useStatus()
+  const { calculateEarnedCoins, saveTracking, coinsEarned } = useTracking()
 
   const setNewDistance = (newDistance: number) => {
     const newValue = newDistance + traveledDistance
@@ -32,15 +41,30 @@ export function TrackingScreen() {
     setWatcher(newWatcher)
   }
 
-  const toggleModal = () => setIsModalVisible(!isModalVisible)
+  const toggleSureModal = () => setIsSureModalVisible(!isSureModalVisible)
+
+  const toggleFinishModal = () => setIsFinishModalVisible(!isFinishModalVisible)
+
+  const onFinishSave = async () => {
+    if (!user || !status) return
+    const allCoins = status.coins + coinsEarned
+    updateCoins(allCoins)
+    await saveTracking(user.id, traveledDistance)
+    toggleFinishModal()
+    navigation.goBack()
+  }
 
   const modalOnSave = () => {
     watcher?.remove()
-    navigation.goBack()
+    calculateEarnedCoins(traveledDistance)
+    setIsStarted(false)
+    toggleSureModal()
+    toggleFinishModal()
   }
 
   const modalOnDiscard = () => {
     watcher?.remove()
+    setIsStarted(false)
     navigation.goBack()
   }
 
@@ -59,7 +83,7 @@ export function TrackingScreen() {
       <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
         <S.ViewWrapper>
           <S.ViewHeader>
-            <TrackingHeader title={'Correndo'} onClose={toggleModal} />
+            <TrackingHeader title={'Correndo'} onClose={toggleSureModal} />
             <TrackingMap
               setNewDistance={setNewDistance}
               setWatcher={setNewWatcher}
@@ -72,7 +96,7 @@ export function TrackingScreen() {
               {isStarted ? (
                 <>
                   <TrackingButton title="Pausar" onPress={() => setIsStarted(false)} />
-                  <TrackingButton title="Terminar" onPress={toggleModal} />
+                  <TrackingButton title="Terminar" onPress={toggleSureModal} />
                 </>
               ) : (
                 <TrackingButton title="Iniciar" onPress={() => setIsStarted(true)} />
@@ -82,15 +106,24 @@ export function TrackingScreen() {
         </S.ViewWrapper>
       </ImageBackground>
       <Modal
-        isVisible={isModalVisible}
-        onBackButtonPress={toggleModal}
-        onBackdropPress={toggleModal}
+        isVisible={isSureModalVisible}
+        onBackButtonPress={toggleSureModal}
+        onBackdropPress={toggleSureModal}
         swipeDirection="down"
-        onSwipeComplete={toggleModal}
+        onSwipeComplete={toggleSureModal}
         statusBarTranslucent
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
         <TrackingModal onDiscard={modalOnDiscard} onSave={modalOnSave} />
+      </Modal>
+      <Modal
+        isVisible={isFinishModalVisible}
+        onBackButtonPress={onFinishSave}
+        onBackdropPress={onFinishSave}
+        statusBarTranslucent
+        style={{}}
+      >
+        <FinishTrackingModal onClick={onFinishSave} />
       </Modal>
     </>
   )

@@ -2,7 +2,11 @@ import { Coins } from 'src/components/Coins'
 
 import * as S from './styles'
 
-export function LastTrainingCell() {
+type Props = {
+  training: TrainingProps
+}
+
+export function LastTrainingCell({ training }: Props) {
   return (
     <S.ViewWrapper>
       <S.ViewRow>
@@ -13,8 +17,8 @@ export function LastTrainingCell() {
       </S.ViewRow>
 
       <S.ViewAwardContainer>
-        <Coins coin={'10'} />
-        <S.TextDistance>5.65 km</S.TextDistance>
+        <Coins coin={training.coins.toFixed(0)} />
+        <S.TextDistance>{`${training.distance.toFixed(1)} km`}</S.TextDistance>
       </S.ViewAwardContainer>
     </S.ViewWrapper>
   )

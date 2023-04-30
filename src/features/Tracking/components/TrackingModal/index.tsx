@@ -13,8 +13,8 @@ export function TrackingModal({ onDiscard, onSave }: Props) {
       <S.TextTitle>Tem certeza que deseja finalizar?</S.TextTitle>
 
       <S.ViewButtonContainer>
-        <TrackingButton title="Sair e descartar" onPress={onDiscard} />
-        <TrackingButton title="Terminar" onPress={onSave} />
+        <TrackingButton title="Sair e descartar" isBackground onPress={onDiscard} />
+        <TrackingButton title="Terminar" isBackground onPress={onSave} />
       </S.ViewButtonContainer>
     </S.ViewWrapper>
   )

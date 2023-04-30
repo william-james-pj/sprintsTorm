@@ -15,6 +15,7 @@ import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrain
 import { useAuth } from 'src/hooks/useAuth'
 import { useEnemies } from 'src/hooks/useEnemies'
 import { useStatus } from 'src/hooks/useStatus'
+import { useTracking } from 'src/hooks/useTracking'
 import { useWarriors } from 'src/hooks/useWarriors'
 import { splitName } from 'src/utils/splitName'
 
@@ -25,13 +26,20 @@ export function HomeScreen() {
   const theme = useTheme()
 
   const { user } = useAuth()
-  const { getStatus, status } = useStatus()
   const { getEnemies } = useEnemies()
+  const { getStatus, status } = useStatus()
+  const { getTracking, tracking } = useTracking()
   const { getWarriors, getUserWarriors } = useWarriors()
 
   useEffect(() => {
     if (!user) return
-    Promise.all([getStatus(user.id), getEnemies(), getWarriors(), getUserWarriors(user.id)])
+    Promise.all([
+      getStatus(user.id),
+      getTracking(user.id),
+      getEnemies(),
+      getWarriors(),
+      getUserWarriors(user.id)
+    ])
     console.log('HomeScreen')
     return () => {}
   }, [])
@@ -49,13 +57,11 @@ export function HomeScreen() {
           <S.ViewContent>
             <Section title="Desafios"></Section>
 
-            <Section
-              title="Último treino"
-              buttonText="Ver tudo"
-              buttonTextOnPress={() => navigation.navigate('LastTraining')}
-            >
-              <LastTrainingCell />
-            </Section>
+            {tracking && (
+              <Section title="Último treino">
+                <LastTrainingCell training={tracking} />
+              </Section>
+            )}
           </S.ViewContent>
 
           <S.ViewBattleButton>

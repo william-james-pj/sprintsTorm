@@ -3,6 +3,11 @@ type LastTrainingProps = {
   id: string
 }
 
+type TrainingProps = {
+  distance: number
+  coins: number
+}
+
 type UserArmyProps = {
   warrior: number
   mage: number

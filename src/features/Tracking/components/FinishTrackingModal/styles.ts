@@ -1,3 +1,4 @@
+import { ActivityIndicator } from 'react-native'
 import styled from 'styled-components/native'
 
 import { fonts } from 'src/styles/fonts'
@@ -78,3 +79,7 @@ export const TextButtonText = styled.Text`
   font-size: ${fonts.size.xxs};
   font-family: ${fonts.type.text600};
 `
+
+export const Indicator = styled(ActivityIndicator).attrs((props) => ({
+  color: props.theme.colors.primary
+}))``

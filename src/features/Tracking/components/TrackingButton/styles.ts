@@ -2,8 +2,13 @@ import styled from 'styled-components/native'
 
 import { fonts } from 'src/styles/fonts'
 
-export const ViewWrapper = styled.View`
-  background: ${({ theme }) => theme.colors.card};
+type BackgroundProps = {
+  isBackground: boolean
+}
+
+export const ViewWrapper = styled.View<BackgroundProps>`
+  background: ${({ theme, isBackground }) =>
+    isBackground ? theme.colors.background : theme.colors.card};
   flex: 1;
   border-radius: 8px;
 

@@ -1,12 +1,17 @@
 import { TouchableOpacity } from 'react-native'
 
-import { Card } from 'src/components/Card'
 import { Coins } from 'src/components/Coins'
-import { Experience } from 'src/components/Experience'
+import { useTracking } from 'src/hooks/useTracking'
 
 import * as S from './styles'
 
-export function FinishTrackingModal() {
+type Props = {
+  onClick: () => void
+}
+
+export function FinishTrackingModal({ onClick }: Props) {
+  const { coinsEarned, isTrackingLoading } = useTracking()
+
   return (
     <S.ViewWrapper>
       <S.ViewTextContainer>
@@ -18,22 +23,21 @@ export function FinishTrackingModal() {
       </S.ViewTextContainer>
 
       <S.ViewContent>
-        <Card width={70} hideName qtd={1} />
-
         <S.ViewRewardContainer>
           <S.ViewReward>
-            <Coins coin={'+20'} />
-          </S.ViewReward>
-          <S.ViewReward>
-            <Experience experience={'+15'} />
+            <Coins coin={`+${coinsEarned}`} />
           </S.ViewReward>
         </S.ViewRewardContainer>
       </S.ViewContent>
 
       <S.ViewButton>
-        <TouchableOpacity style={{ width: '100%' }} onPress={() => {}}>
+        <TouchableOpacity style={{ width: '100%' }} onPress={onClick}>
           <S.ViewButtonContent>
-            <S.TextButtonText>OK</S.TextButtonText>
+            {isTrackingLoading ? (
+              <S.Indicator size="small" />
+            ) : (
+              <S.TextButtonText>OK</S.TextButtonText>
+            )}
           </S.ViewButtonContent>
         </TouchableOpacity>
       </S.ViewButton>

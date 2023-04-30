@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { fonts } from 'src/styles/fonts'
 
 export const ViewWrapper = styled.View`
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.card};
   width: 100%;
   height: auto;
 

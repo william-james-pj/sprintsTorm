@@ -41,6 +41,7 @@ export function StatusContextProvider(props: StatusContextProviderProps) {
   }
 
   function updateCoins(value: number) {
+    console.log(value)
     if (!status) return
     const auxStatus = { ...status }
     auxStatus.coins = value
