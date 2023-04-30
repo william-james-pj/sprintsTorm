@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 type LogoutStackParamList = {
   Login: undefined
+  SignUp: undefined
 }
 
 type LoggedParamList = {
