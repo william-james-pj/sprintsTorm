@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
-import { ImageBackground } from 'react-native'
+import { ImageBackground, ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from 'styled-components'
@@ -11,10 +11,12 @@ import { Section } from 'src/components/Section'
 import { UserStatus } from 'src/components/UserStatus'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { HomeHeader } from 'src/features/Home/components/HomeHeader'
+import { TaskCell } from 'src/features/Home/components/TaskCell'
 import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrainingCell'
 import { useAuth } from 'src/hooks/useAuth'
 import { useEnemies } from 'src/hooks/useEnemies'
 import { useStatus } from 'src/hooks/useStatus'
+import { useTask } from 'src/hooks/useTask'
 import { useTracking } from 'src/hooks/useTracking'
 import { useWarriors } from 'src/hooks/useWarriors'
 import { splitName } from 'src/utils/splitName'
@@ -30,6 +32,7 @@ export function HomeScreen() {
   const { getStatus, status } = useStatus()
   const { getTracking, tracking } = useTracking()
   const { getWarriors, getUserWarriors } = useWarriors()
+  const { getDailyTask, dailyTasks } = useTask()
 
   useEffect(() => {
     if (!user) return
@@ -38,7 +41,8 @@ export function HomeScreen() {
       getTracking(user.id),
       getEnemies(),
       getWarriors(),
-      getUserWarriors(user.id)
+      getUserWarriors(user.id),
+      getDailyTask(user.id)
     ])
     console.log('HomeScreen')
     return () => {}
@@ -53,16 +57,27 @@ export function HomeScreen() {
 
             <HomeHeader userName={splitName(user?.name)} trophy={status?.trophy ?? 0} />
           </S.ViewHeader>
-
-          <S.ViewContent>
-            <Section title="Desafios"></Section>
-
-            {tracking && (
-              <Section title="Último treino">
-                <LastTrainingCell training={tracking} />
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <S.ViewContent>
+              <Section title="Desafios Diários">
+                <S.ViewTaskContainer>
+                  {dailyTasks.map((task) => (
+                    <TaskCell key={task.id} item={task} />
+                  ))}
+                </S.ViewTaskContainer>
               </Section>
-            )}
-          </S.ViewContent>
+
+              <Section title="Desafios Mensais">
+                <S.ViewTaskContainer></S.ViewTaskContainer>
+              </Section>
+
+              {tracking && (
+                <Section title="Último treino">
+                  <LastTrainingCell training={tracking} />
+                </Section>
+              )}
+            </S.ViewContent>
+          </ScrollView>
 
           <S.ViewBattleButton>
             <TouchableOpacity

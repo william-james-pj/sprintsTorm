@@ -48,3 +48,10 @@ export const TextBattleButton = styled.Text`
   font-family: ${fonts.type.text600};
   text-align: center;
 `
+
+export const ViewTaskContainer = styled.View`
+  width: 100%;
+
+  flex-direction: column;
+  gap: 4px;
+`
