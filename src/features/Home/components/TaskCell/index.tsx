@@ -1,3 +1,6 @@
+import { useTheme } from 'styled-components'
+
+import CheckSVG from 'src/assets/svg/check.svg'
 import { Coins } from 'src/components/Coins'
 
 import * as S from './styles'
@@ -7,8 +10,12 @@ type Pros = {
 }
 
 export function TaskCell({ item }: Pros) {
+  const theme = useTheme()
+
   return (
     <S.ViewWrapper>
+      <CheckSVG fill={theme.colors.disabled} />
+
       <S.TextTitle>{item.task}</S.TextTitle>
 
       <S.ViewReward>

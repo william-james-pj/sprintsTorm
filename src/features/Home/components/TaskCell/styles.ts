@@ -6,18 +6,18 @@ export const ViewWrapper = styled.View`
   background: ${({ theme }) => theme.colors.card};
   width: 100%;
 
-  padding: 6px 8px;
+  padding: 6px 12px;
   border-radius: 8px;
 
   flex-direction: row;
   align-items: center;
-  gap: 6px;
+  gap: 16px;
 `
 
 export const TextTitle = styled.Text`
   color: ${({ theme }) => theme.colors.text};
   font-size: ${fonts.size.xxs};
-  font-family: ${fonts.type.text700};
+  font-family: ${fonts.type.text600};
 
   flex: 1;
 `
