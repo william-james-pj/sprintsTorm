@@ -1,7 +1,7 @@
-import { dailyTasks } from 'src/constants/dailyTasks'
+import { monthlyTasks } from 'src/constants/monthlyTasks'
 
-export const generateDailyTasks = (): InternalTaskProps[] => {
-  const aux = dailyTasks
+export const generateMonthlyTasks = (): InternalTaskProps[] => {
+  const aux = monthlyTasks
 
   const firstItem = aux[Math.floor(Math.random() * aux.length)]
 

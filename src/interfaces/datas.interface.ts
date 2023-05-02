@@ -49,6 +49,12 @@ type BattleLevelProps = {
   currentLife: number
 }
 
+type InternalTaskProps = {
+  task: string
+  value: number
+  reward: number
+}
+
 type DailyTaskProps = {
   id: string
   userId: string
@@ -58,8 +64,11 @@ type DailyTaskProps = {
   value: number
 }
 
-type DailyTaskInternalProps = {
+type MonthlyTaskProps = {
+  id: string
+  userId: string
+  month: number
+  reward: number
   task: string
   value: number
-  reward: number
 }

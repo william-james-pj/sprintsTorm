@@ -1,12 +1,20 @@
 import { createContext, ReactNode, useState } from 'react'
 import uuid from 'react-native-uuid'
 
-import { getDailyTaskRequest, setDailyTaskRequest } from 'src/services/taskService'
+import {
+  getDailyTaskRequest,
+  getMonthlyTaskRequest,
+  setDailyTaskRequest,
+  setMonthlyTaskRequest
+} from 'src/services/taskService'
 import { generateDailyTasks } from 'src/utils/generateDailyTask'
+import { generateMonthlyTasks } from 'src/utils/generateMonthlyTasks'
 
 type TaskContextType = {
   dailyTasks: DailyTaskProps[]
+  monthlyTasks: MonthlyTaskProps[]
   getDailyTask: (userId: string) => Promise<void>
+  getMonthlyTask: (userId: string) => Promise<void>
 }
 
 type TaskContextProviderProps = {
@@ -17,6 +25,7 @@ export const TaskContext = createContext({} as TaskContextType)
 
 export function TaskContextProvider(props: TaskContextProviderProps) {
   const [dailyTasks, setDailyTasks] = useState<DailyTaskProps[]>([])
+  const [monthlyTasks, setMonthlyTasks] = useState<MonthlyTaskProps[]>([])
 
   async function getDailyTask(userId: string) {
     const dailyTasksSaved = await getDailyTaskRequest(userId)
@@ -34,6 +43,24 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
 
     const currentIds = dailyTasksSaved.map((dailyTask) => dailyTask.id)
     await saveDailyTask(userId, currentIds)
+  }
+
+  async function getMonthlyTask(userId: string) {
+    const monthlyTasksSaved = await getMonthlyTaskRequest(userId)
+
+    if (!monthlyTasksSaved) {
+      await saveMonthlyTask(userId)
+      return
+    }
+
+    const currentMonth = new Date().getMonth()
+    if (monthlyTasksSaved[0].month === currentMonth) {
+      setMonthlyTasks(monthlyTasksSaved)
+      return
+    }
+
+    const currentIds = monthlyTasksSaved.map((monthlyTask) => monthlyTask.id)
+    await saveMonthlyTask(userId, currentIds)
   }
 
   // private functions
@@ -68,8 +95,35 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
     return [uuid.v4() as string, uuid.v4() as string]
   }
 
+  async function saveMonthlyTask(userId: string, currentIds?: string[]) {
+    const newMonthlyTask = generateNewMonthlyTask(userId, currentIds)
+
+    await setMonthlyTaskRequest(newMonthlyTask)
+    setMonthlyTasks(newMonthlyTask)
+  }
+
+  function generateNewMonthlyTask(userId: string, ids?: string[]): MonthlyTaskProps[] {
+    const taskGenerated = generateMonthlyTasks()
+    const date = new Date()
+
+    const currentIds = ids ?? generateUUID()
+
+    const newMonthlyTasks = taskGenerated.map((task, i): MonthlyTaskProps => {
+      return {
+        id: currentIds[i],
+        task: task.task,
+        reward: task.reward,
+        value: task.value,
+        userId,
+        month: date.getMonth()
+      }
+    })
+
+    return newMonthlyTasks
+  }
+
   return (
-    <TaskContext.Provider value={{ dailyTasks, getDailyTask }}>
+    <TaskContext.Provider value={{ dailyTasks, monthlyTasks, getDailyTask, getMonthlyTask }}>
       {props.children}
     </TaskContext.Provider>
   )
