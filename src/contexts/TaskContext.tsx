@@ -1,11 +1,12 @@
 import { createContext, ReactNode, useState } from 'react'
 import uuid from 'react-native-uuid'
 
+import { getDailyTaskRequest, setDailyTaskRequest } from 'src/services/taskService'
 import { generateDailyTasks } from 'src/utils/generateDailyTask'
 
 type TaskContextType = {
   dailyTasks: DailyTaskProps[]
-  getDailyTask: (userId: string) => void
+  getDailyTask: (userId: string) => Promise<void>
 }
 
 type TaskContextProviderProps = {
@@ -17,26 +18,41 @@ export const TaskContext = createContext({} as TaskContextType)
 export function TaskContextProvider(props: TaskContextProviderProps) {
   const [dailyTasks, setDailyTasks] = useState<DailyTaskProps[]>([])
 
-  function getDailyTask(userId: string) {
-    // get daily reward
-    // if found, save it
-    // else create new reward
-    const newDailyTask = generateNewDailyTask(userId)
+  async function getDailyTask(userId: string) {
+    const dailyTasksSaved = await getDailyTaskRequest(userId)
 
-    // save daily tasks
-    setDailyTasks(newDailyTask)
+    if (!dailyTasksSaved) {
+      await saveDailyTask(userId)
+      return
+    }
 
-    // delete old daily tasks
+    const today = new Date().getDay()
+    if (dailyTasksSaved[0].day === today) {
+      setDailyTasks(dailyTasksSaved)
+      return
+    }
+
+    const currentIds = dailyTasksSaved.map((dailyTask) => dailyTask.id)
+    await saveDailyTask(userId, currentIds)
   }
 
   // private functions
-  function generateNewDailyTask(userId: string): DailyTaskProps[] {
+  async function saveDailyTask(userId: string, currentIds?: string[]) {
+    const newDailyTask = generateNewDailyTask(userId, currentIds)
+
+    await setDailyTaskRequest(newDailyTask)
+    setDailyTasks(newDailyTask)
+  }
+
+  function generateNewDailyTask(userId: string, ids?: string[]): DailyTaskProps[] {
     const taskGenerated = generateDailyTasks()
     const date = new Date()
 
-    const newDailyTasks = taskGenerated.map((task): DailyTaskProps => {
+    const currentIds = ids ?? generateUUID()
+
+    const newDailyTasks = taskGenerated.map((task, i): DailyTaskProps => {
       return {
-        id: uuid.v4() as string,
+        id: currentIds[i],
         task: task.task,
         reward: task.reward,
         value: task.value,
@@ -46,6 +62,10 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
     })
 
     return newDailyTasks
+  }
+
+  function generateUUID(): string[] {
+    return [uuid.v4() as string, uuid.v4() as string]
   }
 
   return (
