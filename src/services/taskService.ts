@@ -60,6 +60,7 @@ export const getMonthlyTaskRequest = async (
       value: data.value,
       userId: data.userId,
       month: data.month,
+      currentValue: data.currentValue,
       isCompleted: data.isCompleted
     })
   })

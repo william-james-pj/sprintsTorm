@@ -31,12 +31,12 @@ export function TrackingScreen() {
   const navigation = useNavigation()
   const { user } = useAuth()
   const { status, updateCoins } = useStatus()
+  const { completeDailyTask, completeMonthlyTask } = useTask()
   const { calculateEarnedCoins, saveTracking, coinsEarned } = useTracking()
-  const { completeDailyTask } = useTask()
 
   const setNewDistance = (newDistance: number) => {
     const newValue = newDistance + traveledDistance
-    setTraveledDistance(newValue)
+    setTraveledDistance(Math.round((newValue + Number.EPSILON) * 100) / 100)
   }
 
   const setNewWatcher = (newWatcher: LocationSubscription) => {
@@ -52,8 +52,9 @@ export function TrackingScreen() {
     await saveTracking(user.id, traveledDistance)
 
     const dailyTaskReward = await completeDailyTask(traveledDistance)
-    const allCoins = status.coins + coinsEarned + dailyTaskReward
-    updateCoins(allCoins)
+    const monthlyTaskReward = await completeMonthlyTask(traveledDistance)
+    const allCoins = status.coins + coinsEarned + dailyTaskReward + monthlyTaskReward
+    updateCoins(allCoins, user.id)
 
     toggleFinishModal()
     navigation.goBack()

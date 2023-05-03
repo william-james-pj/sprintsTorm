@@ -5,7 +5,7 @@ import { getStatusRequest, setStatusRequest } from 'src/services/statusService'
 type StatusContextType = {
   status: StatusProps | undefined
   getStatus: (userId: string) => void
-  updateCoins: (value: number) => void
+  updateCoins: (value: number, userId?: string) => void
   updateStatus: (userId: string) => Promise<void>
   finishBattle: (coinsEarned: number, userId: string) => Promise<void>
   isLoading: boolean
@@ -40,11 +40,13 @@ export function StatusContextProvider(props: StatusContextProviderProps) {
     setStatus(newStatus)
   }
 
-  function updateCoins(value: number) {
+  function updateCoins(value: number, userId?: string) {
     if (!status) return
     const auxStatus = { ...status }
     auxStatus.coins = value
     setStatus(auxStatus)
+
+    if (userId) setStatusRequest(userId, auxStatus)
   }
 
   async function updateStatus(userId: string) {

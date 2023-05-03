@@ -72,5 +72,6 @@ type MonthlyTaskProps = {
   reward: number
   task: string
   value: number
+  currentValue: number
   isCompleted: boolean
 }
