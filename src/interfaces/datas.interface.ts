@@ -62,6 +62,7 @@ type DailyTaskProps = {
   reward: number
   task: string
   value: number
+  isCompleted: boolean
 }
 
 type MonthlyTaskProps = {
@@ -71,4 +72,5 @@ type MonthlyTaskProps = {
   reward: number
   task: string
   value: number
+  isCompleted: boolean
 }

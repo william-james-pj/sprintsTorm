@@ -15,6 +15,7 @@ type TaskContextType = {
   monthlyTasks: MonthlyTaskProps[]
   getDailyTask: (userId: string) => Promise<void>
   getMonthlyTask: (userId: string) => Promise<void>
+  completeDailyTask: (distance: number) => Promise<number>
 }
 
 type TaskContextProviderProps = {
@@ -63,6 +64,25 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
     await saveMonthlyTask(userId, currentIds)
   }
 
+  async function completeDailyTask(distance: number): Promise<number> {
+    const taskNotCompleted = dailyTasks.filter((dailyTask) => !dailyTask.isCompleted)
+    const taskValueFiltered = taskNotCompleted.filter((task) => task.value <= distance)
+    taskValueFiltered.map((task) => (task.isCompleted = true))
+
+    const completedIds = taskValueFiltered.map((task) => task.id)
+    setDailyTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (completedIds.includes(task.id)) {
+          return { ...task, isCompleted: true }
+        }
+        return task
+      })
+    )
+
+    setDailyTaskRequest(taskValueFiltered)
+    return taskValueFiltered.reduce((total, task) => total + task.reward, 0)
+  }
+
   // private functions
   async function saveDailyTask(userId: string, currentIds?: string[]) {
     const newDailyTask = generateNewDailyTask(userId, currentIds)
@@ -84,7 +104,8 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
         reward: task.reward,
         value: task.value,
         userId,
-        day: date.getDay()
+        day: date.getDay(),
+        isCompleted: false
       }
     })
 
@@ -115,7 +136,8 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
         reward: task.reward,
         value: task.value,
         userId,
-        month: date.getMonth()
+        month: date.getMonth(),
+        isCompleted: false
       }
     })
 
@@ -123,7 +145,9 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
   }
 
   return (
-    <TaskContext.Provider value={{ dailyTasks, monthlyTasks, getDailyTask, getMonthlyTask }}>
+    <TaskContext.Provider
+      value={{ dailyTasks, monthlyTasks, getDailyTask, getMonthlyTask, completeDailyTask }}
+    >
       {props.children}
     </TaskContext.Provider>
   )

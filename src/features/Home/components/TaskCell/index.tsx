@@ -14,7 +14,7 @@ export function TaskCell({ item }: Pros) {
 
   return (
     <S.ViewWrapper>
-      <CheckSVG fill={theme.colors.disabled} />
+      <CheckSVG fill={item.isCompleted ? theme.colors.primary : theme.colors.disabled} />
 
       <S.TextTitle>{item.task}</S.TextTitle>
 

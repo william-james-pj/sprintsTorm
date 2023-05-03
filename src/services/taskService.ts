@@ -21,7 +21,8 @@ export const getDailyTaskRequest = async (
       reward: data.reward,
       value: data.value,
       userId: data.userId,
-      day: data.day
+      day: data.day,
+      isCompleted: data.isCompleted
     })
   })
 
@@ -58,7 +59,8 @@ export const getMonthlyTaskRequest = async (
       reward: data.reward,
       value: data.value,
       userId: data.userId,
-      month: data.month
+      month: data.month,
+      isCompleted: data.isCompleted
     })
   })
 
