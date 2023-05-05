@@ -88,10 +88,7 @@ export function BattleScreen() {
       </ImageBackground>
       <Modal
         isVisible={isModalVisible}
-        onBackButtonPress={toggleModal}
-        onBackdropPress={toggleModal}
-        swipeDirection="down"
-        onSwipeComplete={toggleModal}
+        onBackButtonPress={finishBattle}
         statusBarTranslucent
         style={{}}
       >
