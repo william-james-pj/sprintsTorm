@@ -1,8 +1,13 @@
-export const dailyTasks: DailyTaskInternalProps[] = [
+export const dailyTasks: InternalTaskProps[] = [
   {
     task: 'Corra pelo menos 1km',
     value: 1,
     reward: 5
+  },
+  {
+    task: 'Corra pelo menos 2km',
+    value: 2,
+    reward: 8
   },
   {
     task: 'Corra pelo menos 3km',

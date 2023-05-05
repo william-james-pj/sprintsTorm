@@ -1,4 +1,9 @@
-export const monthlyTasks: MonthlyTaskInternalProps[] = [
+export const monthlyTasks: InternalTaskProps[] = [
+  {
+    task: 'Corra um total 20km',
+    value: 20,
+    reward: 80
+  },
   {
     task: 'Corra um total 30km',
     value: 30,
@@ -10,8 +15,8 @@ export const monthlyTasks: MonthlyTaskInternalProps[] = [
     reward: 250
   },
   {
-    task: 'Corra um total 80km',
-    value: 80,
-    reward: 500
+    task: 'Corra um total 70km',
+    value: 70,
+    reward: 400
   }
 ]

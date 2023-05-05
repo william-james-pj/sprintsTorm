@@ -8,11 +8,9 @@ import { useAuth } from 'src/hooks/useAuth'
 import * as S from './styles'
 
 export function LoginScreen() {
-  const { handleGoogleSignIn, isLoading } = useAuth()
+  const { isLoading } = useAuth()
 
-  const login = async () => {
-    await handleGoogleSignIn()
-  }
+  const login = async () => {}
 
   return (
     <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>

@@ -20,7 +20,7 @@ import { getTimerString } from 'src/utils/getTimeString'
 import * as S from './styles'
 
 export function TrackingScreen() {
-  const [traveledDistance, setTraveledDistance] = useState(10) // km
+  const [traveledDistance, setTraveledDistance] = useState(0) // km
   const [timer, setTimer] = useState(0)
   const [watcher, setWatcher] = useState<LocationSubscription | null>(null)
   const [isStarted, setIsStarted] = useState(false)

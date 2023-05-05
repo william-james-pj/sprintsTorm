@@ -10,12 +10,12 @@ import { LastTrainingCell } from 'src/features/LastTraining/components/LastTrain
 import * as S from './styles'
 
 export function LastTraining() {
-  const flatList = useRef<FlatList<LastTrainingProps>>(null)
+  const flatList = useRef<FlatList<TrainingProps>>(null)
 
-  const data: LastTrainingProps[] = [{ id: '1' }, { id: '2' }, { id: '3' }]
+  const data: TrainingProps[] = []
 
-  const renderRows = ({ item }: { item: LastTrainingProps }) => {
-    return <LastTrainingCell />
+  const renderRows = ({ item }: { item: TrainingProps }) => {
+    return <LastTrainingCell training={item} />
   }
 
   return (
@@ -31,7 +31,7 @@ export function LastTraining() {
               bounces={false}
               data={data}
               renderItem={renderRows}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => `${item.distance}`}
               ItemSeparatorComponent={() => <S.Separator></S.Separator>}
               ListFooterComponent={() => <S.Footer />}
             />

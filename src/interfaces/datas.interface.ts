@@ -1,8 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-type LastTrainingProps = {
-  id: string
-}
-
 type TrainingProps = {
   distance: number
   coins: number
