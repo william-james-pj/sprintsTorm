@@ -23,7 +23,7 @@ export function TrackingContextProvider(props: TrackingContextProviderProps) {
   const [isTrackingLoading, setIsTrackingLoading] = useState(false)
 
   function calculateEarnedCoins(distance: number) {
-    const coins = Math.round(distance / 2) * 50
+    const coins = Math.round((distance / 2) * 50)
     setCoinsEarned(coins)
   }
 
