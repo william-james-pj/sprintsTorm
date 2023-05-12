@@ -18,7 +18,7 @@ export const ViewContent = styled.View`
   flex: 1;
 
   padding: 0px 16px;
-  margin: 16px 0 80px;
+  margin: 24px 0 80px;
 
   gap: 32px;
 `
