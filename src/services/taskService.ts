@@ -40,6 +40,46 @@ export const setDailyTaskRequest = async (dailyTasks: DailyTaskProps[]): Promise
   await batch.commit()
 }
 
+export const getWeeklyTaskRequest = async (
+  userId: string
+): Promise<WeeklyTaskProps[] | undefined> => {
+  const q = query(collection(firestore, 'weeklyTask'), where('userId', '==', userId))
+  const weeklyTask: WeeklyTaskProps[] = []
+
+  const querySnapshot = await getDocs(q)
+
+  if (querySnapshot.empty) return
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data()
+
+    weeklyTask.push({
+      id: data.id,
+      task: data.task,
+      reward: data.reward,
+      value: data.value,
+      userId: data.userId,
+      day: data.day,
+      month: data.month,
+      currentValue: data.currentValue,
+      isCompleted: data.isCompleted
+    })
+  })
+
+  return weeklyTask
+}
+
+export const setWeeklyTaskRequest = async (weeklyTasks: WeeklyTaskProps[]): Promise<void> => {
+  const batch = writeBatch(firestore)
+
+  weeklyTasks.forEach((weeklyTask) => {
+    const dTaskRef = doc(firestore, 'weeklyTask', weeklyTask.id)
+    batch.set(dTaskRef, weeklyTask)
+  })
+
+  await batch.commit()
+}
+
 export const getMonthlyTaskRequest = async (
   userId: string
 ): Promise<MonthlyTaskProps[] | undefined> => {

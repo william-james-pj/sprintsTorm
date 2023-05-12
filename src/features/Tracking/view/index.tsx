@@ -20,7 +20,7 @@ import { getTimerString } from 'src/utils/getTimeString'
 import * as S from './styles'
 
 export function TrackingScreen() {
-  const [traveledDistance, setTraveledDistance] = useState(0) // km
+  const [traveledDistance, setTraveledDistance] = useState(5) // km
   const [timer, setTimer] = useState(0)
   const [watcher, setWatcher] = useState<LocationSubscription | null>(null)
   const [isStarted, setIsStarted] = useState(false)
@@ -31,7 +31,7 @@ export function TrackingScreen() {
   const navigation = useNavigation()
   const { user } = useAuth()
   const { status, updateCoins } = useStatus()
-  const { completeDailyTask, completeMonthlyTask } = useTask()
+  const { completeDailyTask, completeWeeklyTask, completeMonthlyTask } = useTask()
   const { calculateEarnedCoins, saveTracking, coinsEarned } = useTracking()
 
   const setNewDistance = (newDistance: number) => {
@@ -52,8 +52,10 @@ export function TrackingScreen() {
     await saveTracking(user.id, traveledDistance)
 
     const dailyTaskReward = await completeDailyTask(traveledDistance)
+    const weeklyTaskReward = await completeWeeklyTask(traveledDistance)
     const monthlyTaskReward = await completeMonthlyTask(traveledDistance)
-    const allCoins = status.coins + coinsEarned + dailyTaskReward + monthlyTaskReward
+    const allCoins =
+      status.coins + coinsEarned + dailyTaskReward + weeklyTaskReward + monthlyTaskReward
     updateCoins(allCoins, user.id)
 
     toggleFinishModal()

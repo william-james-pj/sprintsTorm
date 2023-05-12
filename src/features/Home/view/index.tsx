@@ -32,7 +32,8 @@ export function HomeScreen() {
   const { getStatus, status } = useStatus()
   const { getTracking, tracking } = useTracking()
   const { getWarriors, getUserWarriors } = useWarriors()
-  const { getDailyTask, dailyTasks, getMonthlyTask, monthlyTasks } = useTask()
+  const { getDailyTask, dailyTasks, getWeeklyTask, weeklyTasks, getMonthlyTask, monthlyTasks } =
+    useTask()
 
   useEffect(() => {
     if (!user) return
@@ -43,6 +44,7 @@ export function HomeScreen() {
       getWarriors(),
       getUserWarriors(user.id),
       getDailyTask(user.id),
+      getWeeklyTask(user.id),
       getMonthlyTask(user.id)
     ])
     console.log('HomeScreen')
@@ -63,6 +65,14 @@ export function HomeScreen() {
               <Section title="Desafios Diários">
                 <S.ViewTaskContainer>
                   {dailyTasks.map((task) => (
+                    <TaskCell key={task.id} item={task} />
+                  ))}
+                </S.ViewTaskContainer>
+              </Section>
+
+              <Section title="Desafios Semanais">
+                <S.ViewTaskContainer>
+                  {weeklyTasks.map((task) => (
                     <TaskCell key={task.id} item={task} />
                   ))}
                 </S.ViewTaskContainer>

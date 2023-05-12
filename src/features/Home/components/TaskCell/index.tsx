@@ -6,7 +6,7 @@ import { Coins } from 'src/components/Coins'
 import * as S from './styles'
 
 type Pros = {
-  item: DailyTaskProps | MonthlyTaskProps
+  item: DailyTaskProps | WeeklyTaskProps | MonthlyTaskProps
 }
 
 export function TaskCell({ item }: Pros) {

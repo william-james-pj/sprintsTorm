@@ -4,18 +4,24 @@ import uuid from 'react-native-uuid'
 import {
   getDailyTaskRequest,
   getMonthlyTaskRequest,
+  getWeeklyTaskRequest,
   setDailyTaskRequest,
-  setMonthlyTaskRequest
+  setMonthlyTaskRequest,
+  setWeeklyTaskRequest
 } from 'src/services/taskService'
 import { generateDailyTasks } from 'src/utils/generateDailyTask'
 import { generateMonthlyTasks } from 'src/utils/generateMonthlyTasks'
+import { generateWeeklyTasks } from 'src/utils/generateWeeklyTasks'
 
 type TaskContextType = {
   dailyTasks: DailyTaskProps[]
+  weeklyTasks: WeeklyTaskProps[]
   monthlyTasks: MonthlyTaskProps[]
   getDailyTask: (userId: string) => Promise<void>
+  getWeeklyTask: (userId: string) => Promise<void>
   getMonthlyTask: (userId: string) => Promise<void>
   completeDailyTask: (distance: number) => Promise<number>
+  completeWeeklyTask: (distance: number) => Promise<number>
   completeMonthlyTask: (distance: number) => Promise<number>
 }
 
@@ -27,6 +33,7 @@ export const TaskContext = createContext({} as TaskContextType)
 
 export function TaskContextProvider(props: TaskContextProviderProps) {
   const [dailyTasks, setDailyTasks] = useState<DailyTaskProps[]>([])
+  const [weeklyTasks, setWeeklyTasks] = useState<WeeklyTaskProps[]>([])
   const [monthlyTasks, setMonthlyTasks] = useState<MonthlyTaskProps[]>([])
 
   async function getDailyTask(userId: string) {
@@ -45,6 +52,25 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
 
     const currentIds = dailyTasksSaved.map((dailyTask) => dailyTask.id)
     await saveDailyTask(userId, currentIds)
+  }
+
+  async function getWeeklyTask(userId: string) {
+    const weeklyTasksSaved = await getWeeklyTaskRequest(userId)
+
+    if (!weeklyTasksSaved) {
+      await saveWeeklyTask(userId)
+      return
+    }
+
+    const currentDay = new Date().getDay()
+    const currentMonth = new Date().getMonth()
+    if (weeklyTasksSaved[0].month === currentMonth && currentDay < weeklyTasksSaved[0].day + 7) {
+      setWeeklyTasks(weeklyTasksSaved)
+      return
+    }
+
+    const currentIds = weeklyTasksSaved.map((weeklyTask) => weeklyTask.id)
+    await saveWeeklyTask(userId, currentIds)
   }
 
   async function getMonthlyTask(userId: string) {
@@ -80,6 +106,23 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
 
     setDailyTaskRequest(taskValueFiltered)
     return taskValueFiltered.reduce((total, task) => total + task.reward, 0)
+  }
+
+  async function completeWeeklyTask(distance: number): Promise<number> {
+    const aux = [...weeklyTasks]
+    const taskNotCompleted = aux.filter((weeklyTask) => !weeklyTask.isCompleted)
+
+    if (taskNotCompleted.length === 0) return 0
+
+    taskNotCompleted.forEach((task) => {
+      task.currentValue += distance
+      if (task.currentValue >= task.value) task.isCompleted = true
+    })
+
+    const completedTask = taskNotCompleted.filter((task) => task.isCompleted)
+
+    setWeeklyTaskRequest(taskNotCompleted)
+    return completedTask.reduce((total, task) => total + task.reward, 0)
   }
 
   async function completeMonthlyTask(distance: number): Promise<number> {
@@ -135,8 +178,34 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
     return newDailyTasks
   }
 
-  function generateUUID(): string[] {
-    return [uuid.v4() as string, uuid.v4() as string]
+  async function saveWeeklyTask(userId: string, currentIds?: string[]) {
+    const newWeeklyTask = generateNewWeeklyTask(userId, currentIds)
+
+    await setWeeklyTaskRequest(newWeeklyTask)
+    setWeeklyTasks(newWeeklyTask)
+  }
+
+  function generateNewWeeklyTask(userId: string, ids?: string[]): WeeklyTaskProps[] {
+    const taskGenerated = generateWeeklyTasks()
+    const date = new Date()
+
+    const currentIds = ids ?? generateUUID()
+
+    const newWeeklyTasks = taskGenerated.map((task, i): WeeklyTaskProps => {
+      return {
+        id: currentIds[i],
+        task: task.task,
+        reward: task.reward,
+        value: task.value,
+        userId,
+        day: date.getDay(),
+        month: date.getMonth(),
+        currentValue: 0,
+        isCompleted: false
+      }
+    })
+
+    return newWeeklyTasks
   }
 
   async function saveMonthlyTask(userId: string, currentIds?: string[]) {
@@ -168,14 +237,21 @@ export function TaskContextProvider(props: TaskContextProviderProps) {
     return newMonthlyTasks
   }
 
+  function generateUUID(): string[] {
+    return [uuid.v4() as string, uuid.v4() as string]
+  }
+
   return (
     <TaskContext.Provider
       value={{
         dailyTasks,
+        weeklyTasks,
         monthlyTasks,
         getDailyTask,
+        getWeeklyTask,
         getMonthlyTask,
         completeDailyTask,
+        completeWeeklyTask,
         completeMonthlyTask
       }}
     >

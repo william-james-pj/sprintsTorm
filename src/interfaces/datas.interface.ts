@@ -61,6 +61,18 @@ type DailyTaskProps = {
   isCompleted: boolean
 }
 
+type WeeklyTaskProps = {
+  id: string
+  userId: string
+  day: number
+  month: number
+  reward: number
+  task: string
+  value: number
+  currentValue: number
+  isCompleted: boolean
+}
+
 type MonthlyTaskProps = {
   id: string
   userId: string
