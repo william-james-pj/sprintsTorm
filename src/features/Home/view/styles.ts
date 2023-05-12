@@ -7,7 +7,7 @@ export const ViewWrapper = styled.View`
 
   padding: 24px 0px 64px;
 
-  gap: 32px;
+  gap: 8px;
 `
 
 export const ViewHeader = styled.View`
@@ -18,6 +18,7 @@ export const ViewContent = styled.View`
   flex: 1;
 
   padding: 0px 16px;
+  margin: 16px 0 80px;
 
   gap: 32px;
 `

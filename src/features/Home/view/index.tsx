@@ -56,8 +56,6 @@ export function HomeScreen() {
       <SafeAreaView style={{ flex: 1 }}>
         <S.ViewWrapper>
           <S.ViewHeader>
-            <UserStatus />
-
             <HomeHeader userName={splitName(user?.name)} trophy={status?.trophy ?? 0} />
           </S.ViewHeader>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

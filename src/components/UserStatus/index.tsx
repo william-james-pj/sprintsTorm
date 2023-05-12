@@ -11,11 +11,11 @@ export function UserStatus() {
   const { status } = useStatus()
 
   return (
-    <S.ViewWrapper>
-      <S.ViewCoin>
-        <S.TextCoinNumber>{status?.coins}</S.TextCoinNumber>
-        <CoinsSVG fill={theme.colors.primary} />
-      </S.ViewCoin>
-    </S.ViewWrapper>
+    // <S.ViewWrapper>
+    <S.ViewCoin>
+      <S.TextCoinNumber>{status?.coins}</S.TextCoinNumber>
+      <CoinsSVG fill={theme.colors.primary} />
+    </S.ViewCoin>
+    // </S.ViewWrapper>
   )
 }
