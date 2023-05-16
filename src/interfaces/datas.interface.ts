@@ -17,6 +17,8 @@ type WarriorsProps = {
   id: string
   name: string
   ability: WarriorAbilityTypeProps
+  description: string
+  img: string
 }
 
 type EnemiesProps = {
@@ -25,6 +27,8 @@ type EnemiesProps = {
   level: number
   name: string
   ability: EnemyAbilityTypeProps
+  description: string
+  img: string
 }
 
 type UserProps = {

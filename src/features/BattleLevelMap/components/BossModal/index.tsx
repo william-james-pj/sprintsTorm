@@ -24,10 +24,7 @@ export function BossModal({ onPress, item }: Props) {
       <S.ViewDetails>
         <S.ViewTextContainer>
           <S.TextName>{item.name}</S.TextName>
-          <S.TextDescription>
-            Sua agilidade e habilidades de combate são incomparáveis, fazendo dele um dos inimigos
-            mais difíceis de se vencer. Derrotá-lo exigirá muita habilidade e estratégia.
-          </S.TextDescription>
+          <S.TextDescription>{item.description}</S.TextDescription>
         </S.ViewTextContainer>
         <Card hideName hideQtd />
       </S.ViewDetails>
