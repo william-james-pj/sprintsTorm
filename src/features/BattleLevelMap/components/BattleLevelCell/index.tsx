@@ -34,13 +34,17 @@ export function BattleLevelCell({ item, onPress, isLeveBefore, isLeveAfter }: Pr
           >
             <S.ViewCardContent isRight={item.level % 2 !== 0}>
               <S.ViewCardContainer>
-                <Card width={60} hideName hideQtd />
+                <Card width={60} hideName hideQtd item={item} />
               </S.ViewCardContainer>
 
               <S.ViewTextContainer isRight={item.level % 2 !== 0}>
                 <S.TextTitle>{item.name}</S.TextTitle>
-                <S.TextDescription isRight={item.level % 2 !== 0}>
-                  Sua agilidade e habilidades de combate são incomparáveis
+                <S.TextDescription
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                  isRight={item.level % 2 !== 0}
+                >
+                  {item.description}
                 </S.TextDescription>
               </S.ViewTextContainer>
 

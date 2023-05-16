@@ -26,7 +26,7 @@ export function BossModal({ onPress, item }: Props) {
           <S.TextName>{item.name}</S.TextName>
           <S.TextDescription>{item.description}</S.TextDescription>
         </S.ViewTextContainer>
-        <Card hideName hideQtd />
+        <Card hideName hideQtd item={item} />
       </S.ViewDetails>
 
       <S.ViewAbility>

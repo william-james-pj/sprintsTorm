@@ -55,7 +55,7 @@ export function BattleScreen() {
               <BattleHeader title={`Level ${enemy?.level}`} onClose={() => navigation.goBack()} />
 
               <S.ViewBoss>
-                <Card width={140} hideQtd qtd={1} enemy={enemy ?? undefined} />
+                <Card width={140} hideQtd qtd={1} item={enemy ?? undefined} />
 
                 <LifeBar currentLife={currentLife} life={totalLife} />
 

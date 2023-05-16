@@ -1,3 +1,5 @@
+import { Image } from 'expo-image'
+import { StyleSheet } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
 
 import * as S from './styles'
@@ -7,8 +9,7 @@ type Props = {
   hideName?: boolean
   hideQtd?: boolean
   qtd?: number
-  item?: WarriorsProps
-  enemy?: EnemiesProps
+  item?: WarriorsProps | EnemiesProps
   canBeDisabled?: boolean
   onPress?: () => void
 }
@@ -20,7 +21,6 @@ export function Card({
   onPress = () => {},
   qtd = 0,
   item,
-  enemy,
   canBeDisabled = false
 }: Props) {
   return (
@@ -31,6 +31,10 @@ export function Card({
         enabled={!(qtd === 0 && canBeDisabled)}
       >
         <S.ViewContent>
+          {item && (
+            <Image style={styles.image} source={item.img} contentFit="cover" transition={500} />
+          )}
+
           {!hideQtd && (
             <S.ViewQtdContainer style={{ borderBottomStartRadius: 4 }} isDisabled={qtd === 0}>
               <S.TextQtd>{qtd}</S.TextQtd>
@@ -39,7 +43,7 @@ export function Card({
 
           {!hideName && (
             <S.ViewNameContainer isDisabled={qtd === 0}>
-              <S.TextName>{item?.name ?? enemy?.name}</S.TextName>
+              <S.TextName>{item?.name}</S.TextName>
             </S.ViewNameContainer>
           )}
         </S.ViewContent>
@@ -47,3 +51,11 @@ export function Card({
     </S.ViewWrapper>
   )
 }
+
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: '#0553'
+  }
+})

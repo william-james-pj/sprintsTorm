@@ -21,7 +21,7 @@ export function CardDetails({ onBuy, item }: Props) {
   return (
     <S.ViewWrapper>
       <S.ViewDetails>
-        <Card hideName qtd={userArmy ? userArmy[item.ability] : 0} />
+        <Card hideName qtd={userArmy ? userArmy[item.ability] : 0} item={item} />
         <S.ViewTextContainer>
           <S.TextName>{item.name}</S.TextName>
           <S.TextDescription>{item.description}</S.TextDescription>
