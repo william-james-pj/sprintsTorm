@@ -21,6 +21,9 @@ module.exports = {
       infoPlist: {
         NSLocationAlwaysAndWhenInUseUsageDescription: 'REASON_FOR_REQUEST',
         UIBackgroundModes: ['location', 'fetch']
+      },
+      config: {
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
       }
     },
     android: {
@@ -28,6 +31,11 @@ module.exports = {
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#ffffff'
+      },
+      config: {
+        googleMaps: {
+          apiKey: process.env.GOOGLE_MAPS_API_KEY
+        }
       },
       permissions: ['ACCESS_BACKGROUND_LOCATION']
     },
