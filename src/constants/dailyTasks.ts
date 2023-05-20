@@ -5,11 +5,6 @@ export const dailyTasks: InternalTaskProps[] = [
     reward: 5
   },
   {
-    task: 'Corra pelo menos 2km',
-    value: 2,
-    reward: 8
-  },
-  {
     task: 'Corra pelo menos 3km',
     value: 3,
     reward: 10
