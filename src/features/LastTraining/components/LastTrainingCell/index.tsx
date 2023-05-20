@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 import * as S from './styles'
 
 type Props = {
@@ -10,7 +12,7 @@ export function LastTrainingCell({ training }: Props) {
       <S.ViewRow>
         <S.ViewTextContainer>
           <S.TextType>Running</S.TextType>
-          <S.TextDate>21/03, 10:32</S.TextDate>
+          <S.TextDate>{`${format(training.date, 'dd/MM, HH:mm')}`}</S.TextDate>
         </S.ViewTextContainer>
       </S.ViewRow>
 
