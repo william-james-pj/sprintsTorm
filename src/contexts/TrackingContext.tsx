@@ -1,12 +1,13 @@
 import { createContext, ReactNode, useState } from 'react'
 
 import { getTrackingRequest, setTrackingRequest } from 'src/services/trackingService'
+import { randomWarriorCount } from 'src/utils/randomWarriorCount'
 
 type TrackingContextType = {
-  coinsEarned: number
+  alliesEarned: UserArmyProps | undefined
   trackings: TrainingProps[]
   isTrackingLoading: boolean
-  calculateEarnedCoins: (distance: number) => void
+  calculateEarnedWarriors: (distance: number) => void
   saveTracking: (userId: string, distance: number) => Promise<void>
   getTracking: (userId: string) => Promise<void>
 }
@@ -18,13 +19,21 @@ type TrackingContextProviderProps = {
 export const TrackingContext = createContext({} as TrackingContextType)
 
 export function TrackingContextProvider(props: TrackingContextProviderProps) {
-  const [coinsEarned, setCoinsEarned] = useState(0)
+  const [alliesEarned, setAlliesEarned] = useState<UserArmyProps>()
   const [trackings, setTrackings] = useState<TrainingProps[]>([])
   const [isTrackingLoading, setIsTrackingLoading] = useState(false)
 
-  function calculateEarnedCoins(distance: number) {
-    const coins = Math.round((distance / 2) * 50)
-    setCoinsEarned(coins)
+  function calculateEarnedWarriors(distance: number) {
+    let earnedWarriors = Math.floor(distance / 2)
+    const remainingDistance = distance % 2
+    const possibility = (remainingDistance / 2) * 100
+
+    if (Math.random() < possibility / 100) {
+      earnedWarriors += 1
+    }
+
+    const allies = randomWarriorCount(earnedWarriors)
+    setAlliesEarned(allies)
   }
 
   async function saveTracking(userId: string, distance: number) {
@@ -33,16 +42,15 @@ export function TrackingContextProvider(props: TrackingContextProviderProps) {
     const training: TrainingProps = {
       userId,
       distance,
-      coins: coinsEarned,
       date: new Date()
     }
 
     await setTrackingRequest(training)
-    setIsTrackingLoading(false)
-    setCoinsEarned(0)
-
     const aux = [training, ...trackings]
     setTrackings(aux)
+
+    setAlliesEarned(undefined)
+    setIsTrackingLoading(false)
   }
 
   async function getTracking(userId: string) {
@@ -56,10 +64,10 @@ export function TrackingContextProvider(props: TrackingContextProviderProps) {
   return (
     <TrackingContext.Provider
       value={{
-        coinsEarned,
+        alliesEarned,
         trackings,
         isTrackingLoading,
-        calculateEarnedCoins,
+        calculateEarnedWarriors,
         saveTracking,
         getTracking
       }}

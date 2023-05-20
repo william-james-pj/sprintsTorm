@@ -1,5 +1,3 @@
-import { Coins } from 'src/components/Coins'
-
 import * as S from './styles'
 
 type Props = {
@@ -17,7 +15,6 @@ export function LastTrainingCell({ training }: Props) {
       </S.ViewRow>
 
       <S.ViewAwardContainer>
-        <Coins coin={training.coins.toFixed(0)} />
         <S.TextDistance>{`${training.distance.toFixed(1)} km`}</S.TextDistance>
       </S.ViewAwardContainer>
     </S.ViewWrapper>

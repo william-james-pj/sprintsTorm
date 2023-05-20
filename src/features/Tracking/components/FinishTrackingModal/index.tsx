@@ -1,7 +1,8 @@
 import { TouchableOpacity } from 'react-native'
 
-import { Coins } from 'src/components/Coins'
+import { Card } from 'src/components/Card'
 import { useTracking } from 'src/hooks/useTracking'
+import { useWarriors } from 'src/hooks/useWarriors'
 
 import * as S from './styles'
 
@@ -10,7 +11,9 @@ type Props = {
 }
 
 export function FinishTrackingModal({ onClick }: Props) {
-  const { coinsEarned, isTrackingLoading } = useTracking()
+  const { alliesEarned, isTrackingLoading } = useTracking()
+  const properties: WarriorAbilityTypeProps[] = ['warrior', 'mage', 'archer']
+  const { warriors } = useWarriors()
 
   return (
     <S.ViewWrapper>
@@ -24,9 +27,22 @@ export function FinishTrackingModal({ onClick }: Props) {
 
       <S.ViewContent>
         <S.ViewRewardContainer>
-          <S.ViewReward>
-            <Coins coin={`+${coinsEarned}`} />
-          </S.ViewReward>
+          {alliesEarned
+            ? properties.map((value) => {
+                const qtd = alliesEarned![value]
+                if (qtd > 0) {
+                  return (
+                    <Card
+                      key={value}
+                      width={70}
+                      qtd={qtd}
+                      showPlusSign
+                      item={warriors.find((w) => w.ability === value)}
+                    />
+                  )
+                }
+              })
+            : null}
         </S.ViewRewardContainer>
       </S.ViewContent>
 

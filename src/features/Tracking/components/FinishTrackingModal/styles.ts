@@ -44,7 +44,7 @@ export const ViewContent = styled.View`
 `
 
 export const ViewRewardContainer = styled.View`
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
 `
 

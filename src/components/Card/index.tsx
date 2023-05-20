@@ -9,6 +9,7 @@ type Props = {
   hideName?: boolean
   hideQtd?: boolean
   qtd?: number
+  showPlusSign?: boolean
   item?: WarriorsProps | EnemiesProps
   canBeDisabled?: boolean
   onPress?: () => void
@@ -20,6 +21,7 @@ export function Card({
   hideQtd = false,
   onPress = () => {},
   qtd = 0,
+  showPlusSign = false,
   item,
   canBeDisabled = false
 }: Props) {
@@ -37,7 +39,7 @@ export function Card({
 
           {!hideQtd && (
             <S.ViewQtdContainer style={{ borderBottomStartRadius: 4 }} isDisabled={qtd === 0}>
-              <S.TextQtd>{qtd}</S.TextQtd>
+              <S.TextQtd>{`${showPlusSign ? '+' : ''}${qtd}`}</S.TextQtd>
             </S.ViewQtdContainer>
           )}
 

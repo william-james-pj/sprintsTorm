@@ -15,12 +15,13 @@ import { useAuth } from 'src/hooks/useAuth'
 import { useStatus } from 'src/hooks/useStatus'
 import { useTask } from 'src/hooks/useTask'
 import { useTracking } from 'src/hooks/useTracking'
+import { useWarriors } from 'src/hooks/useWarriors'
 import { getTimerString } from 'src/utils/getTimeString'
 
 import * as S from './styles'
 
 export function TrackingScreen() {
-  const [traveledDistance, setTraveledDistance] = useState(0) // km
+  const [traveledDistance, setTraveledDistance] = useState(8) // km
   const [timer, setTimer] = useState(0)
   const [watcher, setWatcher] = useState<LocationSubscription | null>(null)
   const [isStarted, setIsStarted] = useState(false)
@@ -30,9 +31,10 @@ export function TrackingScreen() {
 
   const navigation = useNavigation()
   const { user } = useAuth()
+  const { winWarrior } = useWarriors()
   const { status, updateCoins } = useStatus()
   const { completeDailyTask, completeWeeklyTask, completeMonthlyTask } = useTask()
-  const { calculateEarnedCoins, saveTracking, coinsEarned } = useTracking()
+  const { calculateEarnedWarriors, alliesEarned, saveTracking } = useTracking()
 
   const setNewDistance = (newDistance: number) => {
     const newValue = newDistance + traveledDistance
@@ -48,23 +50,22 @@ export function TrackingScreen() {
   const toggleFinishModal = () => setIsFinishModalVisible(!isFinishModalVisible)
 
   const onFinishSave = async () => {
-    if (!user || !status) return
+    if (!user || !status || !alliesEarned) return
+    winWarrior(user.id, alliesEarned)
     await saveTracking(user.id, traveledDistance)
 
     const dailyTaskReward = await completeDailyTask(traveledDistance)
     const weeklyTaskReward = await completeWeeklyTask(traveledDistance)
     const monthlyTaskReward = await completeMonthlyTask(traveledDistance)
-    const allCoins =
-      status.coins + coinsEarned + dailyTaskReward + weeklyTaskReward + monthlyTaskReward
+    const allCoins = status.coins + dailyTaskReward + weeklyTaskReward + monthlyTaskReward
     updateCoins(allCoins, user.id)
-
     toggleFinishModal()
     navigation.goBack()
   }
 
   const modalOnSave = () => {
     watcher?.remove()
-    calculateEarnedCoins(traveledDistance)
+    calculateEarnedWarriors(traveledDistance)
     setIsStarted(false)
     toggleSureModal()
     toggleFinishModal()

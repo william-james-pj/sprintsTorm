@@ -2,7 +2,6 @@
 type TrainingProps = {
   userId: string
   distance: number
-  coins: number
   date: Date
 }
 

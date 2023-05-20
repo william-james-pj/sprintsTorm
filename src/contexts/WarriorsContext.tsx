@@ -18,6 +18,7 @@ type WarriorsContextType = {
     userCoins: number,
     updateCoins: (value: number) => void
   ) => void
+  winWarrior: (userId: string, winArmy: UserArmyProps) => Promise<void>
   lostWarrior: (type: WarriorAbilityTypeProps) => void
 }
 
@@ -77,6 +78,16 @@ export function WarriorsContextProvider(props: WarriorsContextProviderProps) {
     setUserArmy(auxUserArmy)
   }
 
+  async function winWarrior(userId: string, winArmy: UserArmyProps) {
+    if (!userArmy) return
+    const auxUserArmy = { ...userArmy }
+    auxUserArmy.archer += winArmy.archer
+    auxUserArmy.mage += winArmy.mage
+    auxUserArmy.warrior += winArmy.warrior
+    setUserArmy(auxUserArmy)
+    await setUserArmyRequest(userId, auxUserArmy)
+  }
+
   async function updateUserArmy(userId: string) {
     if (!userArmy) return
     await setUserArmyRequest(userId, userArmy)
@@ -91,6 +102,7 @@ export function WarriorsContextProvider(props: WarriorsContextProviderProps) {
         getUserWarriors,
         updateUserArmy,
         buyWarrior,
+        winWarrior,
         lostWarrior
       }}
     >

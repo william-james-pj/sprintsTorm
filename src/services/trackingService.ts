@@ -16,7 +16,6 @@ export const getTrackingRequest = async (userId: string): Promise<TrainingProps[
 
     trainings.push({
       userId: data.userId,
-      coins: data.coins,
       distance: data.distance,
       date: data.date.toDate()
     })
