@@ -14,7 +14,9 @@ export const getWarriorsRequest = async (): Promise<WarriorsProps[]> => {
     warriors.push({
       id: doc.id,
       name: data.name,
-      ability: data.ability
+      ability: data.ability,
+      description: data.description,
+      img: data.img
     })
   })
 

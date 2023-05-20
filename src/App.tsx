@@ -11,6 +11,7 @@ import { BattleContextProvider } from 'src/contexts/BattleContext'
 import { ColorModeContext } from 'src/contexts/ColorModeContext'
 import { EnemiesContextProvider } from 'src/contexts/EnemiesContext'
 import { StatusContextProvider } from 'src/contexts/StatusContext'
+import { TaskContextProvider } from 'src/contexts/TaskContext'
 import { TrackingContextProvider } from 'src/contexts/TrackingContext'
 import { WarriorsContextProvider } from 'src/contexts/WarriorsContext'
 
@@ -42,9 +43,11 @@ export default function App() {
               <WarriorsContextProvider>
                 <BattleContextProvider>
                   <TrackingContextProvider>
-                    <GestureHandlerRootView style={{ flex: 1 }}>
-                      <Routes />
-                    </GestureHandlerRootView>
+                    <TaskContextProvider>
+                      <GestureHandlerRootView style={{ flex: 1 }}>
+                        <Routes />
+                      </GestureHandlerRootView>
+                    </TaskContextProvider>
                   </TrackingContextProvider>
                 </BattleContextProvider>
               </WarriorsContextProvider>

@@ -6,6 +6,8 @@ export const ViewWrapper = styled.View`
   width: 100%;
   height: auto;
 
+  padding-right: 16px;
+
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

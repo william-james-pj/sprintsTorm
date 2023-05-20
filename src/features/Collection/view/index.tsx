@@ -6,11 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import BackgroundImg from 'src/assets/img/background.png'
 import { Card } from 'src/components/Card'
 import { Section } from 'src/components/Section'
-import { UserStatus } from 'src/components/UserStatus'
 import { CardDetails } from 'src/features/Collection/components/CardDetailsModal'
+import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { useAuth } from 'src/hooks/useAuth'
 import { useStatus } from 'src/hooks/useStatus'
 import { useWarriors } from 'src/hooks/useWarriors'
+import { splitName } from 'src/utils/splitName'
 
 import * as S from './styles'
 
@@ -45,7 +46,7 @@ export function CollectionScreen() {
       <ImageBackground style={{ flex: 1 }} source={BackgroundImg}>
         <SafeAreaView style={{ flex: 1 }}>
           <S.ViewWrapper>
-            <UserStatus />
+            <HomeHeader userName={splitName(user?.name)} trophy={status?.trophy ?? 0} />
             <S.ViewContent>
               <Section title="Coleção de cartas">
                 <S.ViewCardRow>

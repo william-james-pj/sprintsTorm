@@ -13,6 +13,7 @@ import { TrackingMap } from 'src/features/Tracking/components/TrackingMap'
 import { TrackingModal } from 'src/features/Tracking/components/TrackingModal'
 import { useAuth } from 'src/hooks/useAuth'
 import { useStatus } from 'src/hooks/useStatus'
+import { useTask } from 'src/hooks/useTask'
 import { useTracking } from 'src/hooks/useTracking'
 import { getTimerString } from 'src/utils/getTimeString'
 
@@ -30,11 +31,12 @@ export function TrackingScreen() {
   const navigation = useNavigation()
   const { user } = useAuth()
   const { status, updateCoins } = useStatus()
+  const { completeDailyTask, completeWeeklyTask, completeMonthlyTask } = useTask()
   const { calculateEarnedCoins, saveTracking, coinsEarned } = useTracking()
 
   const setNewDistance = (newDistance: number) => {
     const newValue = newDistance + traveledDistance
-    setTraveledDistance(newValue)
+    setTraveledDistance(Math.round((newValue + Number.EPSILON) * 100) / 100)
   }
 
   const setNewWatcher = (newWatcher: LocationSubscription) => {
@@ -47,9 +49,15 @@ export function TrackingScreen() {
 
   const onFinishSave = async () => {
     if (!user || !status) return
-    const allCoins = status.coins + coinsEarned
-    updateCoins(allCoins)
     await saveTracking(user.id, traveledDistance)
+
+    const dailyTaskReward = await completeDailyTask(traveledDistance)
+    const weeklyTaskReward = await completeWeeklyTask(traveledDistance)
+    const monthlyTaskReward = await completeMonthlyTask(traveledDistance)
+    const allCoins =
+      status.coins + coinsEarned + dailyTaskReward + weeklyTaskReward + monthlyTaskReward
+    updateCoins(allCoins, user.id)
+
     toggleFinishModal()
     navigation.goBack()
   }

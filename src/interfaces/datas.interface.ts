@@ -1,8 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-type LastTrainingProps = {
-  id: string
-}
-
 type TrainingProps = {
   distance: number
   coins: number
@@ -21,6 +17,8 @@ type WarriorsProps = {
   id: string
   name: string
   ability: WarriorAbilityTypeProps
+  description: string
+  img: string
 }
 
 type EnemiesProps = {
@@ -29,6 +27,8 @@ type EnemiesProps = {
   level: number
   name: string
   ability: EnemyAbilityTypeProps
+  description: string
+  img: string
 }
 
 type UserProps = {
@@ -47,4 +47,43 @@ type StatusProps = {
 type BattleLevelProps = {
   level: number
   currentLife: number
+}
+
+type InternalTaskProps = {
+  task: string
+  value: number
+  reward: number
+}
+
+type DailyTaskProps = {
+  id: string
+  userId: string
+  day: number
+  reward: number
+  task: string
+  value: number
+  isCompleted: boolean
+}
+
+type WeeklyTaskProps = {
+  id: string
+  userId: string
+  day: number
+  month: number
+  reward: number
+  task: string
+  value: number
+  currentValue: number
+  isCompleted: boolean
+}
+
+type MonthlyTaskProps = {
+  id: string
+  userId: string
+  month: number
+  reward: number
+  task: string
+  value: number
+  currentValue: number
+  isCompleted: boolean
 }

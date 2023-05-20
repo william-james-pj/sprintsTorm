@@ -21,13 +21,10 @@ export function CardDetails({ onBuy, item }: Props) {
   return (
     <S.ViewWrapper>
       <S.ViewDetails>
-        <Card hideName qtd={userArmy ? userArmy[item.ability] : 0} />
+        <Card hideName qtd={userArmy ? userArmy[item.ability] : 0} item={item} />
         <S.ViewTextContainer>
           <S.TextName>{item.name}</S.TextName>
-          <S.TextDescription>
-            Sua agilidade e habilidades de combate são incomparáveis, fazendo dele um dos inimigos
-            mais difíceis de se vencer. Derrotá-lo exigirá muita habilidade e estratégia.
-          </S.TextDescription>
+          <S.TextDescription>{item.description}</S.TextDescription>
         </S.ViewTextContainer>
       </S.ViewDetails>
 

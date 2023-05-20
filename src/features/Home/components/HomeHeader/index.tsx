@@ -1,6 +1,7 @@
 import { useTheme } from 'styled-components'
 
 import TrophySVG from 'src/assets/svg/trophy.svg'
+import { UserStatus } from 'src/components/UserStatus'
 
 import * as S from './styles'
 
@@ -24,6 +25,8 @@ export function HomeHeader({ userName, trophy }: Props) {
           </S.ViewTextTrophyContainer>
         </S.ViewTrophyContainer>
       </S.ViewBoxContainer>
+
+      <UserStatus />
     </S.ViewWrapper>
   )
 }

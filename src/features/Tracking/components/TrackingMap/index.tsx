@@ -7,7 +7,7 @@ import {
   watchPositionAsync
 } from 'expo-location'
 import { useEffect, useRef, useState } from 'react'
-import MapView, { LatLng, Marker, Polyline } from 'react-native-maps'
+import MapView, { LatLng, Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps'
 import { useTheme } from 'styled-components'
 
 import { haversine } from 'src/utils/haversine'
@@ -98,6 +98,7 @@ export function TrackingMap({ setNewDistance, setWatcher, isStarted }: Props) {
       {location && (
         <MapView
           ref={mapRef}
+          provider={PROVIDER_GOOGLE}
           style={{ flex: 1 }}
           initialRegion={{
             latitude: location.coords.latitude,
