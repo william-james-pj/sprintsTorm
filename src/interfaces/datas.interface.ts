@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 type TrainingProps = {
+  userId: string
   distance: number
   coins: number
+  date: Date
 }
 
 type UserArmyProps = {

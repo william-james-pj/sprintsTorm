@@ -1,24 +1,33 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { addDoc, collection, getDocs, orderBy, query, Timestamp, where } from 'firebase/firestore'
 
 import { firestore } from './firebase'
 
-export const getTrackingRequest = async (userId: string): Promise<TrainingProps | undefined> => {
-  const docRef = doc(firestore, 'tracking', userId)
-  const docSnap = await getDoc(docRef)
+export const getTrackingRequest = async (userId: string): Promise<TrainingProps[]> => {
+  const trackingRef = collection(firestore, 'tracking')
+  const q = query(trackingRef, where('userId', '==', userId), orderBy('date', 'desc'))
+  const querySnapshot = await getDocs(q)
 
-  if (!docSnap.exists()) return undefined
+  const trainings: TrainingProps[] = []
 
-  const data = docSnap.data()
+  if (querySnapshot.empty) return []
 
-  return {
-    coins: data.coins,
-    distance: data.distance
-  }
+  querySnapshot.forEach((doc) => {
+    const data = doc.data()
+
+    trainings.push({
+      userId: data.userId,
+      coins: data.coins,
+      distance: data.distance,
+      date: data.date.toDate()
+    })
+  })
+
+  return trainings
 }
 
-export const setTrackingRequest = async (
-  userId: string,
-  training: TrainingProps
-): Promise<void> => {
-  await setDoc(doc(firestore, 'tracking', userId), training)
+export const setTrackingRequest = async (training: TrainingProps): Promise<void> => {
+  await addDoc(collection(firestore, 'tracking'), {
+    ...training,
+    date: Timestamp.fromDate(training.date)
+  })
 }
