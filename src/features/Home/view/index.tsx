@@ -8,7 +8,6 @@ import { useTheme } from 'styled-components'
 import BackgroundImg from 'src/assets/img/background.png'
 import SwordsSVG from 'src/assets/svg/swords.svg'
 import { Section } from 'src/components/Section'
-import { UserStatus } from 'src/components/UserStatus'
 import { HomeNavigationProp } from 'src/constants/navigationTypes'
 import { HomeHeader } from 'src/features/Home/components/HomeHeader'
 import { TaskCell } from 'src/features/Home/components/TaskCell'
@@ -30,7 +29,7 @@ export function HomeScreen() {
   const { user } = useAuth()
   const { getEnemies } = useEnemies()
   const { getStatus, status } = useStatus()
-  const { getTracking, tracking } = useTracking()
+  const { getTracking, trackings } = useTracking()
   const { getWarriors, getUserWarriors } = useWarriors()
   const { getDailyTask, dailyTasks, getWeeklyTask, weeklyTasks, getMonthlyTask, monthlyTasks } =
     useTask()
@@ -84,9 +83,9 @@ export function HomeScreen() {
                 </S.ViewTaskContainer>
               </Section>
 
-              {tracking && (
+              {trackings.length > 0 && (
                 <Section title="Último treino">
-                  <LastTrainingCell training={tracking} />
+                  <LastTrainingCell training={trackings[0]} />
                 </Section>
               )}
             </S.ViewContent>

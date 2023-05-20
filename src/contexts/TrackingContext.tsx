@@ -4,7 +4,7 @@ import { getTrackingRequest, setTrackingRequest } from 'src/services/trackingSer
 
 type TrackingContextType = {
   coinsEarned: number
-  tracking: TrainingProps | undefined
+  trackings: TrainingProps[]
   isTrackingLoading: boolean
   calculateEarnedCoins: (distance: number) => void
   saveTracking: (userId: string, distance: number) => Promise<void>
@@ -19,7 +19,7 @@ export const TrackingContext = createContext({} as TrackingContextType)
 
 export function TrackingContextProvider(props: TrackingContextProviderProps) {
   const [coinsEarned, setCoinsEarned] = useState(0)
-  const [tracking, setTracking] = useState<TrainingProps>()
+  const [trackings, setTrackings] = useState<TrainingProps[]>([])
   const [isTrackingLoading, setIsTrackingLoading] = useState(false)
 
   function calculateEarnedCoins(distance: number) {
@@ -31,21 +31,25 @@ export function TrackingContextProvider(props: TrackingContextProviderProps) {
     setIsTrackingLoading(true)
 
     const training: TrainingProps = {
+      userId,
       distance,
-      coins: coinsEarned
+      coins: coinsEarned,
+      date: new Date()
     }
 
-    await setTrackingRequest(userId, training)
+    await setTrackingRequest(training)
     setIsTrackingLoading(false)
     setCoinsEarned(0)
-    setTracking(training)
+
+    const aux = [training, ...trackings]
+    setTrackings(aux)
   }
 
   async function getTracking(userId: string) {
     const auxTracking = await getTrackingRequest(userId)
 
     if (auxTracking) {
-      setTracking(auxTracking)
+      setTrackings(auxTracking)
     }
   }
 
@@ -53,7 +57,7 @@ export function TrackingContextProvider(props: TrackingContextProviderProps) {
     <TrackingContext.Provider
       value={{
         coinsEarned,
-        tracking,
+        trackings,
         isTrackingLoading,
         calculateEarnedCoins,
         saveTracking,
