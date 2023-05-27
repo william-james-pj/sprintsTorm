@@ -25,6 +25,7 @@ export function TrackingScreen() {
   const [timer, setTimer] = useState(0)
   const [watcher, setWatcher] = useState<LocationSubscription | null>(null)
   const [isStarted, setIsStarted] = useState(false)
+  const [isMapLoaded, setMapLoaded] = useState(true)
 
   const [isSureModalVisible, setIsSureModalVisible] = useState(false)
   const [isFinishModalVisible, setIsFinishModalVisible] = useState(false)
@@ -48,6 +49,8 @@ export function TrackingScreen() {
   const toggleSureModal = () => setIsSureModalVisible(!isSureModalVisible)
 
   const toggleFinishModal = () => setIsFinishModalVisible(!isFinishModalVisible)
+
+  const toogleMapLoaded = () => setMapLoaded(!isMapLoaded)
 
   const onFinishSave = async () => {
     if (!user || !status || !alliesEarned) return
@@ -96,6 +99,7 @@ export function TrackingScreen() {
             <TrackingMap
               setNewDistance={setNewDistance}
               setWatcher={setNewWatcher}
+              toogleMapLoaded={toogleMapLoaded}
               isStarted={isStarted}
             />
           </S.ViewHeader>
@@ -108,7 +112,11 @@ export function TrackingScreen() {
                   <TrackingButton title="Terminar" onPress={toggleSureModal} />
                 </>
               ) : (
-                <TrackingButton title="Iniciar" onPress={() => setIsStarted(true)} />
+                <TrackingButton
+                  isDisabled={isMapLoaded}
+                  title="Iniciar"
+                  onPress={() => setIsStarted(true)}
+                />
               )}
             </S.ViewButtonContainer>
           </S.ViewFooter>

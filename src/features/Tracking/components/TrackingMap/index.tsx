@@ -17,10 +17,11 @@ import * as S from './styles'
 type Props = {
   setNewDistance: (newDistance: number) => void
   setWatcher: (newWatcher: LocationSubscription) => void
+  toogleMapLoaded: () => void
   isStarted: boolean
 }
 
-export function TrackingMap({ setNewDistance, setWatcher, isStarted }: Props) {
+export function TrackingMap({ setNewDistance, setWatcher, toogleMapLoaded, isStarted }: Props) {
   const [oldLocation, setOldLocation] = useState<LocationObject | null>(null)
   const [location, setLocation] = useState<LocationObject | null>(null)
   const [routeCoordinates, setRouteCoordinates] = useState<LatLng[]>([])
@@ -110,6 +111,9 @@ export function TrackingMap({ setNewDistance, setWatcher, isStarted }: Props) {
           scrollEnabled={false}
           zoomEnabled={false}
           rotateEnabled={false}
+          loadingEnabled
+          loadingIndicatorColor={theme.colors.primary}
+          onMapReady={() => toogleMapLoaded()}
         >
           <Polyline
             coordinates={routeCoordinates}
