@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import { useKeepAwake } from 'expo-keep-awake'
 import { LocationSubscription } from 'expo-location'
 import { useEffect, useState } from 'react'
 import { ImageBackground } from 'react-native'
@@ -21,6 +22,8 @@ import { getTimerString } from 'src/utils/getTimeString'
 import * as S from './styles'
 
 export function TrackingScreen() {
+  useKeepAwake()
+
   const [traveledDistance, setTraveledDistance] = useState(0) // km
   const [timer, setTimer] = useState(0)
   const [watcher, setWatcher] = useState<LocationSubscription | null>(null)
