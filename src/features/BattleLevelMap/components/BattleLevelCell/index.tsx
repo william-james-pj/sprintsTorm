@@ -11,11 +11,10 @@ import * as S from './styles'
 type Props = {
   item: EnemiesProps
   isLeveBefore: boolean
-  isLeveAfter: boolean
   onPress: () => void
 }
 
-export function BattleLevelCell({ item, onPress, isLeveBefore, isLeveAfter }: Props) {
+export function BattleLevelCell({ item, onPress, isLeveBefore }: Props) {
   const { status } = useStatus()
 
   return (
@@ -27,11 +26,7 @@ export function BattleLevelCell({ item, onPress, isLeveBefore, isLeveAfter }: Pr
 
       <S.ViewContentContainer>
         <S.ViewCard>
-          <RectButton
-            onPress={onPress}
-            style={styles.button}
-            enabled={!isLeveAfter && !isLeveBefore}
-          >
+          <RectButton onPress={onPress} style={styles.button}>
             <S.ViewCardContent isRight={item.level % 2 !== 0}>
               <S.ViewCardContainer>
                 <Card width={60} hideName hideQtd item={item} />

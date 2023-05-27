@@ -12,10 +12,12 @@ import * as S from './styles'
 
 type Props = {
   item: EnemiesProps
+  isLeveBefore: boolean
+  isLeveAfter: boolean
   onPress: () => void
 }
 
-export function BossModal({ onPress, item }: Props) {
+export function BossModal({ onPress, isLeveBefore, isLeveAfter, item }: Props) {
   const theme = useTheme()
   const { isLoadingBattle } = useBattle()
 
@@ -35,10 +37,18 @@ export function BossModal({ onPress, item }: Props) {
       </S.ViewAbility>
 
       <S.ViewButton>
-        <TouchableOpacity style={{ width: '100%' }} onPress={onPress}>
+        <TouchableOpacity
+          style={{ width: '100%' }}
+          onPress={onPress}
+          disabled={isLeveAfter || isLeveBefore}
+        >
           <S.ViewButtonContent>
             {isLoadingBattle ? (
               <S.Indicator size="small" />
+            ) : isLeveAfter ? (
+              <S.TextButtonText>Você ainda não alcançou esse nível</S.TextButtonText>
+            ) : isLeveBefore ? (
+              <S.TextButtonText>Você já superou esse nível</S.TextButtonText>
             ) : (
               <>
                 <SwordsSVG fill={theme.colors.text} />

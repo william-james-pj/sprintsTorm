@@ -38,7 +38,6 @@ export function BattleLevelMap() {
     return (
       <BattleLevelCell
         isLeveBefore={item.level < (status?.currentLevel ?? 0)}
-        isLeveAfter={item.level > (status?.currentLevel ?? 1)}
         item={item}
         onPress={() => {
           toggleModal()
@@ -102,7 +101,12 @@ export function BattleLevelMap() {
         statusBarTranslucent
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
-        <BossModal item={enemies[indexSelected]} onPress={onSelect} />
+        <BossModal
+          item={enemies[indexSelected]}
+          isLeveBefore={enemies[indexSelected].level < (status?.currentLevel ?? 0)}
+          isLeveAfter={enemies[indexSelected].level > (status?.currentLevel ?? 1)}
+          onPress={onSelect}
+        />
       </Modal>
     </>
   )
